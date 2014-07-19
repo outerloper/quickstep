@@ -298,7 +298,7 @@ public class GridBagBuilder implements ComponentBuilder
       return add(text, spec());
    }
 
-   public final GridBagBuilder add(String text, GridBagSpec spec)
+   public GridBagBuilder add(String text, GridBagSpec spec)
    {
       return add(createDefaultLabel(text), spec);
    }
@@ -308,7 +308,7 @@ public class GridBagBuilder implements ComponentBuilder
       return add(component, spec());
    }
 
-   public final GridBagBuilder add(JComponent component, GridBagSpec spec)
+   public GridBagBuilder add(JComponent component, GridBagSpec spec)
    {
       return addDirective(new AddComponentDirective(component, spec.derive()));
    }
@@ -318,7 +318,7 @@ public class GridBagBuilder implements ComponentBuilder
       return add(componentBuilder, spec());
    }
 
-   public final GridBagBuilder add(ComponentBuilder componentBuilder, GridBagSpec spec)
+   public GridBagBuilder add(ComponentBuilder componentBuilder, GridBagSpec spec)
    {
       return addDirective(new AddComponentBuilderDirective(componentBuilder, spec.derive()));
    }
@@ -332,7 +332,7 @@ public class GridBagBuilder implements ComponentBuilder
    {
       for (JComponent component : components)
       {
-         addDirective(new AddComponentDirective(component, spec.derive()));
+         add(component, spec);
       }
       return this;
    }
@@ -373,14 +373,7 @@ public class GridBagBuilder implements ComponentBuilder
    {
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
-      if (debug)
-      {
-         decorateComponentForDebugging(component, String.format(
-            "<html>this: <b>%s</b><br>parent: <b>%s</b><br>%s</html>",
-            objectId(component), objectId(panel), gbcToString(constraints)));
-
-         logger.log(Level.INFO, String.format("%s.add(%s, %s)%n", objectId(panel), objectId(component), gbcToString(constraints)));
-      }
+      attachDebugInfo(component, panel, constraints);
 
       Integer width = calculatedSpec.getPreferredWidth();
       if (width != null)
@@ -585,14 +578,14 @@ public class GridBagBuilder implements ComponentBuilder
       return BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(title), BorderFactory.createEmptyBorder(5, 5, 5, 5));
    }
 
+   public final GridBagBuilder withBorder()
+   {
+      return withBorder(null);
+   }
+
    public final GridBagBuilder withBorder(String title)
    {
       return withBorder(createDefaultBorder(title));
-   }
-
-   public final GridBagBuilder withBorder()
-   {
-      return withBorder(createDefaultBorder(null));
    }
 
    public final GridBagBuilder withBorder(Border innerBorder, Border... outerBorders)

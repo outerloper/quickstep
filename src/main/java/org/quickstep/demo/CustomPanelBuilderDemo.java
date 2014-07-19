@@ -6,24 +6,27 @@ import javax.swing.border.Border;
 
 import org.quickstep.GridBagBuilder;
 
-import static javax.swing.BorderFactory.createLineBorder;
-import static javax.swing.BorderFactory.createTitledBorder;
-import static org.quickstep.GridBagToolKit.buildContent;
-import static org.quickstep.GridBagToolKit.spec;
+import static javax.swing.BorderFactory.*;
+import static org.quickstep.GridBagToolKit.*;
 
 public class CustomPanelBuilderDemo extends JFrame
 {
    public CustomPanelBuilderDemo() throws HeadlessException
    {
       buildContent(this, MyBuilder.myPanel().
-         add(new JLabel("User")).
-         add(new JTextField(), spec().withPreferredWidth(100)).
-         nextLine().
-         add(new JLabel("Password")).
-         add(new JTextField(), spec().withPreferredWidth(100)).
-         nextLine().
-         add(new JButton("Proceed"), spec().withGridWidth(2)).
-         withBorder("Custom Panel")
+         withBorder().
+         withOrientation(Orientation.VERTICAL).
+         add(MyBuilder.myPanel().
+            add("User").
+            add(new JTextField(), spec().withPreferredWidth(100)).
+            nextLine().
+            add("Password").
+            add(new JTextField(), spec().withPreferredWidth(100)).
+            withBorder("Custom Panel")
+         ).
+         add(MyBuilder.myPanel().
+            add(new JButton("Proceed"), spec().withGridWidthRemaining())
+         )
       );
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       setMinimumSize(getPreferredSize());
@@ -49,12 +52,12 @@ class MyBuilder extends GridBagBuilder
 
    private MyBuilder(JPanel panel)
    {
-      super(panel, spec().withFill().withWeight(1.0).withGap(20));
+      super(panel, spec().withFill().withWeight(1.0).withGap(12));
    }
 
    @Override
    protected Border createDefaultBorder(String title)
    {
-      return createTitledBorder(createLineBorder(Color.ORANGE, 10), title);
+      return createCompoundBorder(createTitledBorder(createLineBorder(Color.ORANGE, 10), title), createEmptyBorder(9, 9, 9, 9));
    }
 }

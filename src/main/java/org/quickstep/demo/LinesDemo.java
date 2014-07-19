@@ -1,5 +1,6 @@
 package org.quickstep.demo;
 
+import java.util.logging.Level;
 import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
@@ -8,8 +9,8 @@ public class LinesDemo extends JFrame
 {
    public LinesDemo()
    {
-//      debug();
-//      logger.setLevel(Level.WARNING);
+      debug();
+      logger.setLevel(Level.WARNING);
       buildContent(this, panel().
          withMaxLineLength(4).
          specifyDefaults(grow().withAlignX(AlignX.LEFT)).

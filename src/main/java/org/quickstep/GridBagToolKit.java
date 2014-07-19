@@ -24,8 +24,8 @@ public final class GridBagToolKit
       HORIZONTAL, VERTICAL
    }
 
-   static boolean debug = false;
-   static CustomToolTipSupport toolTipSupportForDebugging = new CustomToolTipSupport();
+   private static boolean debug = false;
+   private static CustomToolTipSupport toolTipSupportForDebugging = new CustomToolTipSupport();
 
    public static Logger logger = Logger.getLogger(GridBagBuilder.class.getName());
 
@@ -79,21 +79,32 @@ public final class GridBagToolKit
    }
 
 
-   public static void buildContent(Window window, GridBagBuilder builder)
+   private static <C extends Container> C genericBuildContent(C container, ComponentBuilder builder)
    {
-      window.setLayout(new GridBagLayout());
-      JPanel rootPanel = builder.build();
+      container.setLayout(new GridBagLayout());
+      JComponent component = builder.build();
       GridBagConstraints constraints = grow().withInset(5).overrideWith(builder.getSpec()).toConstraints(0, 0);
-      window.add(rootPanel, constraints);
+
+      container.add(component, constraints);
+      attachDebugInfo(component, container, constraints);
+      return container;
+   }
+
+   public static Window buildContent(Window window, ComponentBuilder builder)
+   {
+      Window result = genericBuildContent(window, builder);
       window.pack();
+      return result;
+   }
 
-      if (debug)
-      {
-         decorateComponentForDebugging(rootPanel, String.format("<html>this: <b>%s</b><br/>this is a root component<br/>%s</html>",
-                                                                objectId(rootPanel), gbcToString(constraints)));
+   public static JPanel buildContent(JPanel panel, ComponentBuilder builder)
+   {
+      return genericBuildContent(panel, builder);
+   }
 
-         logger.log(Level.INFO, String.format("buildContent(%s, %s)%n", objectId(rootPanel), gbcToString(constraints)));
-      }
+   public static JPanel buildContent(ComponentBuilder builder)
+   {
+      return genericBuildContent(new JPanel(), builder);
    }
 
 
@@ -196,17 +207,25 @@ public final class GridBagToolKit
       }
    }
 
-   static void decorateComponentForDebugging(JComponent component, String toolTipText)
+   static void attachDebugInfo(JComponent component, Container container, GridBagConstraints constraints)
    {
+      if (!debug)
+      {
+         return;
+      }
       if (component instanceof JPanel)
       {
          component.setBackground(new Color((int) (Math.random() * 0xFFFFFF)));
       }
-      component.setToolTipText(toolTipText);
+      String containerId = objectId(container);
+      String componentId = objectId(component);
+      String gbcString = gbcToString(constraints);
+      logger.log(Level.INFO, String.format("%s.add(%s, %s)%n", containerId, componentId, gbcString));
+      component.setToolTipText(String.format("<html>this: <b>%s</b><br>parent: <b>%s</b><br>%s</html>", componentId, containerId, gbcString));
       toolTipSupportForDebugging.addComponent(component);
    }
 
-   static String objectId(Object object)
+   private static String objectId(Object object)
    {
       return object.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(object));
    }
