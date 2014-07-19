@@ -91,7 +91,7 @@ public class GridBagBuilder implements ComponentBuilder
       @Override
       public void apply()
       {
-         endOfLine = true;
+         endOfLine = cursorX != 0 || cursorY != 0;
          moveToNextFreeCell();
          int lineNumber = isHorizontal() ? cursorY : cursorX;
          moveToPreviousCell();

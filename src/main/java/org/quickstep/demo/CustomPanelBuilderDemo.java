@@ -13,18 +13,14 @@ public class CustomPanelBuilderDemo extends JFrame
 {
    public CustomPanelBuilderDemo() throws HeadlessException
    {
-      buildContent(this, MyBuilder.myPanel().
-         withBorder().
+      buildContent(this, new MyBuilder().
          withOrientation(Orientation.VERTICAL).
-         add(MyBuilder.myPanel().
-            add("User").
-            add(new JTextField(), spec().withPreferredWidth(100)).
-            nextLine().
-            add("Password").
-            add(new JTextField(), spec().withPreferredWidth(100)).
+         add(new MyBuilder().
+            add(line().add("User").add(new JTextField(), spec().withPreferredWidth(100))).
+            add(line().add("Password").add(new JTextField(), spec().withPreferredWidth(100))).
             withBorder("Custom Panel")
          ).
-         add(MyBuilder.myPanel().
+         add(new MyBuilder().
             add(new JButton("Proceed"), spec().withGridWidthRemaining())
          )
       );
@@ -45,14 +41,9 @@ public class CustomPanelBuilderDemo extends JFrame
 
 class MyBuilder extends GridBagBuilder
 {
-   static MyBuilder myPanel()
+   MyBuilder()
    {
-      return new MyBuilder(new JPanel());
-   }
-
-   private MyBuilder(JPanel panel)
-   {
-      super(panel, spec().withFill().withWeight(1.0).withGap(12));
+      super(new JPanel(), spec().withFill().withWeight(1.0).withGap(12));
    }
 
    @Override

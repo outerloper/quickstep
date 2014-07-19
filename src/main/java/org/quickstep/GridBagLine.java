@@ -9,10 +9,19 @@ public class GridBagLine implements Iterable<GridBagLine.GridBagLineEntry>
 {
    private final List<GridBagLineEntry> elements = new LinkedList<GridBagLineEntry>();
 
+   public GridBagLine add(String text)
+   {
+      return add(text, spec());
+   }
+
+   public GridBagLine add(String text, GridBagSpec spec)
+   {
+      return add(new JLabel(text), spec);
+   }
+
    public GridBagLine add(JComponent component)
    {
-      elements.add(new GridBagLineEntry(component, spec()));
-      return this;
+      return add(component, spec());
    }
 
    public GridBagLine add(JComponent component, GridBagSpec spec)
