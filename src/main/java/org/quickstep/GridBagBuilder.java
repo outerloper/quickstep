@@ -509,7 +509,7 @@ public class GridBagBuilder implements ComponentBuilder
    }
 
 
-   public final GridBagBuilder specifyDefaults(GridBagSpec spec)
+   public final GridBagBuilder specifyCellDefaults(GridBagSpec spec)
    {
       cellDefaultSpec.overrideWith(spec);
       return this;

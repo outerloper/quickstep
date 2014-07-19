@@ -15,7 +15,7 @@ public class VerticalOrientationDemo extends JFrame
       buildContent(this, panel().
          withMaxLineLength(10).
          withOrientation(Orientation.VERTICAL).
-         specifyDefaults(grow()).
+         specifyCellDefaults(grow()).
          add(generateOptions())
       );
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

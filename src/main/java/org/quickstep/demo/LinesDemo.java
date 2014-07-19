@@ -13,7 +13,7 @@ public class LinesDemo extends JFrame
       logger.setLevel(Level.WARNING);
       buildContent(this, panel().
          withMaxLineLength(4).
-         specifyDefaults(grow().withAlignX(AlignX.LEFT)).
+         specifyCellDefaults(grow().withAnchorX(AnchorX.LEFT)).
          add(checkBox(0)).
          add(line().
             add(checkBox(1), spec().withGridHeight(2)).

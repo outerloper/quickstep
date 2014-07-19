@@ -18,7 +18,7 @@ public class ComponentBuilderDemo extends JFrame
          add(new JButton("Button")).
          add(SeparatorBuilder.horizontalSeparator()).
          add(new JButton("Button")).
-         add(panel().withSpec(growY()).specifyDefaults(growX()).
+         add(panel().withSpec(growY()).specifyCellDefaults(growX()).
             add(new JButton("Button")).add(SeparatorBuilder.verticalSeparator()).add(new JButton("Button"))
          )
       );

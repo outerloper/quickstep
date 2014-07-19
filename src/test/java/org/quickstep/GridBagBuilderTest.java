@@ -1,7 +1,6 @@
 package org.quickstep;
 
 import java.awt.*;
-import java.util.Collection;
 import java.util.LinkedList;
 import javax.swing.*;
 
@@ -162,7 +161,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panel(panel).
-         specifyDefaults(spec().withInset(10, 3)).
+         specifyCellDefaults(spec().withInset(10, 3)).
          add(new JLabel()).
          add(new JLabel(), spec().withGridWidthRemaining()).
          add(new JLabel()).
@@ -176,15 +175,15 @@ public class GridBagBuilderTest
    public void columnSpecOverridesCellDefaults()
    {
       panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(1, 0, spec().withAlignX(AlignX.RIGHT).withInset(0, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AnchorX.RIGHT).withInset(0, 5, 0, 0)));
       panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withAlignX(AlignX.RIGHT).withInset(5, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AnchorX.RIGHT).withInset(5, 5, 0, 0)));
 
       replay(panel);
 
       panel(panel).
          withMaxLineLength(2).
-         specifyColumn(1, spec().withAlignX(AlignX.RIGHT)).
+         specifyColumn(1, spec().withAnchorX(AnchorX.RIGHT)).
          add(new JLabel()).
          add(new JLabel()).
          add(new JLabel()).
@@ -271,14 +270,14 @@ public class GridBagBuilderTest
    @Test
    public void specProvidedForAddOverridesAllOtherSpecsForCurrentCell()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withAlign(AlignX.LEFT, AlignY.TOP)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchor(AnchorX.LEFT, AnchorY.TOP)));
 
       replay(panel);
 
       panel(panel).
          withMaxLineLength(2).
-         specifyCell(0, 0, spec().withAlign(AlignX.RIGHT, AlignY.BOTTOM)).
-         add(new JLabel(), spec().withAlign(AlignX.LEFT, AlignY.TOP)).
+         specifyCell(0, 0, spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM)).
+         add(new JLabel(), spec().withAnchor(AnchorX.LEFT, AnchorY.TOP)).
          build();
 
       verify(panel);
@@ -500,19 +499,19 @@ public class GridBagBuilderTest
       {
          checkBoxes.add(new JCheckBox());
       }
-      panel.add((JComponent) anyObject(), gbc(0, 0, spec().withAlignX(AlignX.LEFT).withInset(0, 30, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 0, spec().withAlignX(AlignX.LEFT).withInset(0, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(2, 0, spec().withAlignX(AlignX.LEFT).withInset(0, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(0, 1, spec().withAlignX(AlignX.LEFT).withInset(5, 30, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 1, spec().withAlignX(AlignX.LEFT).withInset(5, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(2, 1, spec().withAlignX(AlignX.LEFT).withInset(5, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(0, 0, spec().withAnchorX(AnchorX.LEFT).withInset(0, 30, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(1, 0, spec().withAnchorX(AnchorX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(2, 0, spec().withAnchorX(AnchorX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(0, 1, spec().withAnchorX(AnchorX.LEFT).withInset(5, 30, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(1, 1, spec().withAnchorX(AnchorX.LEFT).withInset(5, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(2, 1, spec().withAnchorX(AnchorX.LEFT).withInset(5, 5, 0, 0)));
 
       replay(panel);
 
       panel(panel).
          withMaxLineLength(3).
-         specifyColumn(0, spec().withAlignX(AlignX.RIGHT).withInsetLeft(30)).
-         add(checkBoxes, spec().withAlignX(AlignX.LEFT)).
+         specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT).withInsetLeft(30)).
+         add(checkBoxes, spec().withAnchorX(AnchorX.LEFT)).
          build();
 
       verify(panel);
@@ -559,19 +558,19 @@ public class GridBagBuilderTest
    @Test
    public void derivedPanelPreservesGridSpecsAndGridWidthOfItsTemplate()
    {
-      panel.add((JComponent) anyObject(), gbc(0, 0, spec().withAlign(AlignX.RIGHT, AlignY.BOTTOM).withInset(10, 10, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 0, spec().withAlign(AlignX.LEFT, AlignY.BOTTOM).withInset(0, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(0, 1, spec().withAlign(AlignX.RIGHT, AlignY.TOP).withInset(5, 0, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 1, spec().withAlign(AlignX.LEFT, AlignY.TOP).withInset(5, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(0, 0, spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM).withInset(10, 10, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(1, 0, spec().withAnchor(AnchorX.LEFT, AnchorY.BOTTOM).withInset(0, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(0, 1, spec().withAnchor(AnchorX.RIGHT, AnchorY.TOP).withInset(5, 0, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(1, 1, spec().withAnchor(AnchorX.LEFT, AnchorY.TOP).withInset(5, 5, 0, 0)));
 
       replay(panel);
 
       GridBagBuilder template = panel().
          withMaxLineLength(2).
          specifyCell(0, 0, spec().withInsetTop(10).withInsetLeft(10)).
-         specifyRow(0, spec().withAlignY(AlignY.BOTTOM)).
-         specifyColumn(0, spec().withAlignX(AlignX.RIGHT)).
-         specifyDefaults(spec().withAlign(AlignX.LEFT, AlignY.TOP));
+         specifyRow(0, spec().withAnchorY(AnchorY.BOTTOM)).
+         specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT)).
+         specifyCellDefaults(spec().withAnchor(AnchorX.LEFT, AnchorY.TOP));
       template.derive(panel).
          add(new JLabel()).
          add(new JLabel()).

@@ -43,11 +43,11 @@ public class RichFormDemo extends JFrame
       buildContent(this, panel().
          add(peopleList, grow().withGridHeightRemaining()).
          add(panel().
-            withSpec(growX().withAlignY(AlignY.TOP)).
+            withSpec(growX().withAnchorY(AnchorY.TOP)).
             withMaxLineLength(4).
-            specifyColumn(0, spec().withAlignX(AlignX.RIGHT)).
+            specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT)).
             specifyColumn(1, growX()).
-            specifyColumn(2, spec().withAlignX(AlignX.RIGHT)).
+            specifyColumn(2, spec().withAnchorX(AnchorX.RIGHT)).
             specifyColumn(3, growX()).
             add("Last name").
             add(lastNameTextField).
@@ -70,8 +70,8 @@ public class RichFormDemo extends JFrame
          ).
          nextLine().
          add(panel().
-            withSpec(growX().withAlignY(AlignY.BOTTOM).withGridWidthRemaining()).
-            specifyDefaults(spec().withPreferredWidth(66)).
+            withSpec(growX().withAnchorY(AnchorY.BOTTOM).withGridWidthRemaining()).
+            specifyCellDefaults(spec().withPreferredWidth(66)).
             add(newButton).
             add(deleteButton).
             add(editButton).

@@ -9,12 +9,12 @@ import org.quickstep.util.CustomToolTipSupport;
 
 public final class GridBagToolKit
 {
-   public enum AlignX
+   public enum AnchorX
    {
       LEFT, CENTER, RIGHT
    }
 
-   public enum AlignY
+   public enum AnchorY
    {
       TOP, MIDDLE, BOTTOM
    }
@@ -58,7 +58,7 @@ public final class GridBagToolKit
 
    public static GridBagSpec completeSpec()
    {
-      return new GridBagSpec(null, null, 1, 1, 0.0, 0.0, AlignX.CENTER, AlignY.MIDDLE, false, false, 0, 0, 0, 0, 0, 0);
+      return new GridBagSpec(null, null, 1, 1, 0.0, 0.0, AnchorX.CENTER, AnchorY.MIDDLE, false, false, 0, 0, 0, 0, 0, 0);
    }
 
 

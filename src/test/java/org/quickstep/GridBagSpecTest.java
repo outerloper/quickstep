@@ -24,7 +24,7 @@ public class GridBagSpecTest
    @Test
    public void testCopyConstructor()
    {
-      spec = spec().withAlignY(AlignY.TOP).withFill().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
+      spec = spec().withAnchorY(AnchorY.TOP).withFill().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
       GridBagSpec copy = new GridBagSpec(spec);
       assertEquals(spec, copy);
    }
@@ -32,7 +32,7 @@ public class GridBagSpecTest
    @Test
    public void deriveMethodCopiesSpec()
    {
-      spec = spec().withAlignY(AlignY.TOP).withFill().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
+      spec = spec().withAnchorY(AnchorY.TOP).withFill().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
       GridBagSpec copy = spec.derive();
       assertEquals(spec, copy);
       assertNotSame(spec, copy);
@@ -41,8 +41,8 @@ public class GridBagSpecTest
    @Test
    public void overrideMethodOverwritesAllNotNullFields()
    {
-      GridBagSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAlignX(AlignX.LEFT).withAlignY(AlignY.BOTTOM).withFillX(false).withFillY().withInsetY(5);
-      GridBagSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(2);
+      GridBagSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorX(AnchorX.LEFT).withAnchorY(AnchorY.BOTTOM).withFillX(false).withFillY().withInsetY(5);
+      GridBagSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
       GridBagSpec spec3 = spec();
 
       spec2.overrideWith(spec1);
@@ -52,8 +52,8 @@ public class GridBagSpecTest
       assertEquals(1, (int) spec2.getGridHeight());
       assertEquals(null, spec2.getWeightX());
       assertEquals(null, spec2.getWeightY());
-      assertEquals(AlignX.LEFT, spec2.getAlignX());
-      assertEquals(AlignY.BOTTOM, spec2.getAlignY());
+      assertEquals(AnchorX.LEFT, spec2.getAnchorX());
+      assertEquals(AnchorY.BOTTOM, spec2.getAnchorY());
       assertEquals(false, (boolean) spec2.getFillX());
       assertEquals(true, (boolean) spec2.getFillY());
       assertEquals(5, (int) spec2.getInsetTop());
@@ -71,8 +71,8 @@ public class GridBagSpecTest
    @Test
    public void overwriteMethodOverwritesAllFieldsEvenNull()
    {
-      GridBagSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(2);
-      GridBagSpec spec2 = spec().withPreferredSize(200, 60).withGridSize(3, 4).withAlignY(AlignY.BOTTOM).withFillY().withInset(5).withIPad(3);
+      GridBagSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
+      GridBagSpec spec2 = spec().withPreferredSize(200, 60).withGridSize(3, 4).withAnchorY(AnchorY.BOTTOM).withFillY().withInset(5).withIPad(3);
       GridBagSpec spec3 = spec();
 
       spec2.overwriteWith(spec1);
@@ -85,9 +85,9 @@ public class GridBagSpecTest
    @Test
    public void testSpecEquals()
    {
-      GridBagSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(2);
-      GridBagSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(2);
-      GridBagSpec spec3 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(88);
+      GridBagSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
+      GridBagSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
+      GridBagSpec spec3 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(88);
       Object nullReference = null;
       assertFalse(spec1.equals(nullReference));
       assertTrue(spec1.equals(spec1));
@@ -99,7 +99,7 @@ public class GridBagSpecTest
    public void testGBCEqualForNullConstraints()
    {
       GridBagConstraints constraints = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
+         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
       assertTrue(gbcEquals(null, null));
       assertFalse(gbcEquals(constraints, null));
       assertFalse(gbcEquals(null, constraints));
@@ -109,11 +109,11 @@ public class GridBagSpecTest
    public void testGBCEqualForNotNullConstraints()
    {
       GridBagConstraints constraints1 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
+         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
       GridBagConstraints constraints2 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
+         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
       GridBagConstraints constraints3 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAlignY(AlignY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 3);
+         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 3);
       assertTrue(gbcEquals(constraints1, constraints1));
       assertTrue(gbcEquals(constraints1, constraints2));
       assertFalse(gbcEquals(constraints1, constraints3));
@@ -174,8 +174,8 @@ public class GridBagSpecTest
    @Test
    public void testSpecToString()
    {
-      spec = spec().withPreferredSize(200, 60).withGridWidth(3).withAlignY(AlignY.BOTTOM).withFillY().withInsetY(5);
-      assertEquals("GBSpec{preferredSize=200,60 gridSize=3,null weight=null,null fillX=null fillY=true alignX=null alignY=BOTTOM " +
+      spec = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorY(AnchorY.BOTTOM).withFillY().withInsetY(5);
+      assertEquals("GBSpec{preferredSize=200,60 gridSize=3,null weight=null,null fillX=null fillY=true AnchorX=null AnchorY=BOTTOM " +
                       "insets(top=5 left=null bottom=5 right=null) pad=null,null}", spec.toString());
    }
 
@@ -266,11 +266,11 @@ public class GridBagSpecTest
    @Test
    public void anchorAccessors()
    {
-      spec = spec().withAlignY(AlignY.BOTTOM);
-      assertEquals(AlignY.BOTTOM, spec.getAlignY());
+      spec = spec().withAnchorY(AnchorY.BOTTOM);
+      assertEquals(AnchorY.BOTTOM, spec.getAnchorY());
 
-      spec = spec().withAlignY(null);
-      assertNull(spec.getAlignY());
+      spec = spec().withAnchorY(null);
+      assertNull(spec.getAnchorY());
    }
 
    @Test

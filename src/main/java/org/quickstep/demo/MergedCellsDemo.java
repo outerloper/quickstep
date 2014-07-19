@@ -41,7 +41,7 @@ public class MergedCellsDemo extends JFrame
          add(panel().
             withSpec(grow()).
             withMaxLineLength(4).
-            specifyDefaults(grow()).
+            specifyCellDefaults(grow()).
             specifyCell(1, 2, spec().withGridSize(2, 3)).
             specifyCell(0, 5, spec().withGridSize(2, 2)).
             specifyCell(2, 7, spec().withGridSize(1, 2)).
@@ -50,7 +50,7 @@ public class MergedCellsDemo extends JFrame
          ).
          add(panel().
             withSpec(spec().withGridWidthRemaining()).
-            specifyDefaults(spec().withPreferredWidth(66)).
+            specifyCellDefaults(spec().withPreferredWidth(66)).
             add(okButton).
             add(cancelButton).
             add(helpButton)
