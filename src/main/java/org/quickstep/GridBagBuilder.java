@@ -25,7 +25,7 @@ public class GridBagBuilder implements ComponentBuilder
    private int previousCursorX = 0;
    private boolean previousEndOfLine = false;
 
-   private final List<Directive> directives = new LinkedList<Directive>();
+   private final List<GridBagCommand> commands = new LinkedList<GridBagCommand>();
 
    private GridBagSpec spec = spec();
    private Border border;
@@ -40,148 +40,6 @@ public class GridBagBuilder implements ComponentBuilder
    private final Table<Integer, Integer, Boolean> usedCells = TreeBasedTable.create();
    private final Map<Integer, Integer> gridHeightsRemaining = new HashMap<Integer, Integer>();
    private final Map<Integer, Integer> gridWidthsRemaining = new HashMap<Integer, Integer>();
-
-   private interface Directive
-   {
-      void apply();
-   }
-
-   private class MoveToNthFreeCellDirective implements Directive
-   {
-      private int number;
-
-      private MoveToNthFreeCellDirective(int number)
-      {
-         this.number = number;
-      }
-
-      @Override
-      public void apply()
-      {
-         for (int i = 0; i < number; i++)
-         {
-            if (!isCellFree(cursorX, cursorY))
-            {
-               moveToNextFreeCell();
-            }
-            usedCells.put(cursorX, cursorY, true);
-         }
-      }
-   }
-
-   private class MoveToNextLineDirective implements Directive
-   {
-      @Override
-      public void apply()
-      {
-         endOfLine = true;
-         moveToNextFreeCell();
-      }
-   }
-
-   private class AddLineDirective implements Directive
-   {
-      private GridBagLine line;
-
-      private AddLineDirective(GridBagLine line)
-      {
-         this.line = line;
-      }
-
-      @Override
-      public void apply()
-      {
-         endOfLine = cursorX != 0 || cursorY != 0;
-         moveToNextFreeCell();
-         int lineNumber = isHorizontal() ? cursorY : cursorX;
-         moveToPreviousCell();
-
-         for (GridBagLine.GridBagLineEntry entry : line)
-         {
-            if (!isCellFree(cursorX, cursorY))
-            {
-               moveToNextFreeCell();
-            }
-            int currentLineNumber = isHorizontal() ? cursorY : cursorX;
-            if (lineNumber != currentLineNumber)
-            {
-               logger.log(Level.WARNING, "Components from GridBagLine #" + lineNumber + " cannot be placed at line " + currentLineNumber + ".");
-               moveToPreviousCell();
-               break;
-            }
-            new AddComponentDirective(entry.getComponent(), entry.getSpec()).apply();
-         }
-         endOfLine = true;
-      }
-   }
-
-   private abstract class AddItemDirective implements Directive
-   {
-      private GridBagSpec spec;
-
-      public abstract JComponent getComponent();
-
-      protected AddItemDirective(GridBagSpec spec)
-      {
-         this.spec = spec;
-      }
-
-      public GridBagSpec getSpec()
-      {
-         return spec;
-      }
-
-      @Override
-      public void apply()
-      {
-         if (!isCellFree(cursorX, cursorY))
-         {
-            moveToNextFreeCell();
-         }
-         GridBagSpec calculatedSpec = calculateSpec(cursorX, cursorY, getSpec());
-         if (!isAreaFree(cursorX, cursorY, calculatedSpec.getGridWidth(), calculatedSpec.getGridHeight()))
-         {
-            logger.log(Level.WARNING, String.format("GridBagBuilder: no enough place for GUI component: %s %s\n",
-                                                    getComponent().getClass(), calculatedSpec));
-         }
-         placeComponent(calculatedSpec, getComponent());
-         markAreaAsUsed(cursorX, cursorY, calculatedSpec);
-      }
-   }
-
-   private class AddComponentDirective extends AddItemDirective
-   {
-      private JComponent component;
-
-      AddComponentDirective(JComponent component, GridBagSpec spec)
-      {
-         super(spec);
-         this.component = component;
-      }
-
-      @Override
-      public JComponent getComponent()
-      {
-         return component;
-      }
-   }
-
-   private class AddComponentBuilderDirective extends AddItemDirective
-   {
-      private ComponentBuilder componentBuilder;
-
-      AddComponentBuilderDirective(ComponentBuilder componentBuilder, GridBagSpec spec)
-      {
-         super(spec.overrideWith(componentBuilder.getSpec()));
-         this.componentBuilder = componentBuilder;
-      }
-
-      @Override
-      public JComponent getComponent()
-      {
-         return componentBuilder.build();
-      }
-   }
 
    protected GridBagBuilder(JPanel panel)
    {
@@ -256,26 +114,54 @@ public class GridBagBuilder implements ComponentBuilder
       }
    }
 
-   private boolean isHorizontal()
+   boolean isHorizontal()
    {
       return Orientation.HORIZONTAL.equals(orientation);
    }
 
-   private void moveToPreviousCell()
+   boolean isEmpty()
+   {
+      return cursorX == 0 && cursorY == 0;
+   }
+
+   void setEndOfLine(boolean value)
+   {
+      endOfLine = value;
+   }
+
+   int getCurrentLineNumber()
+   {
+      return isHorizontal() ? cursorY : cursorX;
+   }
+
+   void moveToPreviousCell()
    {
       cursorX = previousCursorX;
       cursorY = previousCursorY;
       endOfLine = previousEndOfLine;
    }
 
-   private GridBagBuilder moveToNextFreeCell()
+   void moveToFreeCell()
+   {
+      if (!isCellFree(cursorX, cursorY))
+      {
+         moveToNextFreeCell();
+      }
+   }
+
+   void moveToNextLine()
+   {
+      endOfLine = true;
+      moveToNextFreeCell();
+   }
+
+   void moveToNextFreeCell()
    {
       do
       {
          moveToNextCell();
       }
       while (!isCellFree(cursorX, cursorY));
-      return this;
    }
 
    private void newLine()
@@ -291,6 +177,16 @@ public class GridBagBuilder implements ComponentBuilder
          cursorY = 0;
       }
       endOfLine = false;
+   }
+
+   public final GridBagBuilder add()
+   {
+      return add(spec());
+   }
+
+   public GridBagBuilder add(GridBagSpec spec)
+   {
+      return add(createDefaultLabel(null), spec);
    }
 
    public final GridBagBuilder add(String text)
@@ -310,7 +206,7 @@ public class GridBagBuilder implements ComponentBuilder
 
    public GridBagBuilder add(JComponent component, GridBagSpec spec)
    {
-      return addDirective(new AddComponentDirective(component, spec.derive()));
+      return add(new ComponentBuilderAdapter(component), spec.derive());
    }
 
    public final GridBagBuilder add(ComponentBuilder componentBuilder)
@@ -320,7 +216,7 @@ public class GridBagBuilder implements ComponentBuilder
 
    public GridBagBuilder add(ComponentBuilder componentBuilder, GridBagSpec spec)
    {
-      return addDirective(new AddComponentBuilderDirective(componentBuilder, spec.derive()));
+      return add(new AddComponentCommand(componentBuilder, spec.derive()));
    }
 
    public final GridBagBuilder add(Iterable<? extends JComponent> components)
@@ -339,42 +235,50 @@ public class GridBagBuilder implements ComponentBuilder
 
    public final GridBagBuilder add(GridBagLine line)
    {
-      return addDirective(new AddLineDirective(line));
+      return add(new AddLineCommand(line));
    }
 
-   private GridBagBuilder addDirective(Directive item)
+   private GridBagBuilder add(GridBagCommand item)
    {
       if (item == null)
       {
          throw new NullPointerException();
       }
-      directives.add(item);
-      return this;
-   }
-
-   public final GridBagBuilder skip()
-   {
-      return skip(1);
-   }
-
-   public final GridBagBuilder skip(int n)
-   {
-      addDirective(new MoveToNthFreeCellDirective(n));
+      commands.add(item);
       return this;
    }
 
    public final GridBagBuilder nextLine()
    {
-      addDirective(new MoveToNextLineDirective());
+      add(new NextLineCommand());
       return this;
    }
 
-   private void placeComponent(GridBagSpec calculatedSpec, JComponent component)
+   void placeComponent(JComponent component, GridBagSpec givenSpec)
    {
+      GridBagSpec calculatedSpec = calculateSpec(cursorX, cursorY, givenSpec);
+
+      if (!isAreaFree(cursorX, cursorY, calculatedSpec.getGridWidth(), calculatedSpec.getGridHeight()))
+      {
+         logger.log(Level.WARNING, String.format("GridBagBuilder: no enough place for component: %s with constraints: %s\n",
+                                                 objectId(component), calculatedSpec));
+      }
+
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
       attachDebugInfo(component, panel, constraints);
 
+      panel.add(getComponentToAdd(component, calculatedSpec), constraints);
+      if (calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER)
+      {
+         endOfLine = true;
+      }
+
+      markAreaAsUsed(cursorX, cursorY, calculatedSpec);
+   }
+
+   private JComponent getComponentToAdd(JComponent component, GridBagSpec calculatedSpec)
+   {
       Integer width = calculatedSpec.getPreferredWidth();
       if (width != null)
       {
@@ -389,13 +293,9 @@ public class GridBagBuilder implements ComponentBuilder
       {
          JPanel wrappingPanel = new ResizablePanel();
          wrappingPanel.add(component);
-         component = wrappingPanel;
+         return wrappingPanel;
       }
-      panel.add(component, constraints);
-      if (calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER)
-      {
-         endOfLine = true;
-      }
+      return component;
    }
 
    private void markAreaAsUsed(int x, int y, GridBagSpec spec)
@@ -477,9 +377,9 @@ public class GridBagBuilder implements ComponentBuilder
    {
       JPanel content = panel;
       content.setLayout(new GridBagLayout());
-      for (Directive directive : directives)
+      for (GridBagCommand command : commands)
       {
-         directive.apply();
+         command.apply(this);
       }
 
       if (scroll != null)

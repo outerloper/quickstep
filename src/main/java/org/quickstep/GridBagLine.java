@@ -5,9 +5,19 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.spec;
 
-public class GridBagLine implements Iterable<GridBagLine.GridBagLineEntry>
+public class GridBagLine implements Iterable<GridBagCommand>
 {
-   private final List<GridBagLineEntry> elements = new LinkedList<GridBagLineEntry>();
+   private final List<GridBagCommand> elements = new LinkedList<GridBagCommand>();
+
+   public GridBagLine add()
+   {
+      return add(spec());
+   }
+
+   public GridBagLine add(GridBagSpec spec)
+   {
+      return add((String) null, spec);
+   }
 
    public GridBagLine add(String text)
    {
@@ -26,34 +36,12 @@ public class GridBagLine implements Iterable<GridBagLine.GridBagLineEntry>
 
    public GridBagLine add(JComponent component, GridBagSpec spec)
    {
-      elements.add(new GridBagLineEntry(component, spec));
+      elements.add(new AddComponentCommand(new ComponentBuilder.ComponentBuilderAdapter(component), spec));
       return this;
    }
 
-   static class GridBagLineEntry
-   {
-      private JComponent component;
-      private GridBagSpec spec;
-
-      GridBagLineEntry(JComponent component, GridBagSpec spec)
-      {
-         this.component = component;
-         this.spec = spec;
-      }
-
-      JComponent getComponent()
-      {
-         return component;
-      }
-
-      GridBagSpec getSpec()
-      {
-         return spec;
-      }
-   }
-
    @Override
-   public Iterator<GridBagLineEntry> iterator()
+   public Iterator<GridBagCommand> iterator()
    {
       return elements.iterator();
    }

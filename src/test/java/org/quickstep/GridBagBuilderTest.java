@@ -42,6 +42,11 @@ public class GridBagBuilderTest
       return null;
    }
 
+   private static GridBagConstraints anyGbc()
+   {
+      return anyObject(GridBagConstraints.class);
+   }
+
    private static JComponent anyComponent()
    {
       return anyObject();
@@ -234,6 +239,9 @@ public class GridBagBuilderTest
    @Test
    public void whenRowAndLaterColumnIsSpecifiedThenColumnSpecIsMoreImportant()
    {
+      panel.add(anyComponent(), anyGbc());
+      panel.add(anyComponent(), anyGbc());
+      panel.add(anyComponent(), anyGbc());
       panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0).withInsetBottom(30)));
 
       replay(panel);
@@ -242,7 +250,7 @@ public class GridBagBuilderTest
          withMaxLineLength(2).
          specifyRow(1, spec().withInsetBottom(20)).
          specifyColumn(1, spec().withInsetBottom(30)).
-         skip(3).
+         add().add().add().
          add(new JLabel()).
          build();
 
@@ -252,6 +260,9 @@ public class GridBagBuilderTest
    @Test
    public void whenColumnAndLaterRowIsSpecifiedThenRowSpecIsMoreImportant()
    {
+      panel.add(anyComponent(), anyGbc());
+      panel.add(anyComponent(), anyGbc());
+      panel.add(anyComponent(), anyGbc());
       panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0).withInsetBottom(30)));
 
       replay(panel);
@@ -260,7 +271,7 @@ public class GridBagBuilderTest
          withMaxLineLength(2).
          specifyColumn(1, spec().withInsetBottom(20)).
          specifyRow(1, spec().withInsetBottom(30)).
-         skip(3).
+         add().add().add().
          add(new JLabel()).
          build();
 
@@ -358,133 +369,6 @@ public class GridBagBuilderTest
          add(new JLabel()).
          add(new JLabel(), spec().withGridHeightRemaining()).
          add(new JLabel()).
-         add(new JLabel()).
-         build();
-
-      verify(panel);
-   }
-
-   @Test
-   public void testSkipMethodInOneRowCase()
-   {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(2, 0, spec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(5, 0, spec().withInset(0, 5, 0, 0)));
-
-      replay(panel);
-
-      panel(panel).
-         add(new JLabel()).
-         skip().
-         add(new JLabel()).
-         skip().
-         skip().
-         add(new JLabel()).
-         build();
-
-      verify(panel);
-   }
-
-   @Test
-   public void testSkipAsFirstDirectiveForBuilder()
-   {
-      panel.add(anyComponent(), gbc(1, 0, spec().withInset(0, 5, 0, 0)));
-
-      replay(panel);
-
-      panel(panel).
-         skip().
-         add(new JLabel()).
-         build();
-
-      verify(panel);
-   }
-
-   @Test
-   public void testMultipleSkipAsFirstDirectiveForBuilder()
-   {
-      panel.add(anyComponent(), gbc(3, 0, spec().withInset(0, 5, 0, 0)));
-
-      replay(panel);
-
-      panel(panel).
-         skip(3).
-         add(new JLabel()).
-         build();
-
-      verify(panel);
-   }
-
-   @Test
-   public void testMultipleSkipMethodInOneRowCase()
-   {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(2, 0, spec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(5, 0, spec().withInset(0, 5, 0, 0)));
-
-      replay(panel);
-
-      panel(panel).
-         add(new JLabel()).
-         skip(1).
-         add(new JLabel()).
-         skip(2).
-         add(new JLabel()).
-         build();
-
-      verify(panel);
-   }
-
-   @Test
-   public void testSkipMethodInMultipleRowsCase()
-   {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 2, spec().withInset(5, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 3, spec().withInset(5, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 5, spec().withInset(5, 0, 0, 0)));
-
-      replay(panel);
-
-      panel(panel).
-         withMaxLineLength(2).
-         add(new JLabel()).
-         skip().
-         add(new JLabel()).
-         skip().
-         skip().
-         add(new JLabel()).
-         skip().
-         add(new JLabel()).
-         skip().
-         skip().
-         add(new JLabel()).
-         build();
-
-      verify(panel);
-   }
-
-   @Test
-   public void testMultipleSkipMethodInMultipleRowsCase()
-   {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 2, spec().withInset(5, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 3, spec().withInset(5, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 5, spec().withInset(5, 0, 0, 0)));
-
-      replay(panel);
-
-      panel(panel).
-         withMaxLineLength(2).
-         add(new JLabel()).
-         skip(1).
-         add(new JLabel()).
-         skip(2).
-         add(new JLabel()).
-         skip(1).
-         add(new JLabel()).
-         skip(2).
          add(new JLabel()).
          build();
 

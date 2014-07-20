@@ -221,12 +221,15 @@ public final class GridBagToolKit
       String componentId = objectId(component);
       String gbcString = gbcToString(constraints);
       logger.log(Level.INFO, String.format("%s.add(%s, %s)%n", containerId, componentId, gbcString));
-      component.setToolTipText(String.format("<html>this: <b>%s</b><br>parent: <b>%s</b><br>%s</html>", componentId, containerId, gbcString));
-      toolTipSupportForDebugging.addComponent(component);
+      if (component != null)
+      {
+         component.setToolTipText(String.format("<html>this: <b>%s</b><br>parent: <b>%s</b><br>%s</html>", componentId, containerId, gbcString));
+         toolTipSupportForDebugging.addComponent(component);
+      }
    }
 
-   private static String objectId(Object object)
+   static String objectId(Object object)
    {
-      return object.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(object));
+      return object == null ? "null" : object.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(object));
    }
 }
