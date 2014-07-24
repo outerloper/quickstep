@@ -45,9 +45,9 @@ public class RichFormDemo extends JFrame
          add(panel().
             withSpec(growX().withAnchorY(AnchorY.TOP)).
             withMaxLineLength(4).
-            specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT)).
+            specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT).withWeightX(0.2)).
             specifyColumn(1, growX()).
-            specifyColumn(2, spec().withAnchorX(AnchorX.RIGHT)).
+            specifyColumn(2, spec().withAnchorX(AnchorX.RIGHT).withWeightX(0.2)).
             specifyColumn(3, growX()).
             add("Last name").
             add(lastNameTextField).

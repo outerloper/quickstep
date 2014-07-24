@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class MergedCellsDemo extends JFrame
+public class SpannedCellsDemo extends JFrame
 {
    List<JButton> buttons = new LinkedList<JButton>();
 
@@ -14,7 +14,7 @@ public class MergedCellsDemo extends JFrame
    JButton cancelButton = new JButton("Cancel");
    JButton helpButton = new JButton("Help");
 
-   public MergedCellsDemo()
+   public SpannedCellsDemo()
    {
       initComponents();
       arrangeComponents();
@@ -46,7 +46,7 @@ public class MergedCellsDemo extends JFrame
             specifyCell(0, 5, spec().withGridSize(2, 2)).
             specifyCell(2, 7, spec().withGridSize(1, 2)).
             specifyCell(3, 3, spec().withGridHeightRemaining()).
-            add(buttons)
+            addAll(buttons)
          ).
          add(panel().
             withSpec(spec().withGridWidthRemaining()).
@@ -69,6 +69,6 @@ public class MergedCellsDemo extends JFrame
       {
          e.printStackTrace();
       }
-      new MergedCellsDemo();
+      new SpannedCellsDemo();
    }
 }

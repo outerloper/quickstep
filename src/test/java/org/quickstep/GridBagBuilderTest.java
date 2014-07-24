@@ -250,7 +250,7 @@ public class GridBagBuilderTest
          withMaxLineLength(2).
          specifyRow(1, spec().withInsetBottom(20)).
          specifyColumn(1, spec().withInsetBottom(30)).
-         add().add().add().
+         addBlank().addBlank().addBlank().
          add(new JLabel()).
          build();
 
@@ -271,7 +271,7 @@ public class GridBagBuilderTest
          withMaxLineLength(2).
          specifyColumn(1, spec().withInsetBottom(20)).
          specifyRow(1, spec().withInsetBottom(30)).
-         add().add().add().
+         addBlank().addBlank().addBlank().
          add(new JLabel()).
          build();
 
@@ -395,7 +395,7 @@ public class GridBagBuilderTest
       panel(panel).
          withMaxLineLength(3).
          specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT).withInsetLeft(30)).
-         add(checkBoxes, spec().withAnchorX(AnchorX.LEFT)).
+         addAll(checkBoxes, spec().withAnchorX(AnchorX.LEFT)).
          build();
 
       verify(panel);

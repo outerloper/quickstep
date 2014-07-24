@@ -73,38 +73,44 @@ public final class GridBagToolKit
    }
 
 
-   public static GridBagLine line()
+   public static LineCommand line()
    {
-      return new GridBagLine();
+      return new LineCommand();
    }
 
 
-   private static <C extends Container> C genericBuildContent(C container, ComponentBuilder builder)
+   public static SeqCommand seq()
+   {
+      return new SeqCommand();
+   }
+
+
+   private static <C extends Container> C genericBuildContent(C container, CellCommand command)
    {
       container.setLayout(new GridBagLayout());
-      JComponent component = builder.build();
-      GridBagConstraints constraints = grow().withInset(5).overrideWith(builder.getSpec()).toConstraints(0, 0);
+      JComponent component = command.getComponent();
+      GridBagConstraints constraints = grow().withInset(5).overrideWith(command.getSpec()).toConstraints(0, 0);
 
       container.add(component, constraints);
       attachDebugInfo(component, container, constraints);
       return container;
    }
 
-   public static Window buildContent(Window window, ComponentBuilder builder)
+   public static Window buildContent(Window window, CellCommand command)
    {
-      Window result = genericBuildContent(window, builder);
+      Window result = genericBuildContent(window, command);
       window.pack();
       return result;
    }
 
-   public static JPanel buildContent(JPanel panel, ComponentBuilder builder)
+   public static JPanel buildContent(JPanel panel, CellCommand command)
    {
-      return genericBuildContent(panel, builder);
+      return genericBuildContent(panel, command);
    }
 
-   public static JPanel buildContent(ComponentBuilder builder)
+   public static JPanel buildContent(ComponentCommand command)
    {
-      return genericBuildContent(new JPanel(), builder);
+      return genericBuildContent(new JPanel(), command);
    }
 
 

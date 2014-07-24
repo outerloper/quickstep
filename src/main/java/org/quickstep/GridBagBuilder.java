@@ -2,44 +2,44 @@ package org.quickstep;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.border.Border;
 
 import com.google.common.collect.*;
 
+import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class GridBagBuilder implements ComponentBuilder
+public class GridBagBuilder implements CellCommand, GridBagCommandsCollector<GridBagBuilder> // TODO MOCK: builder, NOTE: panelCommand and gridCommand
 {
-   private final JPanel panel;
-   private Integer maxLineLength;
-   private Orientation orientation = Orientation.HORIZONTAL;
+   private final JPanel panel; // ASK
+   private Integer maxLineLength; // NOTE MOCK
+   private Orientation orientation = Orientation.HORIZONTAL; // NOTE MOCK
 
-   private int cursorY = 0;
-   private int cursorX = 0;
-   private boolean endOfLine = false;
+   private int cursorY = 0; // MOCK
+   private int cursorX = 0; // MOCK
+   private boolean endOfLine = false; // MOCK
 
-   private int previousCursorY = 0;
-   private int previousCursorX = 0;
-   private boolean previousEndOfLine = false;
+   private int previousCursorY = 0; // MOCK
+   private int previousCursorX = 0; // MOCK
+   private boolean previousEndOfLine = false; // MOCK
 
-   private final List<GridBagCommand> commands = new LinkedList<GridBagCommand>();
+   GridBagCommandsCollectorComponent<GridBagBuilder> commandsCollector = new GridBagCommandsCollectorComponent<GridBagBuilder>(this);
 
-   private GridBagSpec spec = spec();
-   private Border border;
-   private JScrollPane scroll;
+   private GridBagSpec spec = spec(); // NOTE
+   private Border border; // NOTE
+   private JScrollPane scroll; // NOTE
 
-   private final GridBagSpec cellDefaultSpec;
-   private final Map<Integer, GridBagSpec> columnSpecs = new TreeMap<Integer, GridBagSpec>();
-   private final Map<Integer, GridBagSpec> rowSpecs = new TreeMap<Integer, GridBagSpec>();
+   private final GridBagSpec cellDefaultSpec; // NOTE
+   private final Map<Integer, GridBagSpec> columnSpecs = new TreeMap<Integer, GridBagSpec>(); // NOTE
+   private final Map<Integer, GridBagSpec> rowSpecs = new TreeMap<Integer, GridBagSpec>(); // NOTE
 
-   private final Table<Integer, Integer, GridBagSpec> cellSpecs = TreeBasedTable.create();
-   private final Table<Integer, Integer, GridBagSpec> rowSpecsOverridingColumnSpecs = TreeBasedTable.create();
-   private final Table<Integer, Integer, Boolean> usedCells = TreeBasedTable.create();
-   private final Map<Integer, Integer> gridHeightsRemaining = new HashMap<Integer, Integer>();
-   private final Map<Integer, Integer> gridWidthsRemaining = new HashMap<Integer, Integer>();
+   private final Table<Integer, Integer, GridBagSpec> cellSpecs = TreeBasedTable.create(); // NOTE
+   private final Table<Integer, Integer, GridBagSpec> rowSpecsOverridingColumnSpecs = TreeBasedTable.create(); // NOTE
+   private final Table<Integer, Integer, Boolean> usedCells = TreeBasedTable.create(); // MOCK
+   private final Map<Integer, Integer> gridHeightsRemaining = new HashMap<Integer, Integer>(); // MOCK
+   private final Map<Integer, Integer> gridWidthsRemaining = new HashMap<Integer, Integer>(); // MOCK
 
    protected GridBagBuilder(JPanel panel)
    {
@@ -179,79 +179,82 @@ public class GridBagBuilder implements ComponentBuilder
       endOfLine = false;
    }
 
-   public final GridBagBuilder add()
-   {
-      return add(spec());
-   }
-
-   public GridBagBuilder add(GridBagSpec spec)
-   {
-      return add(createDefaultLabel(null), spec);
-   }
-
-   public final GridBagBuilder add(String text)
-   {
-      return add(text, spec());
-   }
-
-   public GridBagBuilder add(String text, GridBagSpec spec)
-   {
-      return add(createDefaultLabel(text), spec);
-   }
-
-   public final GridBagBuilder add(JComponent component)
-   {
-      return add(component, spec());
-   }
-
-   public GridBagBuilder add(JComponent component, GridBagSpec spec)
-   {
-      return add(new ComponentBuilderAdapter(component), spec.derive());
-   }
-
-   public final GridBagBuilder add(ComponentBuilder componentBuilder)
-   {
-      return add(componentBuilder, spec());
-   }
-
-   public GridBagBuilder add(ComponentBuilder componentBuilder, GridBagSpec spec)
-   {
-      return add(new AddComponentCommand(componentBuilder, spec.derive()));
-   }
-
-   public final GridBagBuilder add(Iterable<? extends JComponent> components)
-   {
-      return add(components, spec());
-   }
-
-   public final GridBagBuilder add(Iterable<? extends JComponent> components, GridBagSpec spec)
-   {
-      for (JComponent component : components)
-      {
-         add(component, spec);
-      }
-      return this;
-   }
-
-   public final GridBagBuilder add(GridBagLine line)
-   {
-      return add(new AddLineCommand(line));
-   }
-
-   private GridBagBuilder add(GridBagCommand item)
-   {
-      if (item == null)
-      {
-         throw new NullPointerException();
-      }
-      commands.add(item);
-      return this;
-   }
-
+   @Override
    public final GridBagBuilder nextLine()
    {
-      add(new NextLineCommand());
-      return this;
+      return commandsCollector.nextLine();
+   }
+
+   @Override
+   public final GridBagBuilder addBlank()
+   {
+      return commandsCollector.addBlank();
+   }
+
+   @Override
+   public GridBagBuilder addBlank(GridBagSpec spec)
+   {
+      return commandsCollector.addBlank(spec);
+   }
+
+   @Override
+   public final GridBagBuilder add(String text)
+   {
+      return commandsCollector.add(text);
+   }
+
+   @Override
+   public GridBagBuilder add(String text, GridBagSpec spec)
+   {
+      return commandsCollector.add(text, spec);
+   }
+
+   @Override
+   public final GridBagBuilder add(JComponent component)
+   {
+      return commandsCollector.add(component);
+   }
+
+   @Override
+   public GridBagBuilder add(JComponent component, GridBagSpec spec)
+   {
+      return commandsCollector.add(component, spec);
+   }
+
+   @Override
+   public final GridBagBuilder addAll(Iterable<? extends JComponent> components)
+   {
+      return commandsCollector.addAll(components);
+   }
+
+   @Override
+   public final GridBagBuilder addAll(Iterable<? extends JComponent> components, GridBagSpec spec)
+   {
+      return commandsCollector.addAll(components, spec);
+   }
+
+   @Override
+   public GridBagBuilder addHeader(String title)
+   {
+      return commandsCollector.addHeader(title);
+   }
+
+   @Override
+   public GridBagBuilder addSeparator()
+   {
+      return commandsCollector.addSeparator();
+   }
+
+   @Override
+   public GridBagBuilder addSeparatingLine()
+   {
+      return commandsCollector.addSeparatingLine();
+   }
+
+   @Override
+   public GridBagBuilder add(GridBagCommand command)
+   {
+      return commandsCollector.add(command);
    }
 
    void placeComponent(JComponent component, GridBagSpec givenSpec)
@@ -372,12 +375,11 @@ public class GridBagBuilder implements ComponentBuilder
       return usedCells.get(x, y) == null;
    }
 
-   @Override
    public final JPanel build()
    {
       JPanel content = panel;
       content.setLayout(new GridBagLayout());
-      for (GridBagCommand command : commands)
+      for (GridBagCommand command : commandsCollector)
       {
          command.apply(this);
       }
@@ -400,6 +402,12 @@ public class GridBagBuilder implements ComponentBuilder
    {
       this.spec.overrideWith(spec);
       return this;
+   }
+
+   @Override
+   public JComponent getComponent()
+   {
+      return build();
    }
 
    @Override
@@ -468,14 +476,24 @@ public class GridBagBuilder implements ComponentBuilder
       return this;
    }
 
-   private JComponent createDefaultLabel(String text)
+   protected JComponent createDefaultLabel(String text)
    {
       return new JLabel(text);
    }
 
    protected Border createDefaultBorder(String title)
    {
-      return BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(title), BorderFactory.createEmptyBorder(5, 5, 5, 5));
+      return createCompoundBorder(createTitledBorder(createEtchedBorder(), title), createEmptyBorder(5, 5, 5, 5));
+   }
+
+   protected JComponent createDefaultHeader(String title)
+   {
+      return panel().add(title).add(createDefaultSeparator(), growX()).build();
+   }
+
+   protected JSeparator createDefaultSeparator()
+   {
+      return new JSeparator();
    }
 
    public final GridBagBuilder withBorder()
@@ -493,7 +511,7 @@ public class GridBagBuilder implements ComponentBuilder
       border = innerBorder;
       for (Border outerBorder : outerBorders)
       {
-         border = BorderFactory.createCompoundBorder(outerBorder, border);
+         border = createCompoundBorder(outerBorder, border);
       }
       return this;
    }
@@ -505,7 +523,7 @@ public class GridBagBuilder implements ComponentBuilder
       result.getHorizontalScrollBar().setBlockIncrement(10);
       result.getVerticalScrollBar().setUnitIncrement(10);
       result.getVerticalScrollBar().setBlockIncrement(10);
-      result.setBorder(BorderFactory.createEmptyBorder());
+      result.setBorder(createEmptyBorder());
       return result;
    }
 
@@ -518,5 +536,12 @@ public class GridBagBuilder implements ComponentBuilder
    {
       scroll = scrollPane;
       return this;
+   }
+
+   @Override
+   public void apply(GridBagBuilder builder)
+   {
+      builder.moveToFreeCell();
+      builder.placeComponent(getComponent(), getSpec());
    }
 }
