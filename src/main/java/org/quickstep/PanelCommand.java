@@ -44,40 +44,9 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       specifyColumn(0, spec().withInsetLeft(0));
    }
 
-   public PanelCommand derive()
+   public final boolean isHorizontal()
    {
-      return derive(new ResizablePanel());
-   }
-
-   public PanelCommand derive(JPanel panel)
-   {
-      PanelCommand result = new PanelCommand(panel, cellDefaultSpec.derive());
-      result.spec = spec.derive();
-      result.border = border;
-      result.maxLineLength = maxLineLength;
-      result.scroll = scroll;
-      for (Map.Entry<Integer, GridBagSpec> entry : rowSpecs.entrySet())
-      {
-         result.rowSpecs.put(entry.getKey(), entry.getValue().derive());
-      }
-      for (Map.Entry<Integer, GridBagSpec> entry : columnSpecs.entrySet())
-      {
-         result.columnSpecs.put(entry.getKey(), entry.getValue().derive());
-      }
-      for (Table.Cell<Integer, Integer, GridBagSpec> cell : cellSpecs.cellSet())
-      {
-         result.cellSpecs.put(cell.getRowKey(), cell.getColumnKey(), cell.getValue().derive());
-      }
-      for (Table.Cell<Integer, Integer, GridBagSpec> cell : rowSpecsOverridingColumnSpecs.cellSet())
-      {
-         result.rowSpecsOverridingColumnSpecs.put(cell.getRowKey(), cell.getColumnKey(), cell.getValue().derive());
-      }
-      return result;
-   }
-
-   public boolean isHorizontal()
-   {
-      return Orientation.HORIZONTAL.equals(orientation);
+      return !Orientation.HORIZONTAL.equals(orientation);
    }
 
    @Override
@@ -180,7 +149,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    {
       JPanel content = panel;
       content.setLayout(new GridBagLayout());
-      GridBagBuilder builder = new GridBagBuilder(this, panel);
+      GridBagBuilder builder = createBuilder();
       for (GridBagCommand command : commandsCollector)
       {
          command.apply(builder);
@@ -197,6 +166,11 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
          content.setBorder(border);
       }
       return content;
+   }
+
+   protected GridBagBuilder createBuilder()
+   {
+      return new GridBagBuilder(this, panel);
    }
 
    @Override

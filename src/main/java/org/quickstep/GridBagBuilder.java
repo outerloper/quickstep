@@ -53,39 +53,34 @@ public class GridBagBuilder
       }
    }
 
-   boolean isHorizontal()
+   public boolean isHorizontal()
    {
       return client.isHorizontal();
    }
 
-   boolean isEmpty()
+   public boolean isEmpty()
    {
       return cursorX == 0 && cursorY == 0;
    }
 
-   void setEndOfLine(boolean value)
+   public void setEndOfLine(boolean value)
    {
       endOfLine = value;
    }
 
-   int getCurrentLineNumber()
+   public int getCurrentLineNumber()
    {
       return isHorizontal() ? cursorY : cursorX;
    }
 
-   int getCurrentPositionInLine()
-   {
-      return isHorizontal() ? cursorX : cursorY;
-   }
-
-   void moveToPreviousCell()
+   public void moveToPreviousCell()
    {
       cursorX = previousCursorX;
       cursorY = previousCursorY;
       endOfLine = previousEndOfLine;
    }
 
-   void moveToFreeCell()
+   public void moveToFreeCell()
    {
       if (!isCellFree(cursorX, cursorY))
       {
@@ -93,13 +88,13 @@ public class GridBagBuilder
       }
    }
 
-   void moveToNextLine()
+   public void moveToNextLine()
    {
       endOfLine = true;
       moveToNextFreeCell();
    }
 
-   void moveToNextFreeCell()
+   public void moveToNextFreeCell()
    {
       do
       {
@@ -123,7 +118,7 @@ public class GridBagBuilder
       endOfLine = false;
    }
 
-   void placeComponent(JComponent component, GridBagSpec givenSpec)
+   public void placeComponent(JComponent component, GridBagSpec givenSpec)
    {
       GridBagSpec calculatedSpec = client.getSpecAt(cursorX, cursorY).overrideWith(givenSpec);
 

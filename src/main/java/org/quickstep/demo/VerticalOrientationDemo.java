@@ -15,11 +15,11 @@ public class VerticalOrientationDemo extends JFrame
       buildContent(this, panel().
          withMaxLineLength(10).
          withOrientation(Orientation.VERTICAL).
+         withScroll().
          specifyCellDefaults(grow()).
          addAll(generateOptions())
       );
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setMinimumSize(getPreferredSize());
       setLocationRelativeTo(null);
       setAlwaysOnTop(true);
       setResizable(true);

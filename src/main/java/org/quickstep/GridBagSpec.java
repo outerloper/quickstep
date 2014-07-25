@@ -12,8 +12,8 @@ public final class GridBagSpec
    private Integer gridHeight;
    private Double weightX;
    private Double weightY;
-   private AnchorX AnchorX;
-   private AnchorY AnchorY;
+   private AnchorX anchorX;
+   private AnchorY anchorY;
    private Boolean fillX;
    private Boolean fillY;
    private Integer insetTop;
@@ -35,8 +35,8 @@ public final class GridBagSpec
            that.gridHeight,
            that.weightX,
            that.weightY,
-           that.AnchorX,
-           that.AnchorY,
+           that.anchorX,
+           that.anchorY,
            that.fillX,
            that.fillY,
            that.insetTop,
@@ -71,8 +71,8 @@ public final class GridBagSpec
       this.gridHeight = gridHeight;
       this.weightX = weightX;
       this.weightY = weightY;
-      this.AnchorX = AnchorX;
-      this.AnchorY = AnchorY;
+      this.anchorX = AnchorX;
+      this.anchorY = AnchorY;
       this.fillX = fillX;
       this.fillY = fillY;
       this.insetTop = insetTop;
@@ -91,8 +91,8 @@ public final class GridBagSpec
       gridHeight = that.gridHeight;
       weightX = that.weightX;
       weightY = that.weightY;
-      AnchorX = that.AnchorX;
-      AnchorY = that.AnchorY;
+      anchorX = that.anchorX;
+      anchorY = that.anchorY;
       fillX = that.fillX;
       fillY = that.fillY;
       insetTop = that.insetTop;
@@ -109,6 +109,7 @@ public final class GridBagSpec
       return new GridBagSpec(this);
    }
 
+   @SuppressWarnings("ConstantConditions")
    public GridBagSpec overrideWith(GridBagSpec that)
    {
       if (that == null)
@@ -139,13 +140,13 @@ public final class GridBagSpec
       {
          weightY = that.weightY;
       }
-      if (that.AnchorX != null)
+      if (that.anchorX != null)
       {
-         AnchorX = that.AnchorX;
+         anchorX = that.anchorX;
       }
-      if (that.AnchorY != null)
+      if (that.anchorY != null)
       {
-         AnchorY = that.AnchorY;
+         anchorY = that.anchorY;
       }
       if (that.fillX != null)
       {
@@ -215,12 +216,12 @@ public final class GridBagSpec
 
    public AnchorX getAnchorX()
    {
-      return AnchorX;
+      return anchorX;
    }
 
    public AnchorY getAnchorY()
    {
-      return AnchorY;
+      return anchorY;
    }
 
    public Boolean getFillX()
@@ -332,13 +333,13 @@ public final class GridBagSpec
 
    public GridBagSpec withAnchorX(AnchorX value)
    {
-      AnchorX = value;
+      anchorX = value;
       return this;
    }
 
    public GridBagSpec withAnchorY(AnchorY value)
    {
-      AnchorY = value;
+      anchorY = value;
       return this;
    }
 
@@ -489,8 +490,8 @@ public final class GridBagSpec
 
    public int getAlign()
    {
-      AnchorX x = AnchorX == null ? AnchorX.CENTER : AnchorX;
-      AnchorY y = AnchorY == null ? AnchorY.MIDDLE : AnchorY;
+      AnchorX x = anchorX == null ? AnchorX.CENTER : anchorX;
+      AnchorY y = anchorY == null ? AnchorY.MIDDLE : anchorY;
       switch (y)
       {
          case TOP:
@@ -542,6 +543,7 @@ public final class GridBagSpec
    }
 
    @Override
+   @SuppressWarnings("ConstantConditions")
    public boolean equals(Object o)
    {
       if (this == o)
@@ -555,11 +557,11 @@ public final class GridBagSpec
 
       GridBagSpec that = (GridBagSpec) o;
 
-      if (AnchorX != that.AnchorX)
+      if (anchorX != that.anchorX)
       {
          return false;
       }
-      if (AnchorY != that.AnchorY)
+      if (anchorY != that.anchorY)
       {
          return false;
       }
@@ -624,6 +626,7 @@ public final class GridBagSpec
    }
 
    @Override
+   @SuppressWarnings("ConstantConditions")
    public int hashCode()
    {
       int result = preferredWidth != null ? preferredWidth.hashCode() : 0;
@@ -632,8 +635,8 @@ public final class GridBagSpec
       result = 31 * result + (gridHeight != null ? gridHeight.hashCode() : 0);
       result = 31 * result + (weightX != null ? weightX.hashCode() : 0);
       result = 31 * result + (weightY != null ? weightY.hashCode() : 0);
-      result = 31 * result + (AnchorX != null ? AnchorX.hashCode() : 0);
-      result = 31 * result + (AnchorY != null ? AnchorY.hashCode() : 0);
+      result = 31 * result + (anchorX != null ? anchorX.hashCode() : 0);
+      result = 31 * result + (anchorY != null ? anchorY.hashCode() : 0);
       result = 31 * result + (fillX != null ? fillX.hashCode() : 0);
       result = 31 * result + (fillY != null ? fillY.hashCode() : 0);
       result = 31 * result + (insetTop != null ? insetTop.hashCode() : 0);
@@ -650,7 +653,7 @@ public final class GridBagSpec
    {
       return String.format("GBSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s fillX=%s fillY=%s AnchorX=%s AnchorY=%s " +
                               "insets(top=%s left=%s bottom=%s right=%s) pad=%s,%s}",
-                           preferredWidth, preferredHeight, gridWidth, gridHeight, weightX, weightY, fillX, fillY, AnchorX, AnchorY,
+                           preferredWidth, preferredHeight, gridWidth, gridHeight, weightX, weightY, fillX, fillY, anchorX, anchorY,
                            insetTop, insetLeft, insetBottom, insetRight, iPadX, iPadY);
    }
 }

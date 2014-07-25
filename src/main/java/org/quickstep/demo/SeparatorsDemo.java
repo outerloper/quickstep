@@ -10,6 +10,7 @@ public class SeparatorsDemo extends JFrame
    {
       buildContent(this, panel().
          withMaxLineLength(1).
+         withBorder().
          specifyCellDefaults(growX()).
 //         specifyCellDefaults(growX().withGridWidthRemaining()). // TODO this hangs
    add(new JButton("Button")).
