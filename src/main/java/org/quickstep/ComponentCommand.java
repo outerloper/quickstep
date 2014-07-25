@@ -28,7 +28,10 @@ public class ComponentCommand implements CellCommand
    @Override
    public void apply(GridBagBuilder builder)
    {
-      builder.moveToFreeCell();
-      builder.placeComponent(getComponent(), getSpec());
+      if (getComponent() != null)
+      {
+         builder.moveToFreeCell();
+         builder.placeComponent(getComponent(), getSpec());
+      }
    }
 }
