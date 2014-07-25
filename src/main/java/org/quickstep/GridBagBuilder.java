@@ -11,6 +11,8 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class GridBagBuilder
 {
+   private final JPanel panel;
+
    private int cursorY = 0;
    private int cursorX = 0;
    private boolean endOfLine = false;
@@ -23,11 +25,12 @@ public class GridBagBuilder
    private final Map<Integer, Integer> gridHeightsRemaining = new HashMap<Integer, Integer>();
    private final Map<Integer, Integer> gridWidthsRemaining = new HashMap<Integer, Integer>();
 
-   private final GridBagBuilderClient client;
+   private final GridBagBuilderSpec client;
 
-   protected GridBagBuilder(GridBagBuilderClient client)
+   protected GridBagBuilder(GridBagBuilderSpec builderSpec, JPanel panel)
    {
-      this.client = client;
+      this.panel = panel;
+      this.client = builderSpec;
    }
 
    private void moveToNextCell()
@@ -68,6 +71,11 @@ public class GridBagBuilder
    int getCurrentLineNumber()
    {
       return isHorizontal() ? cursorY : cursorX;
+   }
+
+   int getCurrentPositionInLine()
+   {
+      return isHorizontal() ? cursorX : cursorY;
    }
 
    void moveToPreviousCell()
@@ -127,7 +135,9 @@ public class GridBagBuilder
 
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
-      client.addComponent(getComponentToAdd(component, calculatedSpec), constraints);
+      panel.add(getComponentToAdd(component, calculatedSpec), constraints);
+      attachDebugInfo(component, panel, constraints);
+
       if (calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER)
       {
          endOfLine = true;

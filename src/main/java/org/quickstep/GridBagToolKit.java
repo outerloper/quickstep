@@ -72,12 +72,10 @@ public final class GridBagToolKit
       return new PanelCommand(panel);
    }
 
-
    public static LineCommand line()
    {
       return new LineCommand();
    }
-
 
    public static SeqCommand seq()
    {

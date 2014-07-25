@@ -11,7 +11,7 @@ import com.google.common.collect.TreeBasedTable;
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class PanelCommand implements CellCommand, GridBagCommandsCollector<PanelCommand>, GridBagBuilderClient
+public class PanelCommand implements CellCommand, GridBagCommandsCollector<PanelCommand>, GridBagBuilderSpec
 {
    private JPanel panel;
    private Integer maxLineLength;
@@ -141,15 +141,15 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
    @Override
-   public PanelCommand addSeparator()
+   public PanelCommand addVerticalSeparator()
    {
-      return commandsCollector.addSeparator();
+      return commandsCollector.addVerticalSeparator();
    }
 
    @Override
-   public PanelCommand addSeparatingLine()
+   public PanelCommand addHorizontalSeparator()
    {
-      return commandsCollector.addSeparatingLine();
+      return commandsCollector.addHorizontalSeparator();
    }
 
    @Override
@@ -169,13 +169,6 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
          overrideWith(cellSpecs.get(x, y));
    }
 
-   @Override
-   public void addComponent(JComponent component, GridBagConstraints constraints)
-   {
-      panel.add(component, constraints);
-      attachDebugInfo(component, panel, constraints);
-   }
-
    public final PanelCommand withSpec(GridBagSpec spec)
    {
       this.spec.overrideWith(spec);
@@ -187,7 +180,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    {
       JPanel content = panel;
       content.setLayout(new GridBagLayout());
-      GridBagBuilder builder = new GridBagBuilder(this);
+      GridBagBuilder builder = new GridBagBuilder(this, panel);
       for (GridBagCommand command : commandsCollector)
       {
          command.apply(builder);

@@ -6,17 +6,17 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class SeparatorCommand implements GridBagCommand
 {
-   private final boolean lineSeparator;
+   private final boolean vertical;
    private final JSeparator customSeparator;
 
-   public SeparatorCommand(boolean lineSeparator)
+   public SeparatorCommand(boolean vertical)
    {
-      this(null, lineSeparator);
+      this(null, vertical);
    }
 
-   protected SeparatorCommand(JSeparator separator, boolean lineSeparator)
+   protected SeparatorCommand(JSeparator separator, boolean vertical)
    {
-      this.lineSeparator = lineSeparator;
+      this.vertical = vertical;
       this.customSeparator = separator;
    }
 
@@ -27,18 +27,18 @@ public class SeparatorCommand implements GridBagCommand
       GridBagSpec spec = spec();
       GridBagCommand command;
 
-      if (builder.isHorizontal() == lineSeparator)
-      {
-         separator.setOrientation(JSeparator.HORIZONTAL);
-         spec.withWeightY(0.0).withFillX().withAnchorY(AnchorY.MIDDLE);
-      }
-      else
+      if (vertical)
       {
          separator.setOrientation(JSeparator.VERTICAL);
          spec.withWeightX(0.0).withFillY().withAnchorX(AnchorX.CENTER);
       }
+      else
+      {
+         separator.setOrientation(JSeparator.HORIZONTAL);
+         spec.withWeightY(0.0).withFillX().withAnchorY(AnchorY.MIDDLE);
+      }
 
-      if (lineSeparator)
+      if (builder.isHorizontal() && !vertical)
       {
          if (builder.isHorizontal())
          {

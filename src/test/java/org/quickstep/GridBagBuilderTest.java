@@ -68,7 +68,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel().
+      panel(panel).
          add(new JLabel()).
          add(new JLabel()).
          add(new JLabel()).

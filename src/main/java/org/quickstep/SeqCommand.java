@@ -77,15 +77,15 @@ public class SeqCommand implements GridBagCommand, GridBagCommandsCollector<SeqC
    }
 
    @Override
-   public SeqCommand addSeparatingLine()
+   public SeqCommand addHorizontalSeparator()
    {
-      return commandsCollector.addSeparatingLine();
+      return commandsCollector.addHorizontalSeparator();
    }
 
    @Override
-   public SeqCommand addSeparator()
+   public SeqCommand addVerticalSeparator()
    {
-      return commandsCollector.addSeparator();
+      return commandsCollector.addVerticalSeparator();
    }
 
    @Override

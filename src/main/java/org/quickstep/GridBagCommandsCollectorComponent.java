@@ -80,15 +80,15 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    }
 
    @Override
-   public T addSeparator()
+   public T addVerticalSeparator()
    {
-      return add(new SeparatorCommand(false));
+      return add(new SeparatorCommand(true));
    }
 
    @Override
-   public T addSeparatingLine()
+   public T addHorizontalSeparator()
    {
-      return add(new SeparatorCommand(true));
+      return add(new SeparatorCommand(false));
    }
 
    @Override

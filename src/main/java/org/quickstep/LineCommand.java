@@ -81,15 +81,15 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    }
 
    @Override
-   public LineCommand addSeparatingLine()
+   public LineCommand addHorizontalSeparator()
    {
-      return commandsCollector.addSeparatingLine();
+      return commandsCollector.addHorizontalSeparator();
    }
 
    @Override
-   public LineCommand addSeparator()
+   public LineCommand addVerticalSeparator()
    {
-      return commandsCollector.addSeparator();
+      return commandsCollector.addVerticalSeparator();
    }
 
    @Override
