@@ -4,23 +4,23 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import org.quickstep.GridBagBuilder;
+import org.quickstep.PanelCommand;
 
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class CustomPanelBuilderDemo extends JFrame
+public class CustomPanelCommandDemo extends JFrame
 {
-   public CustomPanelBuilderDemo() throws HeadlessException
+   public CustomPanelCommandDemo() throws HeadlessException
    {
-      buildContent(this, new MyBuilder().
+      buildContent(this, new MyPanel().
          withOrientation(Orientation.VERTICAL).
-         add(new MyBuilder().
+         add(new MyPanel().
             add(line().add("User").add(new JTextField(), spec().withPreferredWidth(100))).
             add(line().add("Password").add(new JTextField(), spec().withPreferredWidth(100))).
             withBorder("Custom Panel")
          ).
-         add(new MyBuilder().
+         add(new MyPanel().
             add(new JButton("Proceed"), spec().withGridWidthRemaining())
          )
       );
@@ -35,13 +35,13 @@ public class CustomPanelBuilderDemo extends JFrame
    public static void main(String[] args) throws Exception
    {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      new CustomPanelBuilderDemo();
+      new CustomPanelCommandDemo();
    }
 }
 
-class MyBuilder extends GridBagBuilder
+class MyPanel extends PanelCommand
 {
-   MyBuilder()
+   MyPanel()
    {
       super(new JPanel(), spec().withFill().withWeight(1.0).withGap(12));
    }

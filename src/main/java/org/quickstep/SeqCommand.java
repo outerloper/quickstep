@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class SeqCommand implements GridBagCommand, GridBagCommandsCollector<SeqCommand>
 {
-   GridBagCommandsCollectorComponent<SeqCommand> commandsCollector = new GridBagCommandsCollectorComponent<SeqCommand>(this);
+   private final GridBagCommandsCollectorComponent<SeqCommand> commandsCollector = new GridBagCommandsCollectorComponent<SeqCommand>(this);
 
    protected SeqCommand()
    {

@@ -8,7 +8,7 @@ import static org.quickstep.GridBagToolKit.logger;
 
 public class LineCommand implements GridBagCommand, GridBagCommandsCollector<LineCommand>
 {
-   GridBagCommandsCollectorComponent<LineCommand> commandsCollector = new GridBagCommandsCollectorComponent<LineCommand>(this);
+   private final GridBagCommandsCollectorComponent<LineCommand> commandsCollector = new GridBagCommandsCollectorComponent<LineCommand>(this);
 
    protected LineCommand()
    {

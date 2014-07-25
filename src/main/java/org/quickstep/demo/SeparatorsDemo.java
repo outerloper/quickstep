@@ -1,8 +1,6 @@
 package org.quickstep.demo;
 
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 
 import static org.quickstep.GridBagToolKit.*;
 
