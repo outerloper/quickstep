@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import javax.swing.*;
 
 import com.google.common.collect.*;
+import org.quickstep.util.DebugSupport;
 
 import static org.quickstep.GridBagToolKit.*;
 
@@ -125,13 +126,13 @@ public class GridBagBuilder
       if (!isAreaFree(cursorX, cursorY, calculatedSpec.getGridWidth(), calculatedSpec.getGridHeight()))
       {
          logger.log(Level.WARNING, String.format("GridBagBuilder: no enough place for component: %s with constraints: %s\n",
-                                                 objectId(component), calculatedSpec));
+                                                 DebugSupport.objectId(component), calculatedSpec));
       }
 
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
       panel.add(getComponentToAdd(component, calculatedSpec), constraints);
-      attachDebugInfo(component, panel, constraints);
+      DebugSupport.attachDebugInfo(component, panel, constraints);
 
       if (calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER)
       {

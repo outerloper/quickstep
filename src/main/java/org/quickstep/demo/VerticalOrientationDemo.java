@@ -16,7 +16,7 @@ public class VerticalOrientationDemo extends JFrame
          withMaxLineLength(10).
          withOrientation(Orientation.VERTICAL).
          withScroll().
-         specifyCellDefaults(grow()).
+         withDefaultSpec(grow()).
          addAll(generateOptions())
       );
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

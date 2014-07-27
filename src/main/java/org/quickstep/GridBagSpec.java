@@ -488,7 +488,7 @@ public final class GridBagSpec
       );
    }
 
-   public int getAlign()
+   public int getAlign() // TODO getAnchor/getAlignment
    {
       AnchorX x = anchorX == null ? AnchorX.CENTER : anchorX;
       AnchorY y = anchorY == null ? AnchorY.MIDDLE : anchorY;

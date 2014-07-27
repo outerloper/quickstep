@@ -40,13 +40,13 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       this.panel = panel;
       this.cellDefaultSpec = cellDefaultSpec;
 
-      specifyRow(0, spec().withInsetTop(0));
-      specifyColumn(0, spec().withInsetLeft(0));
+      withRowSpec(0, spec().withInsetTop(0));
+      withColumnSpec(0, spec().withInsetLeft(0));
    }
 
    public final boolean isHorizontal()
    {
-      return !Orientation.HORIZONTAL.equals(orientation);
+      return Orientation.HORIZONTAL.equals(orientation);
    }
 
    @Override
@@ -186,13 +186,13 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
 
-   public final PanelCommand specifyCellDefaults(GridBagSpec spec)
+   public final PanelCommand withDefaultSpec(GridBagSpec spec)
    {
       cellDefaultSpec.overrideWith(spec);
       return this;
    }
 
-   public final PanelCommand specifyColumn(int x, GridBagSpec spec)
+   public final PanelCommand withColumnSpec(int x, GridBagSpec spec)
    {
       for (Integer y : rowSpecsOverridingColumnSpecs.column(x).keySet())
       {
@@ -207,7 +207,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       return this;
    }
 
-   public final PanelCommand specifyRow(int y, GridBagSpec spec)
+   public final PanelCommand withRowSpec(int y, GridBagSpec spec)
    {
       for (Integer x : columnSpecs.keySet())
       {
@@ -222,7 +222,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       return this;
    }
 
-   public final PanelCommand specifyCell(int x, int y, GridBagSpec spec)
+   public final PanelCommand withCellSpec(int x, int y, GridBagSpec spec)
    {
       GridBagSpec cellSpec = cellSpecs.get(x, y);
       if (cellSpec == null)
@@ -247,7 +247,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
 
    protected Border createDefaultBorder(String title)
    {
-      return createCompoundBorder(createTitledBorder(createEtchedBorder(), title), createEmptyBorder(5, 5, 5, 5));
+      return createCompoundBorder(createTitledBorder(title), createEmptyBorder(5, 5, 5, 5));
    }
 
    public final PanelCommand withBorder()

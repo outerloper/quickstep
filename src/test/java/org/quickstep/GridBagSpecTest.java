@@ -9,6 +9,8 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 import static org.quickstep.GridBagToolKit.*;
+import static org.quickstep.util.DebugSupport.gbcEquals;
+import static org.quickstep.util.DebugSupport.gbcToString;
 
 public class GridBagSpecTest
 {

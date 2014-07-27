@@ -9,6 +9,8 @@ import org.junit.*;
 
 import static org.easymock.EasyMock.*;
 import static org.quickstep.GridBagToolKit.*;
+import static org.quickstep.util.DebugSupport.gbcEquals;
+import static org.quickstep.util.DebugSupport.gbcToString;
 
 public class GridBagBuilderTest
 {
@@ -166,7 +168,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panel(panel).
-         specifyCellDefaults(spec().withInset(10, 3)).
+         withDefaultSpec(spec().withInset(10, 3)).
          add(new JLabel()).
          add(new JLabel(), spec().withGridWidthRemaining()).
          add(new JLabel()).
@@ -188,7 +190,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         specifyColumn(1, spec().withAnchorX(AnchorX.RIGHT)).
+         withColumnSpec(1, spec().withAnchorX(AnchorX.RIGHT)).
          add(new JLabel()).
          add(new JLabel()).
          add(new JLabel()).
@@ -210,7 +212,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         specifyRow(1, spec().withInsetTop(20)).
+         withRowSpec(1, spec().withInsetTop(20)).
          add(new JLabel()).
          add(new JLabel()).
          add(new JLabel()).
@@ -229,7 +231,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         specifyCell(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
+         withCellSpec(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
          add(new JLabel()).
          getComponent();
 
@@ -248,8 +250,8 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         specifyRow(1, spec().withInsetBottom(20)).
-         specifyColumn(1, spec().withInsetBottom(30)).
+         withRowSpec(1, spec().withInsetBottom(20)).
+         withColumnSpec(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
          add(new JLabel()).
          getComponent();
@@ -269,8 +271,8 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         specifyColumn(1, spec().withInsetBottom(20)).
-         specifyRow(1, spec().withInsetBottom(30)).
+         withColumnSpec(1, spec().withInsetBottom(20)).
+         withRowSpec(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
          add(new JLabel()).
          getComponent();
@@ -287,7 +289,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         specifyCell(0, 0, spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM)).
+         withCellSpec(0, 0, spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM)).
          add(new JLabel(), spec().withAnchor(AnchorX.LEFT, AnchorY.TOP)).
          getComponent();
 
@@ -394,7 +396,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(3).
-         specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT).withInsetLeft(30)).
+         withColumnSpec(0, spec().withAnchorX(AnchorX.RIGHT).withInsetLeft(30)).
          addAll(checkBoxes, spec().withAnchorX(AnchorX.LEFT)).
          getComponent();
 
@@ -413,74 +415,8 @@ public class GridBagBuilderTest
       PanelCommand builder = panel(auxPanel)
          .withSpec(grow());
       panel(panel).
-         specifyCell(0, 0, spec().withInsetRight(50)).
+         withCellSpec(0, 0, spec().withInsetRight(50)).
          add(builder).
-         getComponent();
-
-      verify(panel);
-   }
-
-   @Test
-   public void derivedPanelPreservesSpecOfItsTemplate()
-   {
-      JPanel auxPanel = new JPanel();
-
-      panel.add((JComponent) anyObject(), gbc(0, 0, grow().withInset(0, 0, 0, 50)));
-
-      replay(panel);
-
-      PanelCommand template = panel(auxPanel).
-         withSpec(grow());
-      panel(panel).
-         specifyCell(0, 0, spec().withInsetRight(50)).
-         add(template.derive()).
-         getComponent();
-
-      verify(panel);
-   }
-
-   @Test
-   public void derivedPanelPreservesGridSpecsAndGridWidthOfItsTemplate()
-   {
-      panel.add((JComponent) anyObject(), gbc(0, 0, spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM).withInset(10, 10, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 0, spec().withAnchor(AnchorX.LEFT, AnchorY.BOTTOM).withInset(0, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(0, 1, spec().withAnchor(AnchorX.RIGHT, AnchorY.TOP).withInset(5, 0, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 1, spec().withAnchor(AnchorX.LEFT, AnchorY.TOP).withInset(5, 5, 0, 0)));
-
-      replay(panel);
-
-      PanelCommand template = panel().
-         withMaxLineLength(2).
-         specifyCell(0, 0, spec().withInsetTop(10).withInsetLeft(10)).
-         specifyRow(0, spec().withAnchorY(AnchorY.BOTTOM)).
-         specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT)).
-         specifyCellDefaults(spec().withAnchor(AnchorX.LEFT, AnchorY.TOP));
-      template.derive(panel).
-         add(new JLabel()).
-         add(new JLabel()).
-         add(new JLabel()).
-         add(new JLabel()).
-         getComponent();
-
-      verify(panel);
-   }
-
-   @Test
-   public void derivedPanelPreservesGridSizesToEndOfItsTemplate()
-   {
-      panel.add((JComponent) anyObject(), gbc(0, 0, spec().withGridHeightRemaining().withInset(0, 0, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 0, spec().withGridWidthRemaining().withInset(0, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 1, spec().withInset(5, 5, 0, 0)));
-
-      replay(panel);
-
-      PanelCommand template = panel().
-         specifyCell(0, 0, spec().withGridHeightRemaining()).
-         specifyCell(1, 0, spec().withGridWidthRemaining());
-      template.derive(panel).
-         add(new JLabel()).
-         add(new JLabel()).
-         add(new JLabel()).
          getComponent();
 
       verify(panel);
