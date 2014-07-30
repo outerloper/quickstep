@@ -6,5 +6,5 @@ public interface CellCommand extends GridBagCommand
 {
    JComponent getComponent();
 
-   GridBagSpec getSpec();
+   CellSpec getSpec();
 }

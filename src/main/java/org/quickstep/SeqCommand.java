@@ -29,7 +29,7 @@ public class SeqCommand implements GridBagCommand, GridBagCommandsCollector<SeqC
    }
 
    @Override
-   public SeqCommand add(JComponent component, GridBagSpec spec)
+   public SeqCommand add(JComponent component, CellSpec spec)
    {
       return commandsCollector.add(component, spec);
    }
@@ -41,7 +41,7 @@ public class SeqCommand implements GridBagCommand, GridBagCommandsCollector<SeqC
    }
 
    @Override
-   public SeqCommand add(String text, GridBagSpec spec)
+   public SeqCommand add(String text, CellSpec spec)
    {
       return commandsCollector.add(text, spec);
    }
@@ -53,7 +53,7 @@ public class SeqCommand implements GridBagCommand, GridBagCommandsCollector<SeqC
    }
 
    @Override
-   public SeqCommand addAll(Iterable<? extends JComponent> components, GridBagSpec spec)
+   public SeqCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
       return commandsCollector.addAll(components, spec);
    }
@@ -65,7 +65,7 @@ public class SeqCommand implements GridBagCommand, GridBagCommandsCollector<SeqC
    }
 
    @Override
-   public SeqCommand addBlank(GridBagSpec spec)
+   public SeqCommand addBlank(CellSpec spec)
    {
       return commandsCollector.addBlank(spec);
    }

@@ -5,9 +5,9 @@ import javax.swing.*;
 public class ComponentCommand implements CellCommand
 {
    private JComponent component;
-   private GridBagSpec spec;
+   private CellSpec spec;
 
-   protected ComponentCommand(JComponent component, GridBagSpec spec)
+   protected ComponentCommand(JComponent component, CellSpec spec)
    {
       this.spec = spec.derive();
       this.component = component;
@@ -20,7 +20,7 @@ public class ComponentCommand implements CellCommand
    }
 
    @Override
-   public GridBagSpec getSpec()
+   public CellSpec getSpec()
    {
       return spec.derive();
    }

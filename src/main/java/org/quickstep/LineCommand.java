@@ -33,7 +33,7 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    }
 
    @Override
-   public LineCommand add(JComponent component, GridBagSpec spec)
+   public LineCommand add(JComponent component, CellSpec spec)
    {
       return commandsCollector.add(component, spec);
    }
@@ -45,7 +45,7 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    }
 
    @Override
-   public LineCommand add(String text, GridBagSpec spec)
+   public LineCommand add(String text, CellSpec spec)
    {
       return commandsCollector.add(text, spec);
    }
@@ -57,7 +57,7 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    }
 
    @Override
-   public LineCommand addAll(Iterable<? extends JComponent> components, GridBagSpec spec)
+   public LineCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
       return commandsCollector.addAll(components, spec);
    }
@@ -69,7 +69,7 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    }
 
    @Override
-   public LineCommand addBlank(GridBagSpec spec)
+   public LineCommand addBlank(CellSpec spec)
    {
       return commandsCollector.addBlank(spec);
    }

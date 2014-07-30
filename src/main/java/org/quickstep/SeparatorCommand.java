@@ -24,7 +24,7 @@ public class SeparatorCommand implements GridBagCommand
    public void apply(GridBagBuilder builder)
    {
       JSeparator separator = customSeparator == null ? builder.createDefaultSeparator() : customSeparator;
-      GridBagSpec spec = spec();
+      CellSpec spec = spec();
       GridBagCommand command;
 
       if (vertical)

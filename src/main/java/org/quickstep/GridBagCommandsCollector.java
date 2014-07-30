@@ -8,19 +8,19 @@ interface GridBagCommandsCollector<T extends GridBagCommandsCollector<T>>
 
    T addBlank();
 
-   T addBlank(GridBagSpec spec);
+   T addBlank(CellSpec spec);
 
    T add(String text);
 
-   T add(String text, GridBagSpec spec);
+   T add(String text, CellSpec spec);
 
    T add(JComponent component);
 
-   T add(JComponent component, GridBagSpec spec);
+   T add(JComponent component, CellSpec spec);
 
    T addAll(Iterable<? extends JComponent> components);
 
-   T addAll(Iterable<? extends JComponent> components, GridBagSpec spec);
+   T addAll(Iterable<? extends JComponent> components, CellSpec spec);
 
    T addHeader(String title);
 

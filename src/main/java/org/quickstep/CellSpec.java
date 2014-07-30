@@ -4,7 +4,7 @@ import java.awt.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public final class GridBagSpec
+public final class CellSpec
 {
    private Integer preferredWidth;
    private Integer preferredHeight;
@@ -23,11 +23,11 @@ public final class GridBagSpec
    private Integer iPadX;
    private Integer iPadY;
 
-   GridBagSpec()
+   CellSpec()
    {
    }
 
-   GridBagSpec(GridBagSpec that)
+   CellSpec(CellSpec that)
    {
       this(that.preferredWidth,
            that.preferredHeight,
@@ -48,22 +48,22 @@ public final class GridBagSpec
       );
    }
 
-   public GridBagSpec(Integer preferredWidth,
-                      Integer preferredHeight,
-                      Integer gridWidth,
-                      Integer gridHeight,
-                      Double weightX,
-                      Double weightY,
-                      AnchorX AnchorX,
-                      AnchorY AnchorY,
-                      Boolean fillX,
-                      Boolean fillY,
-                      Integer insetTop,
-                      Integer insetLeft,
-                      Integer insetBottom,
-                      Integer insetRight,
-                      Integer iPadX,
-                      Integer iPadY)
+   public CellSpec(Integer preferredWidth,
+                   Integer preferredHeight,
+                   Integer gridWidth,
+                   Integer gridHeight,
+                   Double weightX,
+                   Double weightY,
+                   AnchorX AnchorX,
+                   AnchorY AnchorY,
+                   Boolean fillX,
+                   Boolean fillY,
+                   Integer insetTop,
+                   Integer insetLeft,
+                   Integer insetBottom,
+                   Integer insetRight,
+                   Integer iPadX,
+                   Integer iPadY)
    {
       this.preferredWidth = preferredWidth;
       this.preferredHeight = preferredHeight;
@@ -83,7 +83,7 @@ public final class GridBagSpec
       this.iPadY = iPadY;
    }
 
-   public GridBagSpec overwriteWith(GridBagSpec that)
+   public CellSpec overwriteWith(CellSpec that)
    {
       preferredWidth = that.preferredWidth;
       preferredHeight = that.preferredHeight;
@@ -104,13 +104,13 @@ public final class GridBagSpec
       return this;
    }
 
-   public GridBagSpec derive()
+   public CellSpec derive()
    {
-      return new GridBagSpec(this);
+      return new CellSpec(this);
    }
 
    @SuppressWarnings("ConstantConditions")
-   public GridBagSpec overrideWith(GridBagSpec that)
+   public CellSpec overrideWith(CellSpec that)
    {
       if (that == null)
       {
@@ -265,208 +265,208 @@ public final class GridBagSpec
    }
 
 
-   public GridBagSpec withPreferredWidth(Integer value)
+   public CellSpec withPreferredWidth(Integer value)
    {
       preferredWidth = value;
       return this;
    }
 
-   public GridBagSpec withPreferredHeight(Integer value)
+   public CellSpec withPreferredHeight(Integer value)
    {
       preferredHeight = value;
       return this;
    }
 
-   public GridBagSpec withPreferredSize(Integer width, Integer height)
+   public CellSpec withPreferredSize(Integer width, Integer height)
    {
       return withPreferredWidth(width).withPreferredHeight(height);
    }
 
-   public GridBagSpec withGridWidth(Integer value)
+   public CellSpec withGridWidth(Integer value)
    {
       gridWidth = value;
       return this;
    }
 
-   public GridBagSpec withGridHeight(Integer value)
+   public CellSpec withGridHeight(Integer value)
    {
       gridHeight = value;
       return this;
    }
 
-   public GridBagSpec withGridWidthRemaining()
+   public CellSpec withGridWidthRemaining()
    {
       return withGridWidth(GridBagConstraints.REMAINDER);
    }
 
-   public GridBagSpec withGridHeightRemaining()
+   public CellSpec withGridHeightRemaining()
    {
       return withGridHeight(GridBagConstraints.REMAINDER);
    }
 
-   public GridBagSpec withGridSize(Integer width, Integer height)
+   public CellSpec withGridSize(Integer width, Integer height)
    {
       return withGridWidth(width).withGridHeight(height);
    }
 
-   public GridBagSpec withWeightX(Double value)
+   public CellSpec withWeightX(Double value)
    {
       weightX = value;
       return this;
    }
 
-   public GridBagSpec withWeightY(Double value)
+   public CellSpec withWeightY(Double value)
    {
       weightY = value;
       return this;
    }
 
-   public GridBagSpec withWeight(Double x, Double y)
+   public CellSpec withWeight(Double x, Double y)
    {
       return withWeightX(x).withWeightY(y);
    }
 
-   public GridBagSpec withWeight(Double value)
+   public CellSpec withWeight(Double value)
    {
       return withWeight(value, value);
    }
 
-   public GridBagSpec withAnchorX(AnchorX value)
+   public CellSpec withAnchorX(AnchorX value)
    {
       anchorX = value;
       return this;
    }
 
-   public GridBagSpec withAnchorY(AnchorY value)
+   public CellSpec withAnchorY(AnchorY value)
    {
       anchorY = value;
       return this;
    }
 
-   public GridBagSpec withAnchor(AnchorX x, AnchorY y)
+   public CellSpec withAnchor(AnchorX x, AnchorY y)
    {
       return withAnchorX(x).withAnchorY(y);
    }
 
-   public GridBagSpec withFillX(Boolean value)
+   public CellSpec withFillX(Boolean value)
    {
       fillX = value;
       return this;
    }
 
-   public GridBagSpec withFillY(Boolean value)
+   public CellSpec withFillY(Boolean value)
    {
       fillY = value;
       return this;
    }
 
-   public GridBagSpec withFill(Boolean value)
+   public CellSpec withFill(Boolean value)
    {
       return withFillX(value).withFillY(value);
    }
 
-   public GridBagSpec withFillX()
+   public CellSpec withFillX()
    {
       return withFillX(true);
    }
 
-   public GridBagSpec withFillY()
+   public CellSpec withFillY()
    {
       return withFillY(true);
    }
 
-   public GridBagSpec withFill()
+   public CellSpec withFill()
    {
       return withFill(true);
    }
 
-   public GridBagSpec withInsetTop(Integer value)
+   public CellSpec withInsetTop(Integer value)
    {
       insetTop = value;
       return this;
    }
 
-   public GridBagSpec withInsetLeft(Integer value)
+   public CellSpec withInsetLeft(Integer value)
    {
       insetLeft = value;
       return this;
    }
 
-   public GridBagSpec withInsetBottom(Integer value)
+   public CellSpec withInsetBottom(Integer value)
    {
       insetBottom = value;
       return this;
    }
 
-   public GridBagSpec withInsetRight(Integer value)
+   public CellSpec withInsetRight(Integer value)
    {
       insetRight = value;
       return this;
    }
 
-   public GridBagSpec withInsetX(Integer value)
+   public CellSpec withInsetX(Integer value)
    {
       return withInsetLeft(value).withInsetRight(value);
    }
 
-   public GridBagSpec withInsetY(Integer value)
+   public CellSpec withInsetY(Integer value)
    {
       return withInsetTop(value).withInsetBottom(value);
    }
 
-   public GridBagSpec withInset(Integer value)
+   public CellSpec withInset(Integer value)
    {
       return withInset(value, value, value, value);
    }
 
-   public GridBagSpec withInset(Integer x, Integer y)
+   public CellSpec withInset(Integer x, Integer y)
    {
       return withInset(y, x, y, x);
    }
 
-   public GridBagSpec withGapX(Integer value)
+   public CellSpec withGapX(Integer value)
    {
       return withInsetLeft(value);
    }
 
-   public GridBagSpec withGapY(Integer value)
+   public CellSpec withGapY(Integer value)
    {
       return withInsetTop(value);
    }
 
-   public GridBagSpec withGap(Integer x, Integer y)
+   public CellSpec withGap(Integer x, Integer y)
    {
       return withGapX(x).withGapY(y);
    }
 
-   public GridBagSpec withGap(Integer value)
+   public CellSpec withGap(Integer value)
    {
       return withGap(value, value);
    }
 
-   public GridBagSpec withInset(Integer top, Integer left, Integer bottom, Integer right)
+   public CellSpec withInset(Integer top, Integer left, Integer bottom, Integer right)
    {
       return withInsetTop(top).withInsetLeft(left).withInsetBottom(bottom).withInsetRight(right);
    }
 
-   public GridBagSpec withIPadX(Integer value)
+   public CellSpec withIPadX(Integer value)
    {
       iPadX = value;
       return this;
    }
 
-   public GridBagSpec withIPadY(Integer value)
+   public CellSpec withIPadY(Integer value)
    {
       iPadY = value;
       return this;
    }
 
-   public GridBagSpec withIPad(Integer x, Integer y)
+   public CellSpec withIPad(Integer x, Integer y)
    {
       return withIPadX(x).withIPadY(y);
    }
 
-   public GridBagSpec withIPad(Integer value)
+   public CellSpec withIPad(Integer value)
    {
       return withIPad(value, value);
    }
@@ -474,7 +474,7 @@ public final class GridBagSpec
 
    public GridBagConstraints toConstraints(int x, int y)
    {
-      GridBagSpec spec = completeSpec().overrideWith(this);
+      CellSpec spec = completeSpec().overrideWith(this);
       return new GridBagConstraints(x, y,
                                     spec.getGridWidth(), spec.getGridHeight(),
                                     spec.getWeightX(), spec.getWeightY(),
@@ -555,7 +555,7 @@ public final class GridBagSpec
          return false;
       }
 
-      GridBagSpec that = (GridBagSpec) o;
+      CellSpec that = (CellSpec) o;
 
       if (anchorX != that.anchorX)
       {

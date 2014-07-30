@@ -119,9 +119,9 @@ public class GridBagBuilder
       endOfLine = false;
    }
 
-   public void placeComponent(JComponent component, GridBagSpec givenSpec)
+   public void placeComponent(JComponent component, CellSpec givenSpec)
    {
-      GridBagSpec calculatedSpec = client.getSpecAt(cursorX, cursorY).overrideWith(givenSpec);
+      CellSpec calculatedSpec = client.getSpecAt(cursorX, cursorY).overrideWith(givenSpec);
 
       if (!isAreaFree(cursorX, cursorY, calculatedSpec.getGridWidth(), calculatedSpec.getGridHeight()))
       {
@@ -142,7 +142,7 @@ public class GridBagBuilder
       markAreaAsUsed(cursorX, cursorY, calculatedSpec);
    }
 
-   private JComponent getComponentToAdd(JComponent component, GridBagSpec calculatedSpec)
+   private JComponent getComponentToAdd(JComponent component, CellSpec calculatedSpec)
    {
       Integer width = calculatedSpec.getPreferredWidth();
       if (width != null)
@@ -163,7 +163,7 @@ public class GridBagBuilder
       return component;
    }
 
-   private void markAreaAsUsed(int x, int y, GridBagSpec spec)
+   private void markAreaAsUsed(int x, int y, CellSpec spec)
    {
       Integer width = spec.getGridWidth();
       Integer height = spec.getGridHeight();

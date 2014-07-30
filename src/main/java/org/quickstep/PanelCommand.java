@@ -19,23 +19,23 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
 
    private final GridBagCommandsCollectorComponent<PanelCommand> commandsCollector = new GridBagCommandsCollectorComponent<PanelCommand>(this);
 
-   private GridBagSpec spec = spec();
+   private CellSpec spec = spec();
    private Border border;
    private JScrollPane scroll;
 
-   private final GridBagSpec cellDefaultSpec;
-   private final Map<Integer, GridBagSpec> columnSpecs = new TreeMap<Integer, GridBagSpec>();
-   private final Map<Integer, GridBagSpec> rowSpecs = new TreeMap<Integer, GridBagSpec>();
+   private final CellSpec cellDefaultSpec;
+   private final Map<Integer, CellSpec> columnSpecs = new TreeMap<Integer, CellSpec>();
+   private final Map<Integer, CellSpec> rowSpecs = new TreeMap<Integer, CellSpec>();
 
-   private final Table<Integer, Integer, GridBagSpec> cellSpecs = TreeBasedTable.create();
-   private final Table<Integer, Integer, GridBagSpec> rowSpecsOverridingColumnSpecs = TreeBasedTable.create();
+   private final Table<Integer, Integer, CellSpec> cellSpecs = TreeBasedTable.create();
+   private final Table<Integer, Integer, CellSpec> rowSpecsOverridingColumnSpecs = TreeBasedTable.create();
 
    protected PanelCommand(JPanel panel)
    {
       this(panel, spec().withGap(5));
    }
 
-   protected PanelCommand(JPanel panel, GridBagSpec cellDefaultSpec)
+   protected PanelCommand(JPanel panel, CellSpec cellDefaultSpec)
    {
       this.panel = panel;
       this.cellDefaultSpec = cellDefaultSpec;
@@ -62,7 +62,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
    @Override
-   public PanelCommand addBlank(GridBagSpec spec)
+   public PanelCommand addBlank(CellSpec spec)
    {
       return commandsCollector.addBlank(spec);
    }
@@ -74,7 +74,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
    @Override
-   public PanelCommand add(String text, GridBagSpec spec)
+   public PanelCommand add(String text, CellSpec spec)
    {
       return commandsCollector.add(text, spec);
    }
@@ -86,7 +86,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
    @Override
-   public PanelCommand add(JComponent component, GridBagSpec spec)
+   public PanelCommand add(JComponent component, CellSpec spec)
    {
       return commandsCollector.add(component, spec);
    }
@@ -98,7 +98,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
    @Override
-   public final PanelCommand addAll(Iterable<? extends JComponent> components, GridBagSpec spec)
+   public final PanelCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
       return commandsCollector.addAll(components, spec);
    }
@@ -127,9 +127,9 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       return commandsCollector.add(command);
    }
 
-   public GridBagSpec getSpecAt(int x, int y)
+   public CellSpec getSpecAt(int x, int y)
    {
-      GridBagSpec[] lineSpecs = new GridBagSpec[]{columnSpecs.get(x), rowSpecs.get(y)};
+      CellSpec[] lineSpecs = new CellSpec[]{columnSpecs.get(x), rowSpecs.get(y)};
       int i = rowSpecsOverridingColumnSpecs.get(x, y) != null ? 0 : 1;
       return completeSpec().
          overrideWith(cellDefaultSpec).
@@ -138,7 +138,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
          overrideWith(cellSpecs.get(x, y));
    }
 
-   public final PanelCommand withSpec(GridBagSpec spec)
+   public final PanelCommand withSpec(CellSpec spec)
    {
       this.spec.overrideWith(spec);
       return this;
@@ -174,7 +174,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
    @Override
-   public final GridBagSpec getSpec()
+   public final CellSpec getSpec()
    {
       return spec;
    }
@@ -186,19 +186,19 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
 
-   public final PanelCommand withDefaultSpec(GridBagSpec spec)
+   public final PanelCommand withDefaultSpec(CellSpec spec)
    {
       cellDefaultSpec.overrideWith(spec);
       return this;
    }
 
-   public final PanelCommand withColumnSpec(int x, GridBagSpec spec)
+   public final PanelCommand withColumnSpec(int x, CellSpec spec)
    {
       for (Integer y : rowSpecsOverridingColumnSpecs.column(x).keySet())
       {
          rowSpecsOverridingColumnSpecs.remove(x, y);
       }
-      GridBagSpec columnSpec = columnSpecs.get(x);
+      CellSpec columnSpec = columnSpecs.get(x);
       if (columnSpec == null)
       {
          columnSpec = spec();
@@ -207,13 +207,13 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       return this;
    }
 
-   public final PanelCommand withRowSpec(int y, GridBagSpec spec)
+   public final PanelCommand withRowSpec(int y, CellSpec spec)
    {
       for (Integer x : columnSpecs.keySet())
       {
          rowSpecsOverridingColumnSpecs.put(x, y, spec);
       }
-      GridBagSpec rowSpec = rowSpecs.get(y);
+      CellSpec rowSpec = rowSpecs.get(y);
       if (rowSpec == null)
       {
          rowSpec = spec();
@@ -222,9 +222,9 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       return this;
    }
 
-   public final PanelCommand withCellSpec(int x, int y, GridBagSpec spec)
+   public final PanelCommand withCellSpec(int x, int y, CellSpec spec)
    {
-      GridBagSpec cellSpec = cellSpecs.get(x, y);
+      CellSpec cellSpec = cellSpecs.get(x, y);
       if (cellSpec == null)
       {
          cellSpec = spec();

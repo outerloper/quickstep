@@ -57,7 +57,7 @@ public class RichFormDemo2 extends JFrame
    // TODO check setAlignmentX/Y() not only for labels but also panels, checkboxes etc.. consider calling it via reflection
    // TODO growX() -> spec(Fill.HORIZONTAL/FILL_X) growY() -> spec(Fill.VERTICAL/FILL_Y) -> grow() -> spec(Fill.BOTH/FILL)
    // TODO nextLine() -> addLineBreak() ? - make sure nextLine() always moves to next line - also called consecutively
-   // TODO CellSpec, LineSpec, GridSpec, making panel()'s with*Spec extractable to separate method, panelCommand overriding GridSpec builder interface
+   // TODO LineSpec, GridSpec, making panel()'s with*Spec extractable to separate method, panelCommand overriding GridSpec builder interface
    // TODO panel().with(container/panel) - if possible deferred usage of panel field
    // TODO panel(), verticalPanel()/columnPanel()/panelOfColumns() or, if above, panel(Orientation.HORIZONTAL/VERTICAL)
    // TODO .withAnchorX(X_LEFT) .withAnchor(X_BOTH, Y_TOP) .withAnchorY(Y_CENTER)

@@ -28,7 +28,7 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    }
 
    @Override
-   public T addBlank(GridBagSpec spec)
+   public T addBlank(CellSpec spec)
    {
       return add((String) null, spec);
    }
@@ -40,7 +40,7 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    }
 
    @Override
-   public T add(String text, GridBagSpec spec)
+   public T add(String text, CellSpec spec)
    {
       return add(new LabelCommand(text, spec));
    }
@@ -52,7 +52,7 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    }
 
    @Override
-   public T add(JComponent component, GridBagSpec spec)
+   public T add(JComponent component, CellSpec spec)
    {
       return add(new ComponentCommand(component, spec));
    }
@@ -64,7 +64,7 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    }
 
    @Override
-   public final T addAll(Iterable<? extends JComponent> components, GridBagSpec spec)
+   public final T addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
       for (JComponent component : components)
       {

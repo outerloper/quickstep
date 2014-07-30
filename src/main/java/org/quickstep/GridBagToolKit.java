@@ -31,30 +31,30 @@ public final class GridBagToolKit
    }
 
 
-   public static GridBagSpec spec()
+   public static CellSpec spec()
    {
-      return new GridBagSpec();
+      return new CellSpec();
    }
 
-   public static GridBagSpec growX()
+   public static CellSpec growX()
    {
       return spec().withFillX().withWeightX(1.0);
    }
 
-   public static GridBagSpec growY()
+   public static CellSpec growY()
    {
       return spec().withFillY().withWeightY(1.0);
    }
 
-   public static GridBagSpec grow()
+   public static CellSpec grow()
    {
       return spec().withFill().withWeight(1.0, 1.0);
    }
 
 
-   public static GridBagSpec completeSpec()
+   public static CellSpec completeSpec()
    {
-      return new GridBagSpec(null, null, 1, 1, 0.0, 0.0, AnchorX.CENTER, AnchorY.MIDDLE, false, false, 0, 0, 0, 0, 0, 0);
+      return new CellSpec(null, null, 1, 1, 0.0, 0.0, AnchorX.CENTER, AnchorY.MIDDLE, false, false, 0, 0, 0, 0, 0, 0);
    }
 
 

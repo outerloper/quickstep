@@ -38,7 +38,7 @@ public class GridBagBuilderTest
       }
    }
 
-   static GBCMatcher gbc(int x, int y, GridBagSpec spec)
+   static GBCMatcher gbc(int x, int y, CellSpec spec)
    {
       reportMatcher(new GBCMatcher(spec.toConstraints(x, y)));
       return null;

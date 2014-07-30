@@ -12,22 +12,22 @@ import static org.quickstep.GridBagToolKit.*;
 import static org.quickstep.util.DebugSupport.gbcEquals;
 import static org.quickstep.util.DebugSupport.gbcToString;
 
-public class GridBagSpecTest
+public class CellSpecTest
 {
    public static final double DELTA = 1e-9;
-   private GridBagSpec spec;
+   private CellSpec spec;
 
    @Test
    public void specFactoryMethodActsAsDefaultConstructor()
    {
-      assertEquals(spec(), new GridBagSpec());
+      assertEquals(spec(), new CellSpec());
    }
 
    @Test
    public void testCopyConstructor()
    {
       spec = spec().withAnchorY(AnchorY.TOP).withFill().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
-      GridBagSpec copy = new GridBagSpec(spec);
+      CellSpec copy = new CellSpec(spec);
       assertEquals(spec, copy);
    }
 
@@ -35,7 +35,7 @@ public class GridBagSpecTest
    public void deriveMethodCopiesSpec()
    {
       spec = spec().withAnchorY(AnchorY.TOP).withFill().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
-      GridBagSpec copy = spec.derive();
+      CellSpec copy = spec.derive();
       assertEquals(spec, copy);
       assertNotSame(spec, copy);
    }
@@ -43,9 +43,9 @@ public class GridBagSpecTest
    @Test
    public void overrideMethodOverwritesAllNotNullFields()
    {
-      GridBagSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorX(AnchorX.LEFT).withAnchorY(AnchorY.BOTTOM).withFillX(false).withFillY().withInsetY(5);
-      GridBagSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
-      GridBagSpec spec3 = spec();
+      CellSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorX(AnchorX.LEFT).withAnchorY(AnchorY.BOTTOM).withFillX(false).withFillY().withInsetY(5);
+      CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
+      CellSpec spec3 = spec();
 
       spec2.overrideWith(spec1);
       assertEquals(200, (int) spec2.getPreferredWidth());
@@ -65,7 +65,7 @@ public class GridBagSpecTest
       assertEquals(2, (int) spec2.getIPadX());
       assertEquals(2, (int) spec2.getIPadY());
 
-      GridBagSpec spec2Copy = spec2.derive();
+      CellSpec spec2Copy = spec2.derive();
       spec2.overrideWith(spec3);
       assertEquals(spec2Copy, spec2);
    }
@@ -73,9 +73,9 @@ public class GridBagSpecTest
    @Test
    public void overwriteMethodOverwritesAllFieldsEvenNull()
    {
-      GridBagSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
-      GridBagSpec spec2 = spec().withPreferredSize(200, 60).withGridSize(3, 4).withAnchorY(AnchorY.BOTTOM).withFillY().withInset(5).withIPad(3);
-      GridBagSpec spec3 = spec();
+      CellSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
+      CellSpec spec2 = spec().withPreferredSize(200, 60).withGridSize(3, 4).withAnchorY(AnchorY.BOTTOM).withFillY().withInset(5).withIPad(3);
+      CellSpec spec3 = spec();
 
       spec2.overwriteWith(spec1);
       assertEquals(spec1, spec2);
@@ -87,9 +87,9 @@ public class GridBagSpecTest
    @Test
    public void testSpecEquals()
    {
-      GridBagSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
-      GridBagSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
-      GridBagSpec spec3 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(88);
+      CellSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
+      CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
+      CellSpec spec3 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(88);
       Object nullReference = null;
       assertFalse(spec1.equals(nullReference));
       assertTrue(spec1.equals(spec1));
@@ -155,7 +155,7 @@ public class GridBagSpecTest
    public void defaultGridBagSpecHasAllFieldsOtherThanSizeNotNull() throws IllegalAccessException
    {
       spec = completeSpec();
-      for (Field field : GridBagSpec.class.getDeclaredFields())
+      for (Field field : CellSpec.class.getDeclaredFields())
       {
          if (isInstanceFieldAndNotPreferredSize(field))
          {
