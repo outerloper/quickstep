@@ -5,8 +5,9 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import org.quickstep.LineCommand;
+import org.quickstep.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
@@ -52,20 +53,27 @@ public class RichFormDemo2 extends JFrame
       setVisible(true);
    }
 
+   // TODO debug mode - called for every specific built component, propagated recursively, mark method as deprecated for ergonomic purposes
+   // TODO check setAlignmentX/Y() not only for labels but also panels, checkboxes etc.. consider calling it via reflection
+   // TODO growX() -> spec(Fill.HORIZONTAL/FILL_X) growY() -> spec(Fill.VERTICAL/FILL_Y) -> grow() -> spec(Fill.BOTH/FILL)
+   // TODO nextLine() -> addLineBreak() ? - make sure nextLine() always moves to next line - also called consecutively
+   // TODO CellSpec, LineSpec, GridSpec, making panel()'s with*Spec extractable to separate method, panelCommand overriding GridSpec builder interface
+   // TODO panel().with(container/panel) - if possible deferred usage of panel field
+   // TODO panel(), verticalPanel()/columnPanel()/panelOfColumns() or, if above, panel(Orientation.HORIZONTAL/VERTICAL)
+   // TODO .withAnchorX(X_LEFT) .withAnchor(X_BOTH, Y_TOP) .withAnchorY(Y_CENTER)
    // TODO line() as first statement hangs
    // TODO withSpec withCellSpec withColumnSpec withRowSpec withDefaultSpec
    // TODO component method for wrapping component
-   // TODO gap applying to more than row and no error when components overlaying
-   // TODO merge fill and anchor -> alignment CENTER/BOTH - common names for X and Y
+   // TODO gap applying to more than one row and no error when components overlaying
+   // TODO merge fill and anchor -> alignment CENTER/BOTH - common names for X and Y, also remove withGap* methods?
    // TODO think about applying alignment to labels with preferred size
    // TODO this hangs: add(line().add("Eff:").add(effTextField).add("Disc").add(discTextField).add("Fr:").add(freqTextField))
    // TODO grid() would be good for sections
    private void arrangeComponents()
    {
       buildContent(this, panel().
-         withDefaultSpec(growX()).
+         withDefaultSpec(growX().withAnchorX(AnchorX.LEFT)).
          withOrientation(Orientation.VERTICAL).
-         withDefaultSpec(spec().withAnchorX(AnchorX.LEFT)).
          add(panel().
             withBorder("Conditions").
             withColumnSpec(0, spec().withAnchorX(AnchorX.RIGHT)).
@@ -156,14 +164,14 @@ public class RichFormDemo2 extends JFrame
          colorPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
          colorPanels.add(colorPanel);
       }
-      colorPicker = panel().addAll(colorPanels, spec().withInset(1)).getComponent();
+      colorPicker = panel().withDefaultSpec(spec().withInset(1)).addAll(colorPanels).getComponent();
    }
 
    public static void main(String[] args) throws Exception
    {
 //      debug();
-//      UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
+//      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       new RichFormDemo2();
    }
 }

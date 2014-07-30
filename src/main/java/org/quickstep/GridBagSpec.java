@@ -478,7 +478,7 @@ public final class GridBagSpec
       return new GridBagConstraints(x, y,
                                     spec.getGridWidth(), spec.getGridHeight(),
                                     spec.getWeightX(), spec.getWeightY(),
-                                    spec.getAlign(),
+                                    spec.getAnchor(),
                                     spec.getFill(),
                                     new Insets(spec.getInsetTop(),
                                                spec.getInsetLeft(),
@@ -488,7 +488,7 @@ public final class GridBagSpec
       );
    }
 
-   public int getAlign() // TODO getAnchor/getAlignment
+   public int getAnchor() // TODO getAnchor/getAlignment
    {
       AnchorX x = anchorX == null ? AnchorX.CENTER : anchorX;
       AnchorY y = anchorY == null ? AnchorY.MIDDLE : anchorY;
