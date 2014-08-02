@@ -1,52 +1,35 @@
 package org.quickstep;
 
 import java.awt.*;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.border.Border;
-
-import com.google.common.collect.Table;
-import com.google.common.collect.TreeBasedTable;
 
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class PanelCommand implements CellCommand, GridBagCommandsCollector<PanelCommand>, GridBagBuilderSpec
+public class PanelCommand implements CellCommand, GridBagCommandsCollector<PanelCommand>, GridSpecBuilder<PanelCommand>
 {
    private JPanel panel;
-   private Integer maxLineLength;
-   private Orientation orientation = Orientation.HORIZONTAL;
+   private CellSpec spec = spec();
 
    private final GridBagCommandsCollectorComponent<PanelCommand> commandsCollector = new GridBagCommandsCollectorComponent<PanelCommand>(this);
 
-   private CellSpec spec = spec();
+   private GridSpec gridSpec = new GridSpec();
    private Border border;
    private JScrollPane scroll;
-
-   private final CellSpec cellDefaultSpec;
-   private final Map<Integer, CellSpec> columnSpecs = new TreeMap<Integer, CellSpec>();
-   private final Map<Integer, CellSpec> rowSpecs = new TreeMap<Integer, CellSpec>();
-
-   private final Table<Integer, Integer, CellSpec> cellSpecs = TreeBasedTable.create();
-   private final Table<Integer, Integer, CellSpec> rowSpecsOverridingColumnSpecs = TreeBasedTable.create();
 
    protected PanelCommand(JPanel panel)
    {
       this(panel, spec().withGap(5));
    }
 
-   protected PanelCommand(JPanel panel, CellSpec cellDefaultSpec)
+   protected PanelCommand(JPanel panel, CellSpec defaultSpec)
    {
       this.panel = panel;
-      this.cellDefaultSpec = cellDefaultSpec;
 
-      withRowSpec(0, spec().withInsetTop(0));
-      withColumnSpec(0, spec().withInsetLeft(0));
-   }
-
-   public final boolean isHorizontal()
-   {
-      return Orientation.HORIZONTAL.equals(orientation);
+      specifyDefault(defaultSpec);
+      specifyRow(0, spec().withInsetTop(0));
+      specifyColumn(0, spec().withInsetLeft(0));
    }
 
    @Override
@@ -129,13 +112,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
 
    public CellSpec getSpecAt(int x, int y)
    {
-      CellSpec[] lineSpecs = new CellSpec[]{columnSpecs.get(x), rowSpecs.get(y)};
-      int i = rowSpecsOverridingColumnSpecs.get(x, y) != null ? 0 : 1;
-      return completeSpec().
-         overrideWith(cellDefaultSpec).
-         overrideWith(lineSpecs[i]).
-         overrideWith(lineSpecs[(i + 1) % 2]).
-         overrideWith(cellSpecs.get(x, y));
+      return completeSpec().overrideWith(gridSpec.getSpecAt(x, y));
    }
 
    public final PanelCommand withSpec(CellSpec spec)
@@ -170,7 +147,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
 
    protected GridBagBuilder createBuilder()
    {
-      return new GridBagBuilder(this, panel);
+      return new GridBagBuilder(gridSpec, panel);
    }
 
    @Override
@@ -180,68 +157,43 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
    @Override
-   public final Integer getMaxLineLength()
+   public final PanelCommand specifyDefault(CellSpec spec)
    {
-      return maxLineLength;
-   }
-
-
-   public final PanelCommand withDefaultSpec(CellSpec spec)
-   {
-      cellDefaultSpec.overrideWith(spec);
+      gridSpec.specifyDefault(spec);
       return this;
    }
 
-   public final PanelCommand withColumnSpec(int x, CellSpec spec)
+   @Override
+   public final PanelCommand specifyColumn(int x, CellSpec spec)
    {
-      for (Integer y : rowSpecsOverridingColumnSpecs.column(x).keySet())
-      {
-         rowSpecsOverridingColumnSpecs.remove(x, y);
-      }
-      CellSpec columnSpec = columnSpecs.get(x);
-      if (columnSpec == null)
-      {
-         columnSpec = spec();
-      }
-      columnSpecs.put(x, columnSpec.overrideWith(spec));
+      gridSpec.specifyColumn(x, spec);
       return this;
    }
 
-   public final PanelCommand withRowSpec(int y, CellSpec spec)
+   @Override
+   public final PanelCommand specifyRow
+      (int y, CellSpec spec)
    {
-      for (Integer x : columnSpecs.keySet())
-      {
-         rowSpecsOverridingColumnSpecs.put(x, y, spec);
-      }
-      CellSpec rowSpec = rowSpecs.get(y);
-      if (rowSpec == null)
-      {
-         rowSpec = spec();
-      }
-      rowSpecs.put(y, rowSpec.overrideWith(spec));
+      gridSpec.specifyRow(y, spec);
       return this;
    }
 
-   public final PanelCommand withCellSpec(int x, int y, CellSpec spec)
+   @Override
+   public final PanelCommand specifyCell(int x, int y, CellSpec spec)
    {
-      CellSpec cellSpec = cellSpecs.get(x, y);
-      if (cellSpec == null)
-      {
-         cellSpec = spec();
-      }
-      cellSpecs.put(x, y, cellSpec.overrideWith(spec));
+      gridSpec.specifyCell(x, y, spec);
       return this;
    }
 
    public final PanelCommand withOrientation(Orientation value)
    {
-      orientation = value;
+      gridSpec.withOrientation(value);
       return this;
    }
 
-   public final PanelCommand withMaxLineLength(int value)
+   public final PanelCommand withMaxLineLength(Integer value)
    {
-      maxLineLength = value;
+      gridSpec.withMaxLineLength(value);
       return this;
    }
 

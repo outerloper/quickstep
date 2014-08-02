@@ -23,15 +23,20 @@ public class GridBagBuilder
    private boolean previousEndOfLine = false;
 
    private final Table<Integer, Integer, Boolean> usedCells = TreeBasedTable.create();
-   private final Map<Integer, Integer> gridHeightsRemaining = new HashMap<Integer, Integer>();
-   private final Map<Integer, Integer> gridWidthsRemaining = new HashMap<Integer, Integer>();
+   private final Map<Integer, Integer> gridHeightsRemaining = new TreeMap<Integer, Integer>();
+   private final Map<Integer, Integer> gridWidthsRemaining = new TreeMap<Integer, Integer>();
 
-   private final GridBagBuilderSpec client;
+   private final GridSpec gridSpec;
 
-   protected GridBagBuilder(GridBagBuilderSpec builderSpec, JPanel panel)
+   protected GridBagBuilder(GridSpec gridSpec, JPanel panel)
    {
       this.panel = panel;
-      this.client = builderSpec;
+      this.gridSpec = gridSpec;
+   }
+
+   public GridSpec getGridSpec()
+   {
+      return gridSpec;
    }
 
    private void moveToNextCell()
@@ -48,7 +53,7 @@ public class GridBagBuilder
       {
          cursorY++;
       }
-      if (client.getMaxLineLength() != null && (isHorizontal() ? cursorX : cursorY) >= client.getMaxLineLength() || endOfLine)
+      if (gridSpec.getMaxLineLength() != null && (isHorizontal() ? cursorX : cursorY) >= gridSpec.getMaxLineLength() || endOfLine)
       {
          newLine();
       }
@@ -56,7 +61,7 @@ public class GridBagBuilder
 
    public boolean isHorizontal()
    {
-      return client.isHorizontal();
+      return Orientation.HORIZONTAL.equals(gridSpec.getOrientation());
    }
 
    public boolean isEmpty()
@@ -121,7 +126,7 @@ public class GridBagBuilder
 
    public void placeComponent(JComponent component, CellSpec givenSpec)
    {
-      CellSpec calculatedSpec = client.getSpecAt(cursorX, cursorY).overrideWith(givenSpec);
+      CellSpec calculatedSpec = completeSpec().overrideWith(gridSpec.getSpecAt(cursorX, cursorY)).overrideWith(givenSpec);
 
       if (!isAreaFree(cursorX, cursorY, calculatedSpec.getGridWidth(), calculatedSpec.getGridHeight()))
       {
@@ -134,7 +139,8 @@ public class GridBagBuilder
       panel.add(getComponentToAdd(component, calculatedSpec), constraints);
       DebugSupport.attachDebugInfo(component, panel, constraints);
 
-      if (calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER)
+      if (isHorizontal() && calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER ||
+         !isHorizontal() && calculatedSpec.getGridHeight() == GridBagConstraints.REMAINDER) // TODO test this
       {
          endOfLine = true;
       }

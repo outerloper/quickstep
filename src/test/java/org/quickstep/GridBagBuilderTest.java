@@ -168,7 +168,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panel(panel).
-         withDefaultSpec(spec().withInset(10, 3)).
+         specifyDefault(spec().withInset(10, 3)).
          add(new JLabel()).
          add(new JLabel(), spec().withGridWidthRemaining()).
          add(new JLabel()).
@@ -190,7 +190,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         withColumnSpec(1, spec().withAnchorX(AnchorX.RIGHT)).
+         specifyColumn(1, spec().withAnchorX(AnchorX.RIGHT)).
          add(new JLabel()).
          add(new JLabel()).
          add(new JLabel()).
@@ -212,7 +212,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         withRowSpec(1, spec().withInsetTop(20)).
+         specifyRow(1, spec().withInsetTop(20)).
          add(new JLabel()).
          add(new JLabel()).
          add(new JLabel()).
@@ -231,7 +231,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         withCellSpec(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
+         specifyCell(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
          add(new JLabel()).
          getComponent();
 
@@ -250,8 +250,8 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         withRowSpec(1, spec().withInsetBottom(20)).
-         withColumnSpec(1, spec().withInsetBottom(30)).
+         specifyRow(1, spec().withInsetBottom(20)).
+         specifyColumn(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
          add(new JLabel()).
          getComponent();
@@ -271,8 +271,8 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         withColumnSpec(1, spec().withInsetBottom(20)).
-         withRowSpec(1, spec().withInsetBottom(30)).
+         specifyColumn(1, spec().withInsetBottom(20)).
+         specifyRow(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
          add(new JLabel()).
          getComponent();
@@ -289,7 +289,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(2).
-         withCellSpec(0, 0, spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM)).
+         specifyCell(0, 0, spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM)).
          add(new JLabel(), spec().withAnchor(AnchorX.LEFT, AnchorY.TOP)).
          getComponent();
 
@@ -396,7 +396,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          withMaxLineLength(3).
-         withColumnSpec(0, spec().withAnchorX(AnchorX.RIGHT).withInsetLeft(30)).
+         specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT).withInsetLeft(30)).
          addAll(checkBoxes, spec().withAnchorX(AnchorX.LEFT)).
          getComponent();
 
@@ -415,7 +415,7 @@ public class GridBagBuilderTest
       PanelCommand builder = panel(auxPanel)
          .withSpec(grow());
       panel(panel).
-         withCellSpec(0, 0, spec().withInsetRight(50)).
+         specifyCell(0, 0, spec().withInsetRight(50)).
          add(builder).
          getComponent();
 

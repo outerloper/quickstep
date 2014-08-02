@@ -41,16 +41,16 @@ public class SpannedCellsDemo extends JFrame
          add(panel().
             withSpec(grow()).
             withMaxLineLength(4).
-            withDefaultSpec(grow()).
-            withCellSpec(1, 2, spec().withGridSize(2, 3)).
-            withCellSpec(0, 5, spec().withGridSize(2, 2)).
-            withCellSpec(2, 7, spec().withGridSize(1, 2)).
-            withCellSpec(3, 3, spec().withGridHeightRemaining()).
+            specifyDefault(grow()).
+            specifyCell(1, 2, spec().withGridSize(2, 3)).
+            specifyCell(0, 5, spec().withGridSize(2, 2)).
+            specifyCell(2, 7, spec().withGridSize(1, 2)).
+            specifyCell(3, 3, spec().withGridHeightRemaining()).
             addAll(buttons)
          ).
          add(panel().
             withSpec(spec().withGridWidthRemaining()).
-            withDefaultSpec(spec().withPreferredWidth(66)).
+            specifyDefault(spec().withPreferredWidth(66)).
             add(okButton).
             add(cancelButton).
             add(helpButton)

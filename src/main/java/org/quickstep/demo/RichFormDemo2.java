@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.quickstep.*;
 
@@ -53,6 +52,8 @@ public class RichFormDemo2 extends JFrame
       setVisible(true);
    }
 
+   // TODO anchoring whole panel contents (what about making use of ResizablePanel?)
+   // TODO top-left alignment by default
    // TODO debug mode - called for every specific built component, propagated recursively, mark method as deprecated for ergonomic purposes
    // TODO check setAlignmentX/Y() not only for labels but also panels, checkboxes etc.. consider calling it via reflection
    // TODO growX() -> spec(Fill.HORIZONTAL/FILL_X) growY() -> spec(Fill.VERTICAL/FILL_Y) -> grow() -> spec(Fill.BOTH/FILL)
@@ -72,20 +73,20 @@ public class RichFormDemo2 extends JFrame
    private void arrangeComponents()
    {
       buildContent(this, panel().
-         withDefaultSpec(growX().withAnchorX(AnchorX.LEFT)).
+         specifyDefault(growX().withAnchorX(AnchorX.LEFT)).
          withOrientation(Orientation.VERTICAL).
          add(panel().
             withBorder("Conditions").
-            withColumnSpec(0, spec().withAnchorX(AnchorX.RIGHT)).
-            withColumnSpec(1, spec().withPreferredWidth(70)).
-            withColumnSpec(2, spec().withAnchorX(AnchorX.RIGHT).withWeightX(1.0).withGapX(40)).
-            withColumnSpec(3, spec().withPreferredWidth(70)).
-            withColumnSpec(4, spec().withAnchorX(AnchorX.RIGHT).withWeightX(1.0).withGapX(40)).
-            withColumnSpec(5, spec().withPreferredWidth(60)).
+            specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT)).
+            specifyColumn(1, spec().withPreferredWidth(70)).
+            specifyColumn(2, spec().withAnchorX(AnchorX.RIGHT).withWeightX(1.0).withGapX(40)).
+            specifyColumn(3, spec().withPreferredWidth(70)).
+            specifyColumn(4, spec().withAnchorX(AnchorX.RIGHT).withWeightX(1.0).withGapX(40)).
+            specifyColumn(5, spec().withPreferredWidth(60)).
             addHeader("Section 1").
-            add("Start Date:").add(startDateTextField).
+            add(line().add("Start Date:").add(startDateTextField).
             add("End Date:").add(endDateTextField).
-            add("Freq:").add(freqTextField).
+            add("Freq:").add(freqTextField)).
             addBlank().
             addHeader("Section 2").
             add("Criterion 1:").add(criterion1TextField).
@@ -96,59 +97,53 @@ public class RichFormDemo2 extends JFrame
             add("Additional Criterion 2:").add(additionalCriterion2TextField).
             addBlank().
             addHeader("Section 4").
-            add(lineWithCombo("Criterion 3 Level:", criterion3ComboBox, criterion3TextField)).
-            add(lineWithCombo("Criterion 4 Level:", criterion4ComboBox, criterion4TextField).
+            add(lineWithCombo().add("Criterion 3 Level:").add(criterion3ComboBox).add(criterion3TextField)).
+            add(lineWithCombo().add("Criterion 4 Level:").add(criterion4ComboBox).add(criterion4TextField).
                add(roundTripCheckBox, spec().withAnchorX(AnchorX.LEFT).withGapX(10).withGridWidthRemaining())
             ).
             addBlank().
             addHeader("Additional Conditions").
-            add(lineWithCombo("Other 1:", other1ComboBox, other1TextField).add("ABC:").add(abcTextField)).
-            add(lineWithCombo("Other 2:", other2ComboBox, other2TextField)).
-            add(lineWithCombo("Other 3:", other3ComboBox, other3TextField)).
+            add(lineWithCombo().add("Other 1:").add(other1ComboBox).add(other1TextField).add("ABC:").add(abcTextField)).
+            add(lineWithCombo().add("Other 2:").add(other2ComboBox).add(other2TextField)).
+            add(lineWithCombo().add("Other 3:").add(other3ComboBox).add(other3TextField)).
             addBlank()
          ).
          add(panel().
             withSpec(growX().withAnchorX(AnchorX.LEFT)).
-            withDefaultSpec(spec().withFillY()).
+            specifyDefault(spec().withFillY()).
             add(panel().
                withBorder("Direction").
-               withDefaultSpec(spec().withAnchorX(AnchorX.LEFT)).
+               specifyDefault(spec().withAnchorX(AnchorX.LEFT)).
                withOrientation(Orientation.VERTICAL).
                addAll(directionRadios)
             ).
             add(panel().
                withBorder("Scope").
-               withDefaultSpec(spec().withAnchorX(AnchorX.LEFT)).
+               specifyDefault(spec().withAnchorX(AnchorX.LEFT)).
                withOrientation(Orientation.VERTICAL).
                addAll(scopeRadios)
             ).
             add(panel().
                withBorder("Highlight").
                withSpec(grow().withAnchorX(AnchorX.LEFT)).
-               withColumnSpec(0, spec().withAnchorX(AnchorX.RIGHT)).
-               withColumnSpec(1, spec().withAnchorX(AnchorX.LEFT).withWeightX(1.0)).
-               withDefaultSpec(spec().withAnchorX(AnchorX.LEFT)).
+               specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT)).
+               specifyColumn(1, spec().withAnchorX(AnchorX.LEFT).withWeightX(1.0)).
+               specifyDefault(spec().withAnchorX(AnchorX.LEFT)).
                add(line().add("Color:").add(colorPicker)).
                add(line().add("Thickness:").add(thicknessComboBox))
             )
          ).
          add(panel().
             withSpec(spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM).withFillX(false).withWeightY(1.0)). // TODO withFill(bool, bool)
-            withDefaultSpec(spec().withPreferredWidth(66)).
-            add(clearButton).
-            add(findAllButton).
-            add(findNextButton).
-            add(closeButton)
+            specifyDefault(spec().withPreferredWidth(66)).
+            add(clearButton).add(findAllButton).add(findNextButton).add(closeButton)
          )
       );
    }
 
-   private LineCommand lineWithCombo(String label, JComboBox combo, JTextField textField)
+   private LineCommand lineWithCombo()
    {
-      return line().
-         add(label).
-         add(combo, spec().withGridWidth(2).withFillX().withInsetRight(5)).
-         add(textField);
+      return line().specifyCell(1, spec().withGridWidth(2).withFillX().withInsetRight(5));
    }
 
    private void buildComponents()
@@ -164,14 +159,14 @@ public class RichFormDemo2 extends JFrame
          colorPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
          colorPanels.add(colorPanel);
       }
-      colorPicker = panel().withDefaultSpec(spec().withInset(1)).addAll(colorPanels).getComponent();
+      colorPicker = panel().specifyDefault(spec().withInset(1)).addAll(colorPanels).getComponent();
    }
 
    public static void main(String[] args) throws Exception
    {
 //      debug();
-      UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
-//      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//      UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       new RichFormDemo2();
    }
 }

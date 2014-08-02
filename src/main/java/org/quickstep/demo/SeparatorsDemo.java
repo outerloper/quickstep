@@ -11,14 +11,14 @@ public class SeparatorsDemo extends JFrame
       buildContent(this, panel().
          withMaxLineLength(1).
          withBorder().
-         withDefaultSpec(growX()).
+         specifyDefault(growX()).
 //         specifyCellDefaults(growX().withGridWidthRemaining()). // TODO this hangs
    add(new JButton("Button")).
          addHorizontalSeparator().
          add(new JButton("Button")).
          addBlank().
          add(new JButton("Button")).
-         add(panel().withSpec(growY()).withDefaultSpec(growX()).
+         add(panel().withSpec(growY()).specifyDefault(growX()).
             add(new JButton("Button")).addVerticalSeparator().add(new JButton("Button"))
          )
       );
