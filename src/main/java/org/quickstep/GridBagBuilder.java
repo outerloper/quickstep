@@ -136,8 +136,8 @@ public class GridBagBuilder
 
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
-      panel.add(getComponentToAdd(component, calculatedSpec), constraints);
       DebugSupport.attachDebugInfo(component, panel, constraints);
+      panel.add(getComponentToAdd(component, calculatedSpec), constraints);
 
       if (isHorizontal() && calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER ||
          !isHorizontal() && calculatedSpec.getGridHeight() == GridBagConstraints.REMAINDER) // TODO test this

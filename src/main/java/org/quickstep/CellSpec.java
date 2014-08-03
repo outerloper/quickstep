@@ -3,6 +3,7 @@ package org.quickstep;
 import java.awt.*;
 
 import static org.quickstep.GridBagToolKit.*;
+import static org.quickstep.util.DebugSupport.*;
 
 public final class CellSpec
 {
@@ -582,7 +583,10 @@ public final class CellSpec
    {
       return String.format("GBSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s " +
                               "insets(top=%s left=%s bottom=%s right=%s) pad=%s,%s}",
-                           preferredWidth, preferredHeight, gridWidth, gridHeight, weightX, weightY, anchorX, anchorY,
+                           preferredWidth, preferredHeight,
+                           gridWidth == null ? gridWidth : gridSizeToString(gridWidth),
+                           gridHeight == null ? gridHeight : gridSizeToString(gridHeight),
+                           weightX, weightY, anchorX, anchorY,
                            insetTop, insetLeft, insetBottom, insetRight, iPadX, iPadY);
    }
 }

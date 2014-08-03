@@ -97,7 +97,11 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    @Override
    public void apply(GridBagBuilder builder)
    {
-      builder.setEndOfLine(!builder.isEmpty());
+      builder.moveToFreeCell();
+      boolean endOfLine = !builder.isEmpty();
+      builder.setEndOfLine(endOfLine);
+      builder.moveToPreviousCell();
+      builder.setEndOfLine(endOfLine);
       builder.moveToNextFreeCell();
       int lineNumber = builder.getCurrentLineNumber();
       builder.moveToPreviousCell();

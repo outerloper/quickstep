@@ -52,22 +52,13 @@ public class RichFormDemo2 extends JFrame
       setVisible(true);
    }
 
-   // NOTE top-center alignment by default
-   // NOTE LineSpec, GridSpec, making panel()'s with*Spec extractable to separate method, panelCommand overriding GridSpec builder interface
    // TODO anchoring whole panel contents (what about making use of ResizablePanel?)
-   // TODO debug mode - called for every specific built component, propagated recursively, mark method as deprecated for ergonomic purposes
-   // TODO check setAlignmentX/Y() not only for labels but also panels, checkboxes etc.. consider calling it via reflection
-   // TODO growX() -> spec(Fill.HORIZONTAL/FILL_X) growY() -> spec(Fill.VERTICAL/FILL_Y) -> grow() -> spec(Fill.BOTH/FILL)
    // TODO nextLine() -> addLineBreak() ? - make sure nextLine() always moves to next line - also called consecutively
    // TODO panel().with(container/panel) - if possible deferred usage of panel field
    // TODO panel(), verticalPanel()/columnPanel()/panelOfColumns() or, if above, panel(Orientation.HORIZONTAL/VERTICAL)
-   // TODO .withAnchorX(X_LEFT) .withAnchor(X_BOTH, Y_TOP) .withAnchorY(Y_CENTER)
-   // TODO line() as first statement hangs
    // TODO component method for wrapping component
-   // TODO merge fill and anchor -> alignment CENTER/BOTH - common names for X and Y, also remove withGap* methods?
    // TODO think about applying alignment to labels with preferred size
-   // TODO this hangs: add(line().add("Eff:").add(effTextField).add("Disc").add(discTextField).add("Fr:").add(freqTextField))
-   // TODO grid() would be good for sections
+   // TODO guard for hanging
    private void arrangeComponents()
    {
       buildContent(this, panel().
@@ -82,11 +73,11 @@ public class RichFormDemo2 extends JFrame
             specifyColumn(4, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
             specifyColumn(5, spec().withPreferredWidth(60)).
             addHeader("Section 1").
-//            add(line().
+            add(line().
                add("Start Date:").add(startDateTextField).
                add("End Date:").add(endDateTextField).
-               add("Freq:").add(freqTextField).
-//            ).
+               add("Freq:").add(freqTextField)
+            ).
             addBlank().
             addHeader("Section 2").
             add("Criterion 1:").add(criterion1TextField).
@@ -161,7 +152,7 @@ public class RichFormDemo2 extends JFrame
 
    public static void main(String[] args) throws Exception
    {
-//      debug();
+      debug();
 //      UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       new RichFormDemo2();
