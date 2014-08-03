@@ -53,7 +53,6 @@ public class RichFormDemo2 extends JFrame
    }
 
    // TODO anchoring whole panel contents (what about making use of ResizablePanel?)
-   // TODO nextLine() -> addLineBreak() ? - make sure nextLine() always moves to next line - also called consecutively
    // TODO panel().with(container/panel) - if possible deferred usage of panel field
    // TODO panel(), verticalPanel()/columnPanel()/panelOfColumns() or, if above, panel(Orientation.HORIZONTAL/VERTICAL)
    // TODO component method for wrapping component
@@ -122,7 +121,7 @@ public class RichFormDemo2 extends JFrame
             )
          ).
          add(panel().
-            withSpec(spec().withAnchor(AX.RIGHT, AY.BOTTOM).withWeightY(1.0)). // TODO withFill(bool, bool)
+            withSpec(spec().withAnchor(AX.RIGHT, AY.BOTTOM).withWeightY(1.0)).
             specifyDefault(spec().withPreferredWidth(66)).
             add(clearButton).add(findAllButton).add(findNextButton).add(closeButton)
          )

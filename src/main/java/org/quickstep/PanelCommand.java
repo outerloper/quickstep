@@ -33,9 +33,9 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    }
 
    @Override
-   public final PanelCommand nextLine()
+   public final PanelCommand addLineBreak()
    {
-      return commandsCollector.nextLine();
+      return commandsCollector.addLineBreak();
    }
 
    @Override
@@ -108,11 +108,6 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    public PanelCommand add(GridBagCommand command)
    {
       return commandsCollector.add(command);
-   }
-
-   public CellSpec getSpecAt(int x, int y)
-   {
-      return completeSpec().overrideWith(gridSpec.getSpecAt(x, y));
    }
 
    public final PanelCommand withSpec(CellSpec spec)

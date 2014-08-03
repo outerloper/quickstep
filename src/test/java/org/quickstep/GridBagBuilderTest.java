@@ -124,7 +124,7 @@ public class GridBagBuilderTest
 
       panel(panel).
          add(aComponent()).
-         nextLine().
+         addLineBreak().
          add(aComponent()).
          add(aComponent()).
          getComponent();
@@ -526,7 +526,7 @@ public class GridBagBuilderTest
             add(aComponent(), spec().withIPad(4)).
             add(aComponent(), spec().withGridSize(2, 2)).
             add(aComponent()).
-            nextLine().
+            addLineBreak().
             add(aComponent())).
          getComponent();
 
@@ -542,11 +542,11 @@ public class GridBagBuilderTest
       replay(panel);
 
       panel(panel).
-         nextLine().
-         nextLine().
+         addLineBreak().
+         addLineBreak().
          add(aComponent()).
-         nextLine().
-         nextLine().
+         addLineBreak().
+         addLineBreak().
          add(aComponent()).
          getComponent();
 

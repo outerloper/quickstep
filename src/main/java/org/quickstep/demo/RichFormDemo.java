@@ -68,7 +68,7 @@ public class RichFormDemo extends JFrame
             add("Country").
             add(countryTextField)
          ).
-         nextLine().
+         addLineBreak().
          add(panel().
             withSpec(specWithFillX().withAnchorY(AY.BOTTOM).withGridWidthRemaining()).
             specifyDefault(spec().withPreferredWidth(66)).

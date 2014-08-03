@@ -4,7 +4,7 @@ import javax.swing.*;
 
 interface GridBagCommandsCollector<T extends GridBagCommandsCollector<T>>
 {
-   T nextLine();
+   T addLineBreak();
 
    T addBlank();
 

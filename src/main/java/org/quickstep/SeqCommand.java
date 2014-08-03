@@ -11,9 +11,9 @@ public class SeqCommand implements GridBagCommand, GridBagCommandsCollector<SeqC
    }
 
    @Override
-   public SeqCommand nextLine()
+   public SeqCommand addLineBreak()
    {
-      return commandsCollector.nextLine();
+      return commandsCollector.addLineBreak();
    }
 
    @Override

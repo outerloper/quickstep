@@ -1,6 +1,6 @@
 package org.quickstep;
 
-public class NextLineCommand implements GridBagCommand
+public class LineBreakCommand implements GridBagCommand
 {
    @Override
    public void apply(GridBagBuilder builder)

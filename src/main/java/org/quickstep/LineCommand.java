@@ -17,9 +17,9 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    }
 
    @Override
-   public LineCommand nextLine()
+   public LineCommand addLineBreak()
    {
-      return commandsCollector.nextLine();
+      return commandsCollector.addLineBreak();
    }
 
    @Override

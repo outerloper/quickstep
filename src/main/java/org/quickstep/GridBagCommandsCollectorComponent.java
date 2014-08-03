@@ -16,9 +16,9 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    }
 
    @Override
-   public final T nextLine()
+   public final T addLineBreak()
    {
-      return add(new NextLineCommand());
+      return add(new LineBreakCommand());
    }
 
    @Override
