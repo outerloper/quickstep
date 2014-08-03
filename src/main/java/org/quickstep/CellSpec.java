@@ -14,8 +14,6 @@ public final class CellSpec
    private Double weightY;
    private AnchorX anchorX;
    private AnchorY anchorY;
-   private Boolean fillX;
-   private Boolean fillY;
    private Integer insetTop;
    private Integer insetLeft;
    private Integer insetBottom;
@@ -37,8 +35,6 @@ public final class CellSpec
            that.weightY,
            that.anchorX,
            that.anchorY,
-           that.fillX,
-           that.fillY,
            that.insetTop,
            that.insetLeft,
            that.insetBottom,
@@ -56,8 +52,6 @@ public final class CellSpec
                    Double weightY,
                    AnchorX AnchorX,
                    AnchorY AnchorY,
-                   Boolean fillX,
-                   Boolean fillY,
                    Integer insetTop,
                    Integer insetLeft,
                    Integer insetBottom,
@@ -73,8 +67,6 @@ public final class CellSpec
       this.weightY = weightY;
       this.anchorX = AnchorX;
       this.anchorY = AnchorY;
-      this.fillX = fillX;
-      this.fillY = fillY;
       this.insetTop = insetTop;
       this.insetLeft = insetLeft;
       this.insetBottom = insetBottom;
@@ -93,8 +85,6 @@ public final class CellSpec
       weightY = that.weightY;
       anchorX = that.anchorX;
       anchorY = that.anchorY;
-      fillX = that.fillX;
-      fillY = that.fillY;
       insetTop = that.insetTop;
       insetLeft = that.insetLeft;
       insetBottom = that.insetBottom;
@@ -147,14 +137,6 @@ public final class CellSpec
       if (that.anchorY != null)
       {
          anchorY = that.anchorY;
-      }
-      if (that.fillX != null)
-      {
-         fillX = that.fillX;
-      }
-      if (that.fillY != null)
-      {
-         fillY = that.fillY;
       }
       if (that.insetTop != null)
       {
@@ -222,16 +204,6 @@ public final class CellSpec
    public AnchorY getAnchorY()
    {
       return anchorY;
-   }
-
-   public Boolean getFillX()
-   {
-      return fillX;
-   }
-
-   public Boolean getFillY()
-   {
-      return fillY;
    }
 
    public Integer getInsetTop()
@@ -348,38 +320,6 @@ public final class CellSpec
       return withAnchorX(x).withAnchorY(y);
    }
 
-   public CellSpec withFillX(Boolean value)
-   {
-      fillX = value;
-      return this;
-   }
-
-   public CellSpec withFillY(Boolean value)
-   {
-      fillY = value;
-      return this;
-   }
-
-   public CellSpec withFill(Boolean value)
-   {
-      return withFillX(value).withFillY(value);
-   }
-
-   public CellSpec withFillX()
-   {
-      return withFillX(true);
-   }
-
-   public CellSpec withFillY()
-   {
-      return withFillY(true);
-   }
-
-   public CellSpec withFill()
-   {
-      return withFill(true);
-   }
-
    public CellSpec withInsetTop(Integer value)
    {
       insetTop = value;
@@ -491,7 +431,7 @@ public final class CellSpec
    public int getAnchor() // TODO getAnchor/getAlignment
    {
       AnchorX x = anchorX == null ? AnchorX.CENTER : anchorX;
-      AnchorY y = anchorY == null ? AnchorY.MIDDLE : anchorY;
+      AnchorY y = anchorY == null ? AnchorY.CENTER : anchorY;
       switch (y)
       {
          case TOP:
@@ -525,17 +465,17 @@ public final class CellSpec
 
    public int getFill()
    {
-      Boolean x = fillX == null ? false : fillX;
-      Boolean y = fillY == null ? false : fillY;
-      if (x)
+      Boolean fillX = anchorX != null && X_BOTH.equals(anchorX);
+      Boolean fillY = anchorY != null && Y_BOTH.equals(anchorY);
+      if (fillX)
       {
-         if (y)
+         if (fillY)
          {
             return GridBagConstraints.BOTH;
          }
          return GridBagConstraints.HORIZONTAL;
       }
-      if (y)
+      if (fillY)
       {
          return GridBagConstraints.VERTICAL;
       }
@@ -562,14 +502,6 @@ public final class CellSpec
          return false;
       }
       if (anchorY != that.anchorY)
-      {
-         return false;
-      }
-      if (fillX != that.fillX)
-      {
-         return false;
-      }
-      if (fillY != that.fillY)
       {
          return false;
       }
@@ -637,8 +569,6 @@ public final class CellSpec
       result = 31 * result + (weightY != null ? weightY.hashCode() : 0);
       result = 31 * result + (anchorX != null ? anchorX.hashCode() : 0);
       result = 31 * result + (anchorY != null ? anchorY.hashCode() : 0);
-      result = 31 * result + (fillX != null ? fillX.hashCode() : 0);
-      result = 31 * result + (fillY != null ? fillY.hashCode() : 0);
       result = 31 * result + (insetTop != null ? insetTop.hashCode() : 0);
       result = 31 * result + (insetLeft != null ? insetLeft.hashCode() : 0);
       result = 31 * result + (insetBottom != null ? insetBottom.hashCode() : 0);
@@ -651,9 +581,9 @@ public final class CellSpec
    @Override
    public String toString()
    {
-      return String.format("GBSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s fillX=%s fillY=%s AnchorX=%s AnchorY=%s " +
+      return String.format("GBSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s " +
                               "insets(top=%s left=%s bottom=%s right=%s) pad=%s,%s}",
-                           preferredWidth, preferredHeight, gridWidth, gridHeight, weightX, weightY, fillX, fillY, anchorX, anchorY,
+                           preferredWidth, preferredHeight, gridWidth, gridHeight, weightX, weightY, anchorX, anchorY,
                            insetTop, insetLeft, insetBottom, insetRight, iPadX, iPadY);
    }
 }

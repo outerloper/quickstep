@@ -26,7 +26,7 @@ public class CellSpecTest
    @Test
    public void testCopyConstructor()
    {
-      spec = spec().withAnchorY(AnchorY.TOP).withFill().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
+      spec = spec().withAnchor(X_BOTH, AnchorY.TOP).withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
       CellSpec copy = new CellSpec(spec);
       assertEquals(spec, copy);
    }
@@ -34,7 +34,7 @@ public class CellSpecTest
    @Test
    public void deriveMethodCopiesSpec()
    {
-      spec = spec().withAnchorY(AnchorY.TOP).withFill().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
+      spec = spec().withAnchor(X_BOTH, AnchorY.TOP).withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
       CellSpec copy = spec.derive();
       assertEquals(spec, copy);
       assertNotSame(spec, copy);
@@ -43,8 +43,8 @@ public class CellSpecTest
    @Test
    public void overrideMethodOverwritesAllNotNullFields()
    {
-      CellSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorX(AnchorX.LEFT).withAnchorY(AnchorY.BOTTOM).withFillX(false).withFillY().withInsetY(5);
-      CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
+      CellSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchor(X_LEFT, AnchorY.BOTTOM).withInsetY(5);
+      CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2);
       CellSpec spec3 = spec();
 
       spec2.overrideWith(spec1);
@@ -56,8 +56,6 @@ public class CellSpecTest
       assertEquals(null, spec2.getWeightY());
       assertEquals(AnchorX.LEFT, spec2.getAnchorX());
       assertEquals(AnchorY.BOTTOM, spec2.getAnchorY());
-      assertEquals(false, (boolean) spec2.getFillX());
-      assertEquals(true, (boolean) spec2.getFillY());
       assertEquals(5, (int) spec2.getInsetTop());
       assertEquals(10, (int) spec2.getInsetLeft());
       assertEquals(5, (int) spec2.getInsetBottom());
@@ -73,8 +71,8 @@ public class CellSpecTest
    @Test
    public void overwriteMethodOverwritesAllFieldsEvenNull()
    {
-      CellSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
-      CellSpec spec2 = spec().withPreferredSize(200, 60).withGridSize(3, 4).withAnchorY(AnchorY.BOTTOM).withFillY().withInset(5).withIPad(3);
+      CellSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2);
+      CellSpec spec2 = spec().withPreferredSize(200, 60).withGridSize(3, 4).withAnchorY(AnchorY.BOTTOM).withInset(5).withIPad(3);
       CellSpec spec3 = spec();
 
       spec2.overwriteWith(spec1);
@@ -87,9 +85,9 @@ public class CellSpecTest
    @Test
    public void testSpecEquals()
    {
-      CellSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
-      CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2);
-      CellSpec spec3 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(88);
+      CellSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2);
+      CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2);
+      CellSpec spec3 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(88);
       Object nullReference = null;
       assertFalse(spec1.equals(nullReference));
       assertTrue(spec1.equals(spec1));
@@ -101,7 +99,7 @@ public class CellSpecTest
    public void testGBCEqualForNullConstraints()
    {
       GridBagConstraints constraints = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
+         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2).toConstraints(1, 2);
       assertTrue(gbcEquals(null, null));
       assertFalse(gbcEquals(constraints, null));
       assertFalse(gbcEquals(null, constraints));
@@ -111,11 +109,11 @@ public class CellSpecTest
    public void testGBCEqualForNotNullConstraints()
    {
       GridBagConstraints constraints1 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
+         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2).toConstraints(1, 2);
       GridBagConstraints constraints2 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 2);
+         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2).toConstraints(1, 2);
       GridBagConstraints constraints3 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withFill().withInset(10).withIPad(2).toConstraints(1, 3);
+         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2).toConstraints(1, 3);
       assertTrue(gbcEquals(constraints1, constraints1));
       assertTrue(gbcEquals(constraints1, constraints2));
       assertFalse(gbcEquals(constraints1, constraints3));
@@ -176,8 +174,8 @@ public class CellSpecTest
    @Test
    public void testSpecToString()
    {
-      spec = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorY(AnchorY.BOTTOM).withFillY().withInsetY(5);
-      assertEquals("GBSpec{preferredSize=200,60 gridSize=3,null weight=null,null fillX=null fillY=true AnchorX=null AnchorY=BOTTOM " +
+      spec = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorY(AnchorY.BOTTOM).withInsetY(5);
+      assertEquals("GBSpec{preferredSize=200,60 gridSize=3,null weight=null,null anchorX=null anchorY=BOTTOM " +
                       "insets(top=5 left=null bottom=5 right=null) pad=null,null}", spec.toString());
    }
 
@@ -271,21 +269,21 @@ public class CellSpecTest
       spec = spec().withAnchorY(AnchorY.BOTTOM);
       assertEquals(AnchorY.BOTTOM, spec.getAnchorY());
 
-      spec = spec().withAnchorY(null);
+      spec = spec().withAnchorX((AnchorX) null); // TODO think
       assertNull(spec.getAnchorY());
    }
 
-   @Test
-   public void fillAccessors()
-   {
-      spec = spec().withFill();
-      assertTrue(spec.getFillX());
-      assertTrue(spec.getFillY());
-
-      spec = spec().withFill(null);
-      assertNull(spec.getFillX());
-      assertNull(spec.getFillY());
-   }
+//   @Test TODO
+//   public void fillAccessors()
+//   {
+//      spec = spec().withFill();
+//      assertTrue(spec.getFillX());
+//      assertTrue(spec.getFillY());
+//
+//      spec = spec().withFill(null);
+//      assertNull(spec.getFillX());
+//      assertNull(spec.getFillY());
+//   }
 
    @Test
    public void insetsAccessors()
@@ -360,33 +358,33 @@ public class CellSpecTest
       assertNull(spec.getIPadY());
    }
 
-   @Test
-   public void growHorizontallyActsLikeFillHorizontallyWithWeightX1()
-   {
-      spec = growX();
-      assertTrue(spec.getFillX());
-      assertNull(spec.getFillY());
-      assertEquals(1.0, spec.getWeightX());
-      assertNull(spec.getWeightY());
-   }
-
-   @Test
-   public void testGrowVerticallyActsLikeFillVerticallyWithWeightY1()
-   {
-      spec = growY();
-      assertNull(spec.getFillX());
-      assertTrue(spec.getFillY());
-      assertNull(spec.getWeightX());
-      assertEquals(1.0, spec.getWeightY());
-   }
-
-   @Test
-   public void testGrowBothActsLikeFillBothWithWeight1()
-   {
-      spec = grow();
-      assertTrue(spec.getFillX());
-      assertTrue(spec.getFillY());
-      assertEquals(1.0, spec.getWeightX());
-      assertEquals(1.0, spec.getWeightY());
-   }
+//   @Test TODO
+//   public void growHorizontallyActsLikeFillHorizontallyWithWeightX1()
+//   {
+//      spec = growX();
+//      assertTrue(spec.getFillX());
+//      assertNull(spec.getFillY());
+//      assertEquals(1.0, spec.getWeightX());
+//      assertNull(spec.getWeightY());
+//   }
+//
+//   @Test
+//   public void testGrowVerticallyActsLikeFillVerticallyWithWeightY1()
+//   {
+//      spec = growY();
+//      assertNull(spec.getFillX());
+//      assertTrue(spec.getFillY());
+//      assertNull(spec.getWeightX());
+//      assertEquals(1.0, spec.getWeightY());
+//   }
+//
+//   @Test
+//   public void testGrowBothActsLikeFillBothWithWeight1()
+//   {
+//      spec = grow();
+//      assertTrue(spec.getFillX());
+//      assertTrue(spec.getFillY());
+//      assertEquals(1.0, spec.getWeightX());
+//      assertEquals(1.0, spec.getWeightY());
+//   }
 }
