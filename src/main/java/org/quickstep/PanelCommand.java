@@ -20,7 +20,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
 
    protected PanelCommand(JPanel panel)
    {
-      this(panel, spec().withGap(5));
+      this(panel, spec().withGap(5).withAnchorX(AX.LEFT));
    }
 
    protected PanelCommand(JPanel panel, CellSpec defaultSpec)

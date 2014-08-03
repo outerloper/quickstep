@@ -52,19 +52,18 @@ public class RichFormDemo2 extends JFrame
       setVisible(true);
    }
 
+   // NOTE top-center alignment by default
+   // NOTE LineSpec, GridSpec, making panel()'s with*Spec extractable to separate method, panelCommand overriding GridSpec builder interface
    // TODO anchoring whole panel contents (what about making use of ResizablePanel?)
-   // TODO top-left alignment by default
    // TODO debug mode - called for every specific built component, propagated recursively, mark method as deprecated for ergonomic purposes
    // TODO check setAlignmentX/Y() not only for labels but also panels, checkboxes etc.. consider calling it via reflection
    // TODO growX() -> spec(Fill.HORIZONTAL/FILL_X) growY() -> spec(Fill.VERTICAL/FILL_Y) -> grow() -> spec(Fill.BOTH/FILL)
    // TODO nextLine() -> addLineBreak() ? - make sure nextLine() always moves to next line - also called consecutively
-   // TODO LineSpec, GridSpec, making panel()'s with*Spec extractable to separate method, panelCommand overriding GridSpec builder interface
    // TODO panel().with(container/panel) - if possible deferred usage of panel field
    // TODO panel(), verticalPanel()/columnPanel()/panelOfColumns() or, if above, panel(Orientation.HORIZONTAL/VERTICAL)
    // TODO .withAnchorX(X_LEFT) .withAnchor(X_BOTH, Y_TOP) .withAnchorY(Y_CENTER)
    // TODO line() as first statement hangs
    // TODO component method for wrapping component
-   // TODO gap applying to more than one row and no error when components overlaying
    // TODO merge fill and anchor -> alignment CENTER/BOTH - common names for X and Y, also remove withGap* methods?
    // TODO think about applying alignment to labels with preferred size
    // TODO this hangs: add(line().add("Eff:").add(effTextField).add("Disc").add(discTextField).add("Fr:").add(freqTextField))
@@ -72,20 +71,22 @@ public class RichFormDemo2 extends JFrame
    private void arrangeComponents()
    {
       buildContent(this, panel().
-         specifyDefault(growX().withAnchorX(AnchorX.LEFT)).
+         specifyDefault(growX()).
          withOrientation(Orientation.VERTICAL).
          add(panel().
             withBorder("Conditions").
-            specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT)).
+            specifyColumn(0, spec().withAnchorX(AX.RIGHT)).
             specifyColumn(1, spec().withPreferredWidth(70)).
-            specifyColumn(2, spec().withAnchorX(AnchorX.RIGHT).withWeightX(1.0).withGapX(40)).
+            specifyColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
             specifyColumn(3, spec().withPreferredWidth(70)).
-            specifyColumn(4, spec().withAnchorX(AnchorX.RIGHT).withWeightX(1.0).withGapX(40)).
+            specifyColumn(4, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
             specifyColumn(5, spec().withPreferredWidth(60)).
             addHeader("Section 1").
-            add(line().add("Start Date:").add(startDateTextField).
+//            add(line().
+               add("Start Date:").add(startDateTextField).
                add("End Date:").add(endDateTextField).
-               add("Freq:").add(freqTextField)).
+               add("Freq:").add(freqTextField).
+//            ).
             addBlank().
             addHeader("Section 2").
             add("Criterion 1:").add(criterion1TextField).
@@ -98,7 +99,7 @@ public class RichFormDemo2 extends JFrame
             addHeader("Section 4").
             add(lineWithCombo().add("Criterion 3 Level:").add(criterion3ComboBox).add(criterion3TextField)).
             add(lineWithCombo().add("Criterion 4 Level:").add(criterion4ComboBox).add(criterion4TextField).
-               add(roundTripCheckBox, spec().withAnchorX(AnchorX.LEFT).withGapX(10).withGridWidthRemaining())
+               add(roundTripCheckBox, spec().withInsetLeft(10).withGridWidthRemaining())
             ).
             addBlank().
             addHeader("Additional Conditions").
@@ -108,32 +109,29 @@ public class RichFormDemo2 extends JFrame
             addBlank()
          ).
          add(panel().
-            withSpec(growX().withAnchorX(AnchorX.LEFT)).
-            specifyDefault(spec().withAnchorY(AnchorY.BOTH)).
+            withSpec(growX()).
+            specifyDefault(spec().withAnchorY(AY.BOTH)).
             add(panel().
                withBorder("Direction").
-               specifyDefault(spec().withAnchorX(AnchorX.LEFT)).
                withOrientation(Orientation.VERTICAL).
                addAll(directionRadios)
             ).
             add(panel().
                withBorder("Scope").
-               specifyDefault(spec().withAnchorX(AnchorX.LEFT)).
                withOrientation(Orientation.VERTICAL).
                addAll(scopeRadios)
             ).
             add(panel().
                withBorder("Highlight").
-               withSpec(grow().withAnchorX(AnchorX.LEFT)).
-               specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT)).
-               specifyColumn(1, spec().withAnchorX(AnchorX.LEFT).withWeightX(1.0)).
-               specifyDefault(spec().withAnchorX(AnchorX.LEFT)).
+               withSpec(grow()).
+               specifyColumn(0, spec().withAnchorX(AX.RIGHT)).
+               specifyColumn(1, spec().withWeightX(1.0)).
                add(line().add("Color:").add(colorPicker)).
                add(line().add("Thickness:").add(thicknessComboBox))
             )
          ).
          add(panel().
-            withSpec(spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM).withWeightY(1.0)). // TODO withFill(bool, bool)
+            withSpec(spec().withAnchor(AX.RIGHT, AY.BOTTOM).withWeightY(1.0)). // TODO withFill(bool, bool)
             specifyDefault(spec().withPreferredWidth(66)).
             add(clearButton).add(findAllButton).add(findNextButton).add(closeButton)
          )
@@ -142,7 +140,7 @@ public class RichFormDemo2 extends JFrame
 
    private LineCommand lineWithCombo()
    {
-      return line().specifyCell(1, spec().withGridWidth(2).withAnchorX(AnchorX.BOTH).withInsetRight(5));
+      return line().specifyCell(1, spec().withGridWidth(2).withAnchorX(AX.BOTH).withInsetRight(5));
    }
 
    private void buildComponents()

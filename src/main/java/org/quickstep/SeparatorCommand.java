@@ -30,12 +30,12 @@ public class SeparatorCommand implements GridBagCommand
       if (vertical)
       {
          separator.setOrientation(JSeparator.VERTICAL);
-         spec.withWeightX(0.0).withAnchor(AnchorX.CENTER, AnchorY.BOTH);
+         spec.withWeightX(0.0).withAnchor(AX.CENTER, AY.BOTH);
       }
       else
       {
          separator.setOrientation(JSeparator.HORIZONTAL);
-         spec.withWeightY(0.0).withAnchor(AnchorX.BOTH, AnchorY.CENTER);
+         spec.withWeightY(0.0).withAnchor(AX.BOTH, AY.CENTER);
       }
 
       if (builder.isHorizontal() && !vertical)

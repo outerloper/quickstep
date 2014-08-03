@@ -25,7 +25,7 @@ public class HeaderCommand implements GridBagCommand
    public void apply(GridBagBuilder builder)
    {
       JComponent component = header == null ? builder.createDefaultHeader(text) : header;
-      CellSpec spec = spec().withAnchorX(GridBagToolKit.AnchorX.BOTH);
+      CellSpec spec = spec().withAnchorX(GridBagToolKit.AX.BOTH);
       GridBagCommand command;
 
       if (builder.isHorizontal())

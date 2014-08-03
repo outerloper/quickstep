@@ -12,8 +12,8 @@ public final class CellSpec
    private Integer gridHeight;
    private Double weightX;
    private Double weightY;
-   private AnchorX anchorX;
-   private AnchorY anchorY;
+   private AX anchorX;
+   private AY anchorY;
    private Integer insetTop;
    private Integer insetLeft;
    private Integer insetBottom;
@@ -50,8 +50,8 @@ public final class CellSpec
                    Integer gridHeight,
                    Double weightX,
                    Double weightY,
-                   AnchorX AnchorX,
-                   AnchorY AnchorY,
+                   AX AnchorX,
+                   AY AnchorY,
                    Integer insetTop,
                    Integer insetLeft,
                    Integer insetBottom,
@@ -196,12 +196,12 @@ public final class CellSpec
       return weightY;
    }
 
-   public AnchorX getAnchorX()
+   public AX getAnchorX()
    {
       return anchorX;
    }
 
-   public AnchorY getAnchorY()
+   public AY getAnchorY()
    {
       return anchorY;
    }
@@ -298,37 +298,46 @@ public final class CellSpec
       return withWeightX(x).withWeightY(y);
    }
 
-   public CellSpec withWeight(Double value)
+   public CellSpec withWeight(Double weightXAndY)
    {
-      return withWeight(value, value);
+      return withWeight(weightXAndY, weightXAndY);
    }
 
-   public CellSpec withAnchorX(AnchorX value)
+   public CellSpec withAnchorX(AX value)
    {
-      anchorX = value;
+      this.anchorX = value;
       return this;
    }
 
-   public CellSpec withAnchorY(AnchorY value)
+   public CellSpec withAnchorY(AY value)
    {
-      anchorY = value;
+      this.anchorY = value;
       return this;
    }
 
-   public CellSpec withAnchor(AnchorX x, AnchorY y)
+   public CellSpec withAnchor(AX anchorX, AY anchorY)
    {
-      return withAnchorX(x).withAnchorY(y);
+      return withAnchorX(anchorX).withAnchorY(anchorY);
    }
 
-   public CellSpec withInsetTop(Integer value)
+   public CellSpec withAnchor(A anchorXAndY)
    {
-      insetTop = value;
+      if (A.CENTER.equals(anchorXAndY))
+      {
+         return withAnchor(AX.CENTER, AY.CENTER);
+      }
+      return withAnchor(AX.BOTH, AY.BOTH);
+   }
+
+   public CellSpec withInsetTop(Integer top)
+   {
+      insetTop = top;
       return this;
    }
 
-   public CellSpec withInsetLeft(Integer value)
+   public CellSpec withInsetLeft(Integer left)
    {
-      insetLeft = value;
+      insetLeft = left;
       return this;
    }
 
@@ -344,14 +353,14 @@ public final class CellSpec
       return this;
    }
 
-   public CellSpec withInsetX(Integer value)
+   public CellSpec withInsetX(Integer leftAndRight)
    {
-      return withInsetLeft(value).withInsetRight(value);
+      return withInsetLeft(leftAndRight).withInsetRight(leftAndRight);
    }
 
-   public CellSpec withInsetY(Integer value)
+   public CellSpec withInsetY(Integer topAndBottom)
    {
-      return withInsetTop(value).withInsetBottom(value);
+      return withInsetTop(topAndBottom).withInsetBottom(topAndBottom);
    }
 
    public CellSpec withInset(Integer value)
@@ -359,29 +368,19 @@ public final class CellSpec
       return withInset(value, value, value, value);
    }
 
-   public CellSpec withInset(Integer x, Integer y)
+   public CellSpec withInset(Integer leftAndRight, Integer topAndBottom)
    {
-      return withInset(y, x, y, x);
+      return withInset(topAndBottom, leftAndRight, topAndBottom, leftAndRight);
    }
 
-   public CellSpec withGapX(Integer value)
+   public CellSpec withGap(Integer insetTop, Integer insetLeft)
    {
-      return withInsetLeft(value);
+      return withInsetLeft(insetLeft).withInsetTop(insetTop);
    }
 
-   public CellSpec withGapY(Integer value)
+   public CellSpec withGap(Integer insetTopAndLeft)
    {
-      return withInsetTop(value);
-   }
-
-   public CellSpec withGap(Integer x, Integer y)
-   {
-      return withGapX(x).withGapY(y);
-   }
-
-   public CellSpec withGap(Integer value)
-   {
-      return withGap(value, value);
+      return withGap(insetTopAndLeft, insetTopAndLeft);
    }
 
    public CellSpec withInset(Integer top, Integer left, Integer bottom, Integer right)
@@ -406,9 +405,9 @@ public final class CellSpec
       return withIPadX(x).withIPadY(y);
    }
 
-   public CellSpec withIPad(Integer value)
+   public CellSpec withIPad(Integer iPadXAndY)
    {
-      return withIPad(value, value);
+      return withIPad(iPadXAndY, iPadXAndY);
    }
 
 
@@ -430,8 +429,8 @@ public final class CellSpec
 
    public int getAnchor() // TODO getAnchor/getAlignment
    {
-      AnchorX x = anchorX == null ? AnchorX.CENTER : anchorX;
-      AnchorY y = anchorY == null ? AnchorY.CENTER : anchorY;
+      AX x = anchorX == null ? AX.CENTER : anchorX;
+      AY y = anchorY == null ? AY.CENTER : anchorY;
       switch (y)
       {
          case TOP:
@@ -465,8 +464,8 @@ public final class CellSpec
 
    public int getFill()
    {
-      Boolean fillX = anchorX != null && AnchorX.BOTH.equals(anchorX);
-      Boolean fillY = anchorY != null && AnchorY.BOTH.equals(anchorY);
+      Boolean fillX = anchorX != null && AX.BOTH.equals(anchorX);
+      Boolean fillY = anchorY != null && AY.BOTH.equals(anchorY);
       if (fillX)
       {
          if (fillY)

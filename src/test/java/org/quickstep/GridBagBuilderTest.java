@@ -64,9 +64,9 @@ public class GridBagBuilderTest
    @Test
    public void testAddComponents()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(1, 0, spec().withInsetLeft(5)));
-      panel.add(anyComponent(), gbc(2, 0, spec().withInsetLeft(5)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT)));
+      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AX.LEFT).withInsetLeft(5)));
+      panel.add(anyComponent(), gbc(2, 0, spec().withAnchorX(AX.LEFT).withInsetLeft(5)));
 
       replay(panel);
 
@@ -82,11 +82,11 @@ public class GridBagBuilderTest
    @Test
    public void wrapRowWhenBuilderGridWidthIsSet()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(1, 0, spec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 2, spec().withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT)));
+      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 2, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
 
       replay(panel);
 
@@ -105,9 +105,9 @@ public class GridBagBuilderTest
    @Test
    public void wrapRowWhenNextRowInvoked()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT)));
+      panel.add(anyComponent(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0)));
 
       replay(panel);
 
@@ -124,9 +124,9 @@ public class GridBagBuilderTest
    @Test
    public void wrapRowWhenRemainingGridWidthUsed()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withGridWidthRemaining()));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT).withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0)));
 
       replay(panel);
 
@@ -142,8 +142,8 @@ public class GridBagBuilderTest
    @Test
    public void wrapRowOnlyOnceWhenComponentIsLastInRowAndNextRowInvoked()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withGridWidthRemaining()));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT).withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
 
       replay(panel);
 
@@ -160,10 +160,10 @@ public class GridBagBuilderTest
    @Test
    public void specifyCellDefaultsMethodOverridesImplicitDefaultSpecForAddedComponents()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withInset(0, 0, 3, 10)));
-      panel.add(anyComponent(), gbc(1, 0, spec().withInset(0, 10, 3, 10).withGridWidthRemaining()));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(3, 0, 3, 10)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(3, 10, 3, 10)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT).withInset(0, 0, 3, 10)));
+      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AX.LEFT).withInset(0, 10, 3, 10).withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(3, 0, 3, 10)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(3, 10, 3, 10)));
 
       replay(panel);
 
@@ -181,16 +181,16 @@ public class GridBagBuilderTest
    @Test
    public void columnSpecOverridesCellDefaults()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AnchorX.RIGHT).withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AnchorX.RIGHT).withInset(5, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT)));
+      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AX.LEFT).withAnchorX(AX.RIGHT).withInset(0, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withAnchorX(AX.RIGHT).withInset(5, 5, 0, 0)));
 
       replay(panel);
 
       panel(panel).
          withMaxLineLength(2).
-         specifyColumn(1, spec().withAnchorX(AnchorX.RIGHT)).
+         specifyColumn(1, spec().withAnchorX(AX.RIGHT)).
          add(new JLabel()).
          add(new JLabel()).
          add(new JLabel()).
@@ -203,10 +203,10 @@ public class GridBagBuilderTest
    @Test
    public void rowSpecOverridesCellDefaults()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(1, 0, spec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(20, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(20, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT)));
+      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(20, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(20, 5, 0, 0)));
 
       replay(panel);
 
@@ -225,7 +225,7 @@ public class GridBagBuilderTest
    @Test
    public void cellSpecOverridesRowAndColumnSpec()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withInset(10, 10, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT).withInset(10, 10, 0, 0)));
 
       replay(panel);
 
@@ -244,7 +244,7 @@ public class GridBagBuilderTest
       panel.add(anyComponent(), anyGbc());
       panel.add(anyComponent(), anyGbc());
       panel.add(anyComponent(), anyGbc());
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0).withInsetBottom(30)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0).withInsetBottom(30)));
 
       replay(panel);
 
@@ -265,7 +265,7 @@ public class GridBagBuilderTest
       panel.add(anyComponent(), anyGbc());
       panel.add(anyComponent(), anyGbc());
       panel.add(anyComponent(), anyGbc());
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0).withInsetBottom(30)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0).withInsetBottom(30)));
 
       replay(panel);
 
@@ -283,14 +283,14 @@ public class GridBagBuilderTest
    @Test
    public void specProvidedForAddOverridesAllOtherSpecsForCurrentCell()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withAnchor(AnchorX.LEFT, AnchorY.TOP)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchor(AX.LEFT, AY.TOP)));
 
       replay(panel);
 
       panel(panel).
          withMaxLineLength(2).
-         specifyCell(0, 0, spec().withAnchor(AnchorX.RIGHT, AnchorY.BOTTOM)).
-         add(new JLabel(), spec().withAnchor(AnchorX.LEFT, AnchorY.TOP)).
+         specifyCell(0, 0, spec().withAnchor(AX.RIGHT, AY.BOTTOM)).
+         add(new JLabel(), spec().withAnchor(AX.LEFT, AY.TOP)).
          getComponent();
 
       verify(panel);
@@ -299,8 +299,8 @@ public class GridBagBuilderTest
    @Test
    public void componentsArePlacedOnGridRespectingTheirGridWidth()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withGridWidth(2)));
-      panel.add(anyComponent(), gbc(2, 0, spec().withInset(0, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT).withGridWidth(2)));
+      panel.add(anyComponent(), gbc(2, 0, spec().withAnchorX(AX.LEFT).withInset(0, 5, 0, 0)));
 
       replay(panel);
 
@@ -315,9 +315,9 @@ public class GridBagBuilderTest
    @Test
    public void componentsArePlacedOnGridRespectingTheirGridHeight()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withGridHeight(2)));
-      panel.add(anyComponent(), gbc(1, 0, spec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT).withGridHeight(2)));
+      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0)));
 
       replay(panel);
 
@@ -334,10 +334,10 @@ public class GridBagBuilderTest
    @Test
    public void componentsArePlacedOnGridRespectingTheirGridSize()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec().withGridSize(2, 2)));
-      panel.add(anyComponent(), gbc(2, 0, spec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(2, 1, spec().withInset(5, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 2, spec().withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT).withGridSize(2, 2)));
+      panel.add(anyComponent(), gbc(2, 0, spec().withAnchorX(AX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(2, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 2, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
 
       replay(panel);
 
@@ -355,12 +355,12 @@ public class GridBagBuilderTest
    @Test
    public void noMoreComponentsArePlacedAtColumnWithComponentTakingRemainingGridHeight()
    {
-      panel.add(anyComponent(), gbc(0, 0, spec()));
-      panel.add(anyComponent(), gbc(1, 0, spec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 1, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, spec().withInset(5, 5, 0, 0).withGridHeightRemaining()));
-      panel.add(anyComponent(), gbc(0, 2, spec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 3, spec().withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, spec().withAnchorX(AX.LEFT)));
+      panel.add(anyComponent(), gbc(1, 0, spec().withAnchorX(AX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0).withGridHeightRemaining()));
+      panel.add(anyComponent(), gbc(0, 2, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 3, spec().withAnchorX(AX.LEFT).withInset(5, 0, 0, 0)));
 
       replay(panel);
 
@@ -385,19 +385,19 @@ public class GridBagBuilderTest
       {
          checkBoxes.add(new JCheckBox());
       }
-      panel.add((JComponent) anyObject(), gbc(0, 0, spec().withAnchorX(AnchorX.LEFT).withInset(0, 30, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 0, spec().withAnchorX(AnchorX.LEFT).withInset(0, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(2, 0, spec().withAnchorX(AnchorX.LEFT).withInset(0, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(0, 1, spec().withAnchorX(AnchorX.LEFT).withInset(5, 30, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(1, 1, spec().withAnchorX(AnchorX.LEFT).withInset(5, 5, 0, 0)));
-      panel.add((JComponent) anyObject(), gbc(2, 1, spec().withAnchorX(AnchorX.LEFT).withInset(5, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(0, 0, spec().withAnchorX(AX.LEFT).withInset(0, 30, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(1, 0, spec().withAnchorX(AX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(2, 0, spec().withAnchorX(AX.LEFT).withInset(0, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(0, 1, spec().withAnchorX(AX.LEFT).withInset(5, 30, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(1, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0)));
+      panel.add((JComponent) anyObject(), gbc(2, 1, spec().withAnchorX(AX.LEFT).withInset(5, 5, 0, 0)));
 
       replay(panel);
 
       panel(panel).
          withMaxLineLength(3).
-         specifyColumn(0, spec().withAnchorX(AnchorX.RIGHT).withInsetLeft(30)).
-         addAll(checkBoxes, spec().withAnchorX(AnchorX.LEFT)).
+         specifyColumn(0, spec().withAnchorX(AX.RIGHT).withInsetLeft(30)).
+         addAll(checkBoxes, spec().withAnchorX(AX.LEFT)).
          getComponent();
 
       verify(panel);

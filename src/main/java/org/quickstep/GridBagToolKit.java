@@ -13,12 +13,17 @@ public final class GridBagToolKit
       NONE, X, Y, BOTH
    }
 
-   public static enum AnchorX
+   public static enum A
+   {
+      CENTER, BOTH
+   }
+
+   public static enum AX
    {
       CENTER, LEFT, RIGHT, BOTH
    }
 
-   public static enum AnchorY
+   public static enum AY
    {
       CENTER, TOP, BOTTOM, BOTH
    }
@@ -57,23 +62,23 @@ public final class GridBagToolKit
 
    public static CellSpec growX()
    {
-      return spec().withAnchorX(AnchorX.BOTH).withWeightX(1.0);
+      return spec().withAnchorX(AX.BOTH).withWeightX(1.0);
    }
 
    public static CellSpec growY()
    {
-      return spec().withAnchorY(AnchorY.BOTH).withWeightY(1.0);
+      return spec().withAnchorY(AY.BOTH).withWeightY(1.0);
    }
 
    public static CellSpec grow()
    {
-      return spec().withAnchor(AnchorX.BOTH, AnchorY.BOTH).withWeight(1.0, 1.0);
+      return spec().withAnchor(AX.BOTH, AY.BOTH).withWeight(1.0, 1.0);
    }
 
 
    public static CellSpec completeSpec()
    {
-      return new CellSpec(null, null, 1, 1, 0.0, 0.0, AnchorX.CENTER, AnchorY.CENTER, 0, 0, 0, 0, 0, 0);
+      return new CellSpec(null, null, 1, 1, 0.0, 0.0, AX.CENTER, AY.CENTER, 0, 0, 0, 0, 0, 0);
    }
 
 
