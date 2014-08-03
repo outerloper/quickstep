@@ -65,12 +65,7 @@ public final class GridBagToolKit
 
    public static PanelCommand panel()
    {
-      return new PanelCommand(new ResizablePanel());
-   }
-
-   public static PanelCommand panel(JPanel panel)
-   {
-      return new PanelCommand(panel);
+      return new PanelCommand();
    }
 
    public static LineCommand line()

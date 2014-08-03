@@ -18,15 +18,13 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    private Border border;
    private JScrollPane scroll;
 
-   protected PanelCommand(JPanel panel)
+   protected PanelCommand()
    {
-      this(panel, spec().withGap(5).withAnchorX(AX.LEFT));
+      this(spec().withGap(5).withAnchorX(AX.LEFT));
    }
 
-   protected PanelCommand(JPanel panel, CellSpec defaultSpec)
+   protected PanelCommand(CellSpec defaultSpec)
    {
-      this.panel = panel;
-
       specifyDefault(defaultSpec);
       specifyRow(0, spec().withInsetTop(0));
       specifyColumn(0, spec().withInsetLeft(0));
@@ -119,9 +117,9 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    @Override
    public JComponent getComponent()
    {
-      JPanel content = panel;
+      JPanel content = panel != null ? panel : new ResizablePanel();
       content.setLayout(new GridBagLayout());
-      GridBagBuilder builder = createBuilder();
+      GridBagBuilder builder = createBuilder(content);
       for (GridBagCommand command : commandsCollector)
       {
          command.apply(builder);
@@ -140,7 +138,7 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       return content;
    }
 
-   protected GridBagBuilder createBuilder()
+   protected GridBagBuilder createBuilder(JPanel panel)
    {
       return new GridBagBuilder(gridSpec, panel);
    }
@@ -177,6 +175,12 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    public final PanelCommand specifyCell(int x, int y, CellSpec spec)
    {
       gridSpec.specifyCell(x, y, spec);
+      return this;
+   }
+
+   public final PanelCommand with(JPanel panel)
+   {
+      this.panel = panel;
       return this;
    }
 

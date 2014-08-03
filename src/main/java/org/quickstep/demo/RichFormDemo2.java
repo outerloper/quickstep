@@ -53,7 +53,6 @@ public class RichFormDemo2 extends JFrame
    }
 
    // TODO anchoring whole panel contents (what about making use of ResizablePanel?)
-   // TODO panel().with(container/panel) - if possible deferred usage of panel field
    // TODO panel(), verticalPanel()/columnPanel()/panelOfColumns() or, if above, panel(Orientation.HORIZONTAL/VERTICAL)
    // TODO component method for wrapping component
    // TODO think about applying alignment to labels with preferred size

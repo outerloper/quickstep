@@ -15,6 +15,7 @@ import static org.quickstep.util.DebugSupport.gbcToString;
 public class GridBagBuilderTest
 {
    private JPanel panel;
+   private PanelCommand panelCommand;
 
    static class GBCMatcher implements IArgumentMatcher
    {
@@ -70,6 +71,7 @@ public class GridBagBuilderTest
    {
       panel = createMock(JPanel.class);
       panel.setLayout((LayoutManager) anyObject());
+      panelCommand = panel().with(panel);
    }
 
    @Test
@@ -81,7 +83,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(aComponent()).
          add(aComponent()).
          add(aComponent()).
@@ -101,7 +103,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          add(aComponent()).
          add(aComponent()).
@@ -122,7 +124,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(aComponent()).
          addLineBreak().
          add(aComponent()).
@@ -141,7 +143,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(aComponent(), spec().withGridWidthRemaining()).
          add(aComponent()).
          add(aComponent()).
@@ -160,7 +162,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          specifyDefault(spec().withInset(10, 3)).
          add(aComponent()).
          add(aComponent(), spec().withGridWidthRemaining()).
@@ -181,7 +183,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          specifyColumn(1, spec().withAnchorX(AX.RIGHT)).
          add(aComponent()).
@@ -203,7 +205,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          specifyRow(1, spec().withInsetTop(20)).
          add(aComponent()).
@@ -222,7 +224,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          specifyCell(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
          add(aComponent()).
@@ -241,7 +243,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          specifyRow(1, spec().withInsetBottom(20)).
          specifyColumn(1, spec().withInsetBottom(30)).
@@ -262,7 +264,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          specifyColumn(1, spec().withInsetBottom(20)).
          specifyRow(1, spec().withInsetBottom(30)).
@@ -280,7 +282,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          specifyCell(0, 0, spec().withAnchor(AX.RIGHT, AY.BOTTOM)).
          add(aComponent(), spec().withAnchor(AX.LEFT, AY.TOP)).
@@ -297,7 +299,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(aComponent(), spec().withGridWidth(2)).
          add(aComponent()).
          getComponent();
@@ -314,7 +316,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          add(aComponent(), spec().withGridHeight(2)).
          add(aComponent()).
@@ -334,7 +336,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(3).
          add(aComponent(), spec().withGridSize(2, 2)).
          add(aComponent()).
@@ -357,7 +359,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(2).
          add(aComponent()).
          add(aComponent()).
@@ -387,7 +389,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          withMaxLineLength(3).
          specifyColumn(0, spec().withAnchorX(AX.RIGHT).withInsetLeft(30)).
          addAll(checkBoxes, defaultSpec()).
@@ -405,9 +407,9 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      PanelCommand builder = panel(auxPanel).
+      PanelCommand builder = panel().with(auxPanel).
          withSpec(specWithFill());
-      panel(panel).
+      panelCommand.
          specifyCell(0, 0, spec().withInsetRight(50)).
          add(builder).
          getComponent();
@@ -423,7 +425,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(line().add(aComponent(), spec().withGridWidthRemaining())).
          add(line().add(aComponent())).
          getComponent();
@@ -439,7 +441,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(line()).
          add(line().add(aComponent())).
          add(line()).
@@ -461,7 +463,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(aComponent()).
          add(aComponent()).
          add(line().add(aComponent())).
@@ -483,7 +485,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(line().add(aComponent()).add(aComponent()).add(aComponent())).
          add(line().add(aComponent()).add(aComponent())).
          add(line().add(aComponent())).
@@ -501,7 +503,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(line().
             add(aComponent(), spec().withIPad(4)).
             add(aComponent(), spec().withGridSize(2, 2)).
@@ -521,7 +523,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          add(seq().
             add(aComponent(), spec().withIPad(4)).
             add(aComponent(), spec().withGridSize(2, 2)).
@@ -541,7 +543,7 @@ public class GridBagBuilderTest
 
       replay(panel);
 
-      panel(panel).
+      panelCommand.
          addLineBreak().
          addLineBreak().
          add(aComponent()).
