@@ -39,9 +39,9 @@ public class SpannedCellsDemo extends JFrame
       buildContent(this, panel().
          withMaxLineLength(1).
          add(panel().
-            withSpec(grow()).
+            withSpec(specWithFill()).
             withMaxLineLength(4).
-            specifyDefault(grow()).
+            specifyDefault(specWithFill()).
             specifyCell(1, 2, spec().withGridSize(2, 3)).
             specifyCell(0, 5, spec().withGridSize(2, 2)).
             specifyCell(2, 7, spec().withGridSize(1, 2)).

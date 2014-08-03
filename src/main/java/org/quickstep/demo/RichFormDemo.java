@@ -41,14 +41,14 @@ public class RichFormDemo extends JFrame
    private void arrangeComponents()
    {
       buildContent(this, panel().
-         add(peopleList, grow().withGridHeightRemaining()).
+         add(peopleList, specWithFill().withGridHeightRemaining()).
          add(panel().
-            withSpec(growX().withAnchorY(AY.TOP)).
+            withSpec(specWithFillX().withAnchorY(AY.TOP)).
             withMaxLineLength(4).
             specifyColumn(0, spec().withAnchorX(AX.RIGHT).withWeightX(0.2)).
-            specifyColumn(1, growX()).
+            specifyColumn(1, specWithFillX()).
             specifyColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(0.2)).
-            specifyColumn(3, growX()).
+            specifyColumn(3, specWithFillX()).
             add("Last name").
             add(lastNameTextField).
             add("First name").
@@ -58,9 +58,9 @@ public class RichFormDemo extends JFrame
             add("Email").
             add(emailTextField).
             add("Address 1").
-            add(address1TextField, growX().withGridWidthRemaining()).
+            add(address1TextField, specWithFillX().withGridWidthRemaining()).
             add("Address 2").
-            add(address2TextField, growX().withGridWidthRemaining()).
+            add(address2TextField, specWithFillX().withGridWidthRemaining()).
             add("City").
             add(cityTextField).
             add("Postal Code", spec().withGridHeight(2)).
@@ -70,7 +70,7 @@ public class RichFormDemo extends JFrame
          ).
          nextLine().
          add(panel().
-            withSpec(growX().withAnchorY(AY.BOTTOM).withGridWidthRemaining()).
+            withSpec(specWithFillX().withAnchorY(AY.BOTTOM).withGridWidthRemaining()).
             specifyDefault(spec().withPreferredWidth(66)).
             add(newButton).
             add(deleteButton).

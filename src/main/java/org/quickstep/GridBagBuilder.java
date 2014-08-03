@@ -239,7 +239,7 @@ public class GridBagBuilder
 
    protected JComponent createDefaultHeader(String title)
    {
-      return panel().add(title).add(createDefaultSeparator(), growX()).getComponent();
+      return panel().add(title).add(createDefaultSeparator(), specWithFillX()).getComponent();
    }
 
    protected JSeparator createDefaultSeparator()

@@ -8,11 +8,6 @@ import org.quickstep.util.DebugSupport;
 
 public final class GridBagToolKit
 {
-   public static enum Fill
-   {
-      NONE, X, Y, BOTH
-   }
-
    public static enum A
    {
       CENTER, BOTH
@@ -46,31 +41,17 @@ public final class GridBagToolKit
       return new CellSpec();
    }
 
-   public static CellSpec spec(Fill fill)
-   {
-      switch (fill)
-      {
-         case BOTH:
-            return grow();
-         case X:
-            return growX();
-         case Y:
-            return growY();
-      }
-      return spec();
-   }
-
-   public static CellSpec growX()
+   public static CellSpec specWithFillX()
    {
       return spec().withAnchorX(AX.BOTH).withWeightX(1.0);
    }
 
-   public static CellSpec growY()
+   public static CellSpec specWithFillY()
    {
       return spec().withAnchorY(AY.BOTH).withWeightY(1.0);
    }
 
-   public static CellSpec grow()
+   public static CellSpec specWithFill()
    {
       return spec().withAnchor(AX.BOTH, AY.BOTH).withWeight(1.0, 1.0);
    }
@@ -107,7 +88,7 @@ public final class GridBagToolKit
    {
       container.setLayout(new GridBagLayout());
       JComponent component = command.getComponent();
-      GridBagConstraints constraints = grow().withInset(5).overrideWith(command.getSpec()).toConstraints(0, 0);
+      GridBagConstraints constraints = specWithFill().withInset(5).overrideWith(command.getSpec()).toConstraints(0, 0);
 
       container.add(component, constraints);
       DebugSupport.attachDebugInfo(component, container, constraints);

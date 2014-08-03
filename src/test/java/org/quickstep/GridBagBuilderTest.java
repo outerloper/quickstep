@@ -408,12 +408,12 @@ public class GridBagBuilderTest
    {
       JPanel auxPanel = new JPanel();
 
-      panel.add(eq(auxPanel), gbc(0, 0, grow().withInset(0, 0, 0, 50)));
+      panel.add(eq(auxPanel), gbc(0, 0, specWithFill().withInset(0, 0, 0, 50)));
 
       replay(panel);
 
-      PanelCommand builder = panel(auxPanel)
-         .withSpec(grow());
+      PanelCommand builder = panel(auxPanel).
+         withSpec(specWithFill());
       panel(panel).
          specifyCell(0, 0, spec().withInsetRight(50)).
          add(builder).
