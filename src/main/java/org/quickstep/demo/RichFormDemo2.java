@@ -52,16 +52,11 @@ public class RichFormDemo2 extends JFrame
       setVisible(true);
    }
 
-   // TODO anchoring whole panel contents (what about making use of ResizablePanel?)
-   // TODO panel(), verticalPanel()/columnPanel()/panelOfColumns() or, if above, panel(Orientation.HORIZONTAL/VERTICAL)
-   // TODO component method for wrapping component
-   // TODO think about applying alignment to labels with preferred size
-   // TODO guard for hanging
    private void arrangeComponents()
    {
       buildContent(this, panel().
-         specifyDefault(specWithFillX()).
          withOrientation(Orientation.VERTICAL).
+         specifyDefault(specWithFillX()).
          add(panel().
             withBorder("Conditions").
             specifyColumn(0, spec().withAnchorX(AX.RIGHT)).
@@ -73,17 +68,17 @@ public class RichFormDemo2 extends JFrame
             addHeader("Section 1").
             add(line().
                add("Start Date:").add(startDateTextField).
-               add("End Date:").add(endDateTextField).
-               add("Freq:").add(freqTextField)
-            ).
+               add("End Date:").add(endDateTextField).add("Freq:").add(freqTextField)).
             addBlank().
             addHeader("Section 2").
-            add("Criterion 1:").add(criterion1TextField).
-            add("Criterion 2:").add(criterion2TextField).
+            add(line().
+               add("Criterion 1:").add(criterion1TextField).
+               add("Criterion 2:").add(criterion2TextField)).
             addBlank().
             addHeader("Section 3").
-            add("Additional Criterion 1:").add(additionalCriterion1TextField).
-            add("Additional Criterion 2:").add(additionalCriterion2TextField).
+            add(line().
+               add("Additional Criterion 1:").add(additionalCriterion1TextField).
+               add("Additional Criterion 2:").add(additionalCriterion2TextField)).
             addBlank().
             addHeader("Section 4").
             add(lineWithCombo().add("Criterion 3 Level:").add(criterion3ComboBox).add(criterion3TextField)).
@@ -101,13 +96,13 @@ public class RichFormDemo2 extends JFrame
             withSpec(specWithFillX()).
             specifyDefault(spec().withAnchorY(AY.BOTH)).
             add(panel().
-               withBorder("Direction").
                withOrientation(Orientation.VERTICAL).
+               withBorder("Direction").
                addAll(directionRadios)
             ).
             add(panel().
-               withBorder("Scope").
                withOrientation(Orientation.VERTICAL).
+               withBorder("Scope").
                addAll(scopeRadios)
             ).
             add(panel().
@@ -150,7 +145,7 @@ public class RichFormDemo2 extends JFrame
 
    public static void main(String[] args) throws Exception
    {
-      debug();
+//      debug();
 //      UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       new RichFormDemo2();
