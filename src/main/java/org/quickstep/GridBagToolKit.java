@@ -8,36 +8,17 @@ import org.quickstep.util.DebugSupport;
 
 public final class GridBagToolKit
 {
-
-   public static final Fill FILL_NONE = Fill.NONE;
-   public static final Fill FILL_X = Fill.X;
-   public static final Fill FILL_Y = Fill.Y;
-   public static final Fill FILL_BOTH = Fill.BOTH;
-
-   public static final AnchorX X_CENTER = AnchorX.CENTER;
-   public static final AnchorX X_LEFT = AnchorX.LEFT;
-   public static final AnchorX X_RIGHT = AnchorX.RIGHT;
-   public static final AnchorX X_BOTH = AnchorX.BOTH;
-
-   public static final AnchorY Y_CENTER = AnchorY.CENTER;
-   public static final AnchorY Y_TOP = AnchorY.TOP;
-   public static final AnchorY Y_BOTTOM = AnchorY.BOTTOM;
-   public static final AnchorY Y_BOTH = AnchorY.BOTH;
-
-   private interface AX {}
-   private interface AY {}
-
-   public static enum Fill implements AX, AY
+   public static enum Fill
    {
       NONE, X, Y, BOTH
    }
 
-   public static enum AnchorX implements AX
+   public static enum AnchorX
    {
       CENTER, LEFT, RIGHT, BOTH
    }
 
-   public static enum AnchorY implements AY
+   public static enum AnchorY
    {
       CENTER, TOP, BOTTOM, BOTH
    }
@@ -76,17 +57,17 @@ public final class GridBagToolKit
 
    public static CellSpec growX()
    {
-      return spec().withAnchorX(X_BOTH).withWeightX(1.0);
+      return spec().withAnchorX(AnchorX.BOTH).withWeightX(1.0);
    }
 
    public static CellSpec growY()
    {
-      return spec().withAnchorY(Y_BOTH).withWeightY(1.0);
+      return spec().withAnchorY(AnchorY.BOTH).withWeightY(1.0);
    }
 
    public static CellSpec grow()
    {
-      return spec().withAnchor(X_BOTH, Y_BOTH).withWeight(1.0, 1.0);
+      return spec().withAnchor(AnchorX.BOTH, AnchorY.BOTH).withWeight(1.0, 1.0);
    }
 
 

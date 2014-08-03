@@ -26,7 +26,7 @@ public class CellSpecTest
    @Test
    public void testCopyConstructor()
    {
-      spec = spec().withAnchor(X_BOTH, AnchorY.TOP).withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
+      spec = spec().withAnchor(AnchorX.BOTH, AnchorY.TOP).withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
       CellSpec copy = new CellSpec(spec);
       assertEquals(spec, copy);
    }
@@ -34,7 +34,7 @@ public class CellSpecTest
    @Test
    public void deriveMethodCopiesSpec()
    {
-      spec = spec().withAnchor(X_BOTH, AnchorY.TOP).withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
+      spec = spec().withAnchor(AnchorX.BOTH, AnchorY.TOP).withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
       CellSpec copy = spec.derive();
       assertEquals(spec, copy);
       assertNotSame(spec, copy);
@@ -43,7 +43,7 @@ public class CellSpecTest
    @Test
    public void overrideMethodOverwritesAllNotNullFields()
    {
-      CellSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchor(X_LEFT, AnchorY.BOTTOM).withInsetY(5);
+      CellSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchor(AnchorX.LEFT, AnchorY.BOTTOM).withInsetY(5);
       CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AnchorY.TOP).withInset(10).withIPad(2);
       CellSpec spec3 = spec();
 

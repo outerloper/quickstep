@@ -2,7 +2,6 @@ package org.quickstep;
 
 import javax.swing.*;
 
-import static org.quickstep.GridBagToolKit.X_BOTH;
 import static org.quickstep.GridBagToolKit.line;
 import static org.quickstep.GridBagToolKit.spec;
 
@@ -26,7 +25,7 @@ public class HeaderCommand implements GridBagCommand
    public void apply(GridBagBuilder builder)
    {
       JComponent component = header == null ? builder.createDefaultHeader(text) : header;
-      CellSpec spec = spec().withAnchorX(X_BOTH);
+      CellSpec spec = spec().withAnchorX(GridBagToolKit.AnchorX.BOTH);
       GridBagCommand command;
 
       if (builder.isHorizontal())

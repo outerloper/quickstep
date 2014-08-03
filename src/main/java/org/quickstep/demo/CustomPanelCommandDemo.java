@@ -43,7 +43,7 @@ class MyPanel extends PanelCommand
 {
    MyPanel()
    {
-      super(new JPanel(), spec().withAnchor(X_BOTH, Y_BOTH).withWeight(1.0).withGap(12));
+      super(new JPanel(), spec().withAnchor(AnchorX.BOTH, AnchorY.BOTH).withWeight(1.0).withGap(12));
    }
 
    @Override

@@ -465,8 +465,8 @@ public final class CellSpec
 
    public int getFill()
    {
-      Boolean fillX = anchorX != null && X_BOTH.equals(anchorX);
-      Boolean fillY = anchorY != null && Y_BOTH.equals(anchorY);
+      Boolean fillX = anchorX != null && AnchorX.BOTH.equals(anchorX);
+      Boolean fillY = anchorY != null && AnchorY.BOTH.equals(anchorY);
       if (fillX)
       {
          if (fillY)
