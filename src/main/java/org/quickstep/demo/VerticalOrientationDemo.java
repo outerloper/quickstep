@@ -12,9 +12,8 @@ public class VerticalOrientationDemo extends JFrame
 {
    public VerticalOrientationDemo() throws HeadlessException
    {
-      buildContent(this, panel().
+      buildContent(this, verticalPanel().
          withMaxLineLength(10).
-         withOrientation(Orientation.VERTICAL).
          withScroll().
          specifyDefault(specWithFill()).
          addAll(generateOptions())

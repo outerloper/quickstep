@@ -68,6 +68,11 @@ public final class GridBagToolKit
       return new PanelCommand();
    }
 
+   public static PanelCommand verticalPanel()
+   {
+      return panel().withOrientation(Orientation.VERTICAL);
+   }
+
    public static LineCommand line()
    {
       return new LineCommand();
