@@ -68,17 +68,20 @@ public class RichFormDemo2 extends JFrame
             addHeader("Section 1").
             add(line().
                add("Start Date:").add(startDateTextField).
-               add("End Date:").add(endDateTextField).add("Freq:").add(freqTextField)).
+               add("End Date:").add(endDateTextField).add("Freq:").add(freqTextField)
+            ).
             addBlank().
             addHeader("Section 2").
             add(line().
                add("Criterion 1:").add(criterion1TextField).
-               add("Criterion 2:").add(criterion2TextField)).
+               add("Criterion 2:").add(criterion2TextField)
+            ).
             addBlank().
             addHeader("Section 3").
             add(line().
                add("Additional Criterion 1:").add(additionalCriterion1TextField).
-               add("Additional Criterion 2:").add(additionalCriterion2TextField)).
+               add("Additional Criterion 2:").add(additionalCriterion2TextField)
+            ).
             addBlank().
             addHeader("Section 4").
             add(lineWithCombo().add("Criterion 3 Level:").add(criterion3ComboBox).add(criterion3TextField)).
@@ -124,7 +127,7 @@ public class RichFormDemo2 extends JFrame
 
    private LineCommand lineWithCombo()
    {
-      return line().specifyCell(1, spec().withGridWidth(2).withAnchorX(AX.BOTH).withInsetRight(5));
+      return line().specifyCell(1, spec().withGridWidth(2).withAnchorX(AX.BOTH));
    }
 
    private void buildComponents()

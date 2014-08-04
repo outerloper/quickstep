@@ -7,7 +7,7 @@ import static org.quickstep.GridBagToolKit.spec;
 public class LineSpec implements LineSpecBuilder<LineSpec>
 {
    private final CellSpec defaultSpec = spec();
-   private final Map<Integer, CellSpec> columnSpecs = new TreeMap<Integer, CellSpec>();
+   private final Map<Integer, CellSpec> cellsSpecs = new TreeMap<Integer, CellSpec>();
 
    public LineSpec()
    {
@@ -23,18 +23,27 @@ public class LineSpec implements LineSpecBuilder<LineSpec>
    @Override
    public LineSpec specifyCell(int i, CellSpec spec)
    {
-      columnSpecs.put(i, getSpecAt(i).overrideWith(spec));
+      CellSpec cellSpec = cellsSpecs.get(i);
+      if (cellSpec == null)
+      {
+         cellSpec = spec();
+      }
+      cellsSpecs.put(i, cellSpec.overrideWith(spec));
       return this;
    }
 
-   public CellSpec getSpecAt(int i) // TODO for public interface return copy
+   public CellSpec getDefaultSpec()
    {
-      CellSpec columnSpec = columnSpecs.get(i);
-      return defaultSpec.derive().overrideWith(columnSpec);
+      return defaultSpec.derive();
    }
 
-   public Set<Map.Entry<Integer, CellSpec>> getSpecifiedCells()
+   public Map<Integer, CellSpec> getSpecifiedCells()
    {
-      return columnSpecs.entrySet();
+      Map<Integer,CellSpec> result = new TreeMap<Integer, CellSpec>();
+      for (Map.Entry<Integer, CellSpec> entry : cellsSpecs.entrySet())
+      {
+         result.put(entry.getKey(), entry.getValue().derive());
+      }
+      return result;
    }
 }

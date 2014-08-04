@@ -107,15 +107,20 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
       builder.moveToPreviousCell();
 
       GridSpec gridSpec = builder.getGridSpec();
-      for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells())
+      if (builder.isHorizontal())
       {
-         if (builder.isHorizontal())
+         gridSpec.specifyRow(lineNumber, lineSpec.getDefaultSpec());
+         for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
          {
-            gridSpec.specifyCell(entry.getKey(), lineNumber, entry.getValue()); // TODO test this
+            gridSpec.specifyCell(entry.getKey(), lineNumber, entry.getValue());
          }
-         else
+      }
+      else
+      {
+         gridSpec.specifyColumn(lineNumber, lineSpec.getDefaultSpec());
+         for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
          {
-            gridSpec.specifyCell(lineNumber, entry.getKey(), entry.getValue());
+            gridSpec.specifyCell(entry.getKey(), lineNumber, entry.getValue());
          }
       }
 

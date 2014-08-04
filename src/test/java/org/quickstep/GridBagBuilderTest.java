@@ -4,67 +4,17 @@ import java.awt.*;
 import java.util.LinkedList;
 import javax.swing.*;
 
-import org.easymock.IArgumentMatcher;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.easymock.EasyMock.*;
 import static org.quickstep.GridBagToolKit.*;
-import static org.quickstep.util.DebugSupport.gbcEquals;
-import static org.quickstep.util.DebugSupport.gbcToString;
+import static org.quickstep.TestUtils.*;
 
 public class GridBagBuilderTest
 {
    private JPanel panel;
    private PanelCommand panelCommand;
-
-   static class GBCMatcher implements IArgumentMatcher
-   {
-      GridBagConstraints constraints;
-
-      GBCMatcher(GridBagConstraints constraints)
-      {
-         this.constraints = constraints;
-      }
-
-      @Override
-      public boolean matches(Object o)
-      {
-         return o instanceof GridBagConstraints && gbcEquals(constraints, (GridBagConstraints) o);
-      }
-
-      @Override
-      public void appendTo(StringBuffer stringBuffer)
-      {
-         stringBuffer.append(gbcToString(constraints));
-      }
-   }
-
-   static GBCMatcher gbc(int x, int y, CellSpec spec)
-   {
-      reportMatcher(new GBCMatcher(spec.toConstraints(x, y)));
-      return null;
-   }
-
-   private static GridBagConstraints anyGbc()
-   {
-      return anyObject(GridBagConstraints.class);
-   }
-
-   private static JComponent anyComponent()
-   {
-      return anyObject();
-   }
-
-   private static JLabel aComponent()
-   {
-      return new JLabel();
-   }
-
-   private static CellSpec defaultSpec()
-   {
-      return spec().withAnchorX(AX.LEFT);
-   }
-
 
    @Before
    public void setUp()
@@ -428,86 +378,6 @@ public class GridBagBuilderTest
       panelCommand.
          add(line().add(aComponent(), spec().withGridWidthRemaining())).
          add(line().add(aComponent())).
-         getComponent();
-
-      verify(panel);
-   }
-
-   @Test
-   public void addingEmptyLinesDoesNotDoAnything()
-   {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec()));
-      panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInsetTop(5)));
-
-      replay(panel);
-
-      panelCommand.
-         add(line()).
-         add(line().add(aComponent())).
-         add(line()).
-         add(line()).
-         add(line().add(aComponent())).
-         add(line()).
-         getComponent();
-
-      verify(panel);
-   }
-
-   @Test
-   public void whenAddingElementsAfterLineThenNewLineStarts()
-   {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec()));
-      panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInsetLeft(5)));
-      panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInsetTop(5)));
-      panel.add(anyComponent(), gbc(0, 2, defaultSpec().withInsetTop(5)));
-
-      replay(panel);
-
-      panelCommand.
-         add(aComponent()).
-         add(aComponent()).
-         add(line().add(aComponent())).
-         add(aComponent()).
-         getComponent();
-
-      verify(panel);
-   }
-
-   @Test
-   public void addingSubsequentLines()
-   {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec()));
-      panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInsetLeft(5)));
-      panel.add(anyComponent(), gbc(2, 0, defaultSpec().withInsetLeft(5)));
-      panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInsetTop(5)));
-      panel.add(anyComponent(), gbc(1, 1, defaultSpec().withGap(5)));
-      panel.add(anyComponent(), gbc(0, 2, defaultSpec().withInsetTop(5)));
-
-      replay(panel);
-
-      panelCommand.
-         add(line().add(aComponent()).add(aComponent()).add(aComponent())).
-         add(line().add(aComponent()).add(aComponent())).
-         add(line().add(aComponent())).
-         getComponent();
-
-      verify(panel);
-   }
-
-   @Test
-   public void addingLineWithCellSpec()
-   {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withIPad(4)));
-      panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInsetLeft(5).withGridSize(2, 2)));
-      panel.add(anyComponent(), gbc(3, 0, defaultSpec().withInsetLeft(5)));
-
-      replay(panel);
-
-      panelCommand.
-         add(line().
-            add(aComponent(), spec().withIPad(4)).
-            add(aComponent(), spec().withGridSize(2, 2)).
-            add(aComponent())).
          getComponent();
 
       verify(panel);
