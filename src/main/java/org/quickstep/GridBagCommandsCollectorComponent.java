@@ -3,7 +3,7 @@ package org.quickstep;
 import java.util.*;
 import javax.swing.*;
 
-import static org.quickstep.GridBagToolKit.spec;
+import static org.quickstep.GridBagToolKit.*;
 
 public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollector<T>> implements GridBagCommandsCollector<T>, Iterable<GridBagCommand>
 {
@@ -54,7 +54,7 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    @Override
    public T add(JComponent component, CellSpec spec)
    {
-      return add(new ComponentCommand(component, spec));
+      return add(component(component).withSpec(spec));
    }
 
    @Override

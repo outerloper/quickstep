@@ -2,6 +2,7 @@ package org.quickstep;
 
 import javax.swing.*;
 
+import static org.quickstep.GridBagToolKit.component;
 import static org.quickstep.GridBagToolKit.line;
 import static org.quickstep.GridBagToolKit.spec;
 
@@ -35,7 +36,7 @@ public class HeaderCommand implements GridBagCommand
       }
       else
       {
-         command = new ComponentCommand(component, spec);
+         command = component(component).withSpec(spec);
       }
 
       command.apply(builder);

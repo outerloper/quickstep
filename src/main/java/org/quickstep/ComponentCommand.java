@@ -2,14 +2,15 @@ package org.quickstep;
 
 import javax.swing.*;
 
-public class ComponentCommand implements CellCommand
-{
-   private JComponent component;
-   private CellSpec spec;
+import static org.quickstep.GridBagToolKit.spec;
 
-   protected ComponentCommand(JComponent component, CellSpec spec)
+public class ComponentCommand implements CellCommand<ComponentCommand>
+{
+   private final JComponent component;
+   private final CellSpec cellSpec = spec();
+
+   ComponentCommand(JComponent component)
    {
-      this.spec = spec.derive();
       this.component = component;
    }
 
@@ -19,10 +20,16 @@ public class ComponentCommand implements CellCommand
       return component;
    }
 
+   public ComponentCommand withSpec(CellSpec spec)
+   {
+      this.cellSpec.overrideWith(spec);
+      return this;
+   }
+
    @Override
    public CellSpec getSpec()
    {
-      return spec.derive();
+      return cellSpec.derive();
    }
 
    @Override

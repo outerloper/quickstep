@@ -52,7 +52,7 @@ public class SeparatorCommand implements GridBagCommand
       }
       else
       {
-         command = new ComponentCommand(separator, spec);
+         command = component(separator).withSpec(spec);
       }
 
       command.apply(builder);

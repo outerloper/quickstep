@@ -117,7 +117,7 @@ public class RichFormDemo2 extends JFrame
          add(panel().
             withSpec(spec().withAnchor(AX.RIGHT, AY.BOTTOM).withWeightY(1.0)).
             specifyDefault(spec().withPreferredWidth(66)).
-            add(clearButton).add(findAllButton).add(findNextButton).add(closeButton)
+            add(seq(clearButton, findAllButton, findNextButton, closeButton))
          )
       );
    }

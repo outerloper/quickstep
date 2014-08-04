@@ -1,6 +1,7 @@
 package org.quickstep;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.logging.Logger;
 import javax.swing.*;
 
@@ -81,6 +82,16 @@ public final class GridBagToolKit
    public static SeqCommand seq()
    {
       return new SeqCommand();
+   }
+
+   public static SeqCommand seq(JComponent... components)
+   {
+      return seq().addAll(Arrays.asList(components));
+   }
+
+   public static ComponentCommand component(JComponent component)
+   {
+      return new ComponentCommand(component);
    }
 
 
