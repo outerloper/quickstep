@@ -424,4 +424,16 @@ public class GridBagBuilderTest
 
       verify(panel);
    }
+
+   @Test
+   public void whenAddingNullComponentThenNoAction()
+   {
+      replay(panel);
+
+      panelCommand.
+         add((JComponent) null).
+         getComponent();
+
+      verify(panel);
+   }
 }
