@@ -37,10 +37,10 @@ public class SpannedCellsDemo extends JFrame
    private void arrangeComponents()
    {
       buildContent(this, panel().
-         withMaxLineLength(1).
+         withLineLength(1).
          add(panel().
             withSpec(specWithFill()).
-            withMaxLineLength(4).
+            withLineLength(4).
             specifyDefault(specWithFill()).
             specifyCell(1, 2, spec().withGridSize(2, 3)).
             specifyCell(0, 5, spec().withGridSize(2, 2)).
@@ -49,7 +49,7 @@ public class SpannedCellsDemo extends JFrame
             addAll(buttons)
          ).
          add(panel().
-            withSpec(spec().withGridWidthRemaining()).
+            withSpec(spec().withGridWidthRemaining().withAnchor(A.CENTER)).
             specifyDefault(spec().withPreferredWidth(66)).
             add(okButton).
             add(cancelButton).

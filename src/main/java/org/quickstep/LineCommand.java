@@ -97,15 +97,48 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    @Override
    public void apply(GridBagBuilder builder)
    {
-      builder.moveToFreeCell();
-      boolean endOfLine = !builder.isEmpty();
-      builder.setEndOfLine(endOfLine);
-      builder.moveToPreviousCell();
-      builder.setEndOfLine(endOfLine);
-      builder.moveToNextFreeCell();
-      int lineNumber = builder.getCurrentLineNumber();
-      builder.moveToPreviousCell();
+      try
+      {
+         int lineNumber = calculateThisLineNumber(builder);
+         applyLineSpecToGrid(builder, lineNumber);
 
+         for (GridBagCommand command : commandsCollector)
+         {
+            validateWhetherStillInThisLine(builder, lineNumber);
+            command.apply(builder);
+         }
+      }
+      catch (IllegalStateException e)
+      {
+         logger.log(Level.WARNING, e.getMessage());
+      }
+      builder.setEndOfLine(true);
+   }
+
+   private int calculateThisLineNumber(GridBagBuilder builder)
+   {
+      if (builder.isEmpty())
+      {
+         return 0;
+      }
+      else
+      {
+         builder.moveToFreeCell();
+
+         builder.setEndOfLine(true);
+         builder.moveToPreviousCell();
+
+         builder.setEndOfLine(true);
+         if (!builder.moveToNextFreeCell())
+         {
+            throw new IllegalStateException("No place for another line in this grid. No components added.");
+         }
+         return builder.getCurrentLineNumber();
+      }
+   }
+
+   private void applyLineSpecToGrid(GridBagBuilder builder, int lineNumber)
+   {
       GridSpec gridSpec = builder.getGridSpec();
       if (builder.isHorizontal())
       {
@@ -123,20 +156,17 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
             gridSpec.specifyCell(entry.getKey(), lineNumber, entry.getValue());
          }
       }
+   }
 
-      for (GridBagCommand command : commandsCollector)
+   private void validateWhetherStillInThisLine(GridBagBuilder builder, int lineNumber)
+   {
+      builder.moveToFreeCell();
+      int currentLineNumber = builder.getCurrentLineNumber();
+      if (lineNumber != currentLineNumber)
       {
-         builder.moveToFreeCell();
-         int currentLineNumber = builder.getCurrentLineNumber();
-         if (lineNumber != currentLineNumber)
-         {
-            logger.log(Level.WARNING, "Components from GridBagLine #" + lineNumber + " cannot be placed at line " + currentLineNumber + ".");
-            builder.moveToPreviousCell();
-            break;
-         }
-         command.apply(builder);
+         builder.moveToPreviousCell();
+         throw new IllegalStateException("Components from GridBagLine #" + lineNumber + " cannot be placed at line " + currentLineNumber + ".");
       }
-      builder.setEndOfLine(true);
    }
 
    @Override

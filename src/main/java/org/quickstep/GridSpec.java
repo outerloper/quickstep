@@ -10,7 +10,7 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class GridSpec implements GridSpecBuilder<GridSpec>
 {
-   private Integer maxLineLength;
+   private Integer lineLength;
    private Orientation orientation = Orientation.HORIZONTAL;
    private final CellSpec defaultSpec = spec();
    private final Map<Integer, CellSpec> columnSpecs = new TreeMap<Integer, CellSpec>();
@@ -33,15 +33,15 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       return orientation;
    }
 
-   public final GridSpec withMaxLineLength(Integer value)
+   public final GridSpec withLineLength(Integer value)
    {
-      maxLineLength = value;
+      lineLength = value;
       return this;
    }
 
-   public Integer getMaxLineLength()
+   public Integer getLineLength()
    {
-      return maxLineLength;
+      return lineLength;
    }
 
    @Override

@@ -1,13 +1,16 @@
 package org.quickstep;
 
 import java.awt.*;
+import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import org.quickstep.util.DebugSupport;
 
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class PanelCommand implements CellCommand, GridBagCommandsCollector<PanelCommand>, GridSpecBuilder<PanelCommand>
+public class PanelCommand implements CellCommand<PanelCommand>, GridBagCommandsCollector<PanelCommand>, GridSpecBuilder<PanelCommand>
 {
    private JPanel panel;
    private CellSpec spec = spec();
@@ -190,9 +193,9 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
       return this;
    }
 
-   public final PanelCommand withMaxLineLength(Integer value)
+   public final PanelCommand withLineLength(Integer value)
    {
-      gridSpec.withMaxLineLength(value);
+      gridSpec.withLineLength(value);
       return this;
    }
 
@@ -246,7 +249,14 @@ public class PanelCommand implements CellCommand, GridBagCommandsCollector<Panel
    @Override
    public void apply(GridBagBuilder builder)
    {
-      builder.moveToFreeCell();
-      builder.placeComponent(getComponent(), getSpec());
+      JComponent panel = getComponent();
+      if (builder.moveToFreeCell())
+      {
+         builder.placeComponent(panel, getSpec());
+      }
+      else
+      {
+         logger.log(Level.WARNING, "No place for " + DebugSupport.objectId(panel));
+      }
    }
 }

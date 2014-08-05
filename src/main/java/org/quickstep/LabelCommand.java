@@ -1,5 +1,13 @@
 package org.quickstep;
 
+import java.util.logging.Level;
+
+import javax.swing.*;
+
+import org.quickstep.util.DebugSupport;
+
+import static org.quickstep.GridBagToolKit.logger;
+
 public class LabelCommand implements GridBagCommand
 {
    private CellSpec spec;
@@ -14,7 +22,14 @@ public class LabelCommand implements GridBagCommand
    @Override
    public void apply(GridBagBuilder builder)
    {
-      builder.moveToFreeCell();
-      builder.placeComponent(builder.createDefaultLabel(text), spec);
+      JComponent component = builder.createDefaultLabel(text);
+      if (builder.moveToFreeCell())
+      {
+         builder.placeComponent(component, spec);
+      }
+      else
+      {
+         logger.log(Level.WARNING, "No place for " + DebugSupport.objectId(component));
+      }
    }
 }

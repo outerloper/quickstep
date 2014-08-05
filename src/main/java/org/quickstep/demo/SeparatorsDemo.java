@@ -9,7 +9,7 @@ public class SeparatorsDemo extends JFrame
    public SeparatorsDemo()
    {
       buildContent(this, panel().
-         withMaxLineLength(1).
+         withLineLength(1).
          withBorder().
          specifyDefault(specWithFillX()).
 //         specifyCellDefaults(growX().withGridWidthRemaining()). // TODO this hangs

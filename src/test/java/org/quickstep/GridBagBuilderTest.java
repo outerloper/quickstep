@@ -54,7 +54,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          add(aComponent()).
          add(aComponent()).
          add(aComponent()).
@@ -134,7 +134,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          specifyColumn(1, spec().withAnchorX(AX.RIGHT)).
          add(aComponent()).
          add(aComponent()).
@@ -156,7 +156,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          specifyRow(1, spec().withInsetTop(20)).
          add(aComponent()).
          add(aComponent()).
@@ -175,7 +175,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          specifyCell(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
          add(aComponent()).
          getComponent();
@@ -194,7 +194,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          specifyRow(1, spec().withInsetBottom(20)).
          specifyColumn(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
@@ -215,7 +215,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          specifyColumn(1, spec().withInsetBottom(20)).
          specifyRow(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
@@ -233,7 +233,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          specifyCell(0, 0, spec().withAnchor(AX.RIGHT, AY.BOTTOM)).
          add(aComponent(), spec().withAnchor(AX.LEFT, AY.TOP)).
          getComponent();
@@ -267,7 +267,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          add(aComponent(), spec().withGridHeight(2)).
          add(aComponent()).
          add(aComponent()).
@@ -287,7 +287,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(3).
+         withLineLength(3).
          add(aComponent(), spec().withGridSize(2, 2)).
          add(aComponent()).
          add(aComponent()).
@@ -310,7 +310,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(2).
+         withLineLength(2).
          add(aComponent()).
          add(aComponent()).
          add(aComponent()).
@@ -340,7 +340,7 @@ public class GridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         withMaxLineLength(3).
+         withLineLength(3).
          specifyColumn(0, spec().withAnchorX(AX.RIGHT).withInsetLeft(30)).
          addAll(checkBoxes, defaultSpec()).
          getComponent();
@@ -432,6 +432,24 @@ public class GridBagBuilderTest
 
       panelCommand.
          add((JComponent) null).
+         getComponent();
+
+      verify(panel);
+   }
+
+   @Test
+   public void whenAllLineLengthUsedForComponentsWithGridHeightRemainingThenNoMoreComponentsArePlaced()
+   {
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridHeightRemaining()));
+
+      replay(panel);
+
+      panelCommand.
+         withLineLength(1).
+         add(aComponent(), spec().withGridHeightRemaining()).
+         add(aComponent(), spec().withIPad(1)).
+         add(aComponent(), spec().withIPad(2)).
+         add(aComponent(), spec().withIPad(3)).
          getComponent();
 
       verify(panel);

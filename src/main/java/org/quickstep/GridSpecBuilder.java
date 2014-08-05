@@ -14,5 +14,5 @@ public interface GridSpecBuilder<T extends GridSpecBuilder<T>>
 
    T withOrientation(Orientation orientation);
 
-   T withMaxLineLength(Integer maxLineLength);
+   T withLineLength(Integer maxLineLength);
 }

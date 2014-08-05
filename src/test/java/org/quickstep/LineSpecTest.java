@@ -55,7 +55,7 @@ public class LineSpecTest
       panel.add(anyComponent(), gbc(0, 2, defaultSpec().withInsetTop(5)));
 
       replay(panel);
-
+      debug();
       panelCommand.
          add(aComponent()).
          add(aComponent()).
@@ -229,6 +229,75 @@ public class LineSpecTest
             add(aComponent())
          ).
          add(aComponent()).
+         getComponent();
+
+      verify(panel);
+   }
+
+   @Test
+   public void givenPanelWithLineLength1WhenAdding2LinesWithOneElementThenThoseElementsAddedInSeparateLines()
+   {
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec()));
+      panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInsetTop(5)));
+
+      replay(panel);
+
+      panelCommand.
+         withLineLength(1).
+         add(line().add(aComponent())).
+         add(line().add(aComponent())).
+         getComponent();
+
+      verify(panel);
+   }
+
+   @Test
+   public void whenAddingLineWithElementWithGridWidthRemainingAndLineWithAnotherElementThenThoseElementsAddedInSeparateLines()
+   {
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInsetTop(5)));
+
+      replay(panel);
+
+      panelCommand.
+         add(line().add(aComponent(), spec().withGridWidthRemaining())).
+         add(line().add(aComponent())).
+         getComponent();
+
+      verify(panel);
+   }
+
+   @Test
+   public void whenAddingALineWhoseElementsAreNotLaidOutInOneLineBecauseOfGridWidthRemainingThenOnlyThoseForCurrentLineArePlaced()
+   {
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemaining()));
+
+      replay(panel);
+
+      panelCommand.
+         add(line().
+            add(aComponent(), spec().withGridWidthRemaining()).
+            add(aComponent())
+         ).
+         getComponent();
+
+      verify(panel);
+   }
+
+   @Test
+   public void whenAddingALineWhoseElementsAreNotLaidOutInOneLineBecauseOfLineLengthThenOnlyThoseForCurrentLineArePlaced()
+   {
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withIPad(1)));
+
+      replay(panel);
+
+      panelCommand.
+         withLineLength(1).
+         add(line().
+            add(aComponent(), spec().withIPad(1)).
+            add(aComponent(), spec().withIPad(2)).
+            add(aComponent(), spec().withIPad(3))
+         ).
          getComponent();
 
       verify(panel);

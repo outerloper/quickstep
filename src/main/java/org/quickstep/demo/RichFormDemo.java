@@ -44,7 +44,7 @@ public class RichFormDemo extends JFrame
          add(peopleList, specWithFill().withGridHeightRemaining()).
          add(panel().
             withSpec(specWithFillX().withAnchorY(AY.TOP)).
-            withMaxLineLength(4).
+            withLineLength(4).
             specifyColumn(0, spec().withAnchorX(AX.RIGHT).withWeightX(0.2)).
             specifyColumn(1, specWithFillX()).
             specifyColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(0.2)).

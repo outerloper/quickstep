@@ -27,6 +27,7 @@ public class GridBagBuilder
    private final Map<Integer, Integer> gridWidthsRemaining = new TreeMap<Integer, Integer>();
 
    private final GridSpec gridSpec;
+   private boolean empty = true;
 
    protected GridBagBuilder(GridSpec gridSpec, JPanel panel)
    {
@@ -39,7 +40,7 @@ public class GridBagBuilder
       return gridSpec;
    }
 
-   private void moveToNextCell()
+   private boolean moveToNextCell()
    {
       previousCursorX = cursorX;
       previousCursorY = cursorY;
@@ -53,10 +54,12 @@ public class GridBagBuilder
       {
          cursorY++;
       }
-      if (gridSpec.getMaxLineLength() != null && (isHorizontal() ? cursorX : cursorY) >= gridSpec.getMaxLineLength() || endOfLine)
+      //noinspection SimplifiableIfStatement
+      if (gridSpec.getLineLength() != null && (isHorizontal() ? cursorX : cursorY) >= gridSpec.getLineLength() || endOfLine)
       {
-         newLine();
+         return newLine();
       }
+      return true;
    }
 
    public boolean isHorizontal()
@@ -66,7 +69,7 @@ public class GridBagBuilder
 
    public boolean isEmpty()
    {
-      return cursorX == 0 && cursorY == 0;
+      return empty;
    }
 
    public void setEndOfLine(boolean value)
@@ -86,31 +89,36 @@ public class GridBagBuilder
       endOfLine = previousEndOfLine;
    }
 
-   public void moveToFreeCell()
+   public boolean moveToFreeCell()
    {
-      if (!isCellFree(cursorX, cursorY))
-      {
-         moveToNextFreeCell();
-      }
+      return isCellFree(cursorX, cursorY) || moveToNextFreeCell();
    }
 
-   public void moveToNextLine()
+   public boolean moveToNextLine()
    {
       endOfLine = true;
-      moveToNextFreeCell();
+      return moveToNextFreeCell();
    }
 
-   public void moveToNextFreeCell()
+   public boolean moveToNextFreeCell()
    {
       do
       {
-         moveToNextCell();
+         if (!moveToNextCell())
+         {
+            return false;
+         }
       }
       while (!isCellFree(cursorX, cursorY));
+      return true;
    }
 
-   private void newLine()
+   private boolean newLine()
    {
+      if (!freeCellInNextLinesExists())
+      {
+         return false;
+      }
       if (isHorizontal())
       {
          cursorY++;
@@ -122,6 +130,25 @@ public class GridBagBuilder
          cursorY = 0;
       }
       endOfLine = false;
+      return true;
+   }
+
+   private boolean freeCellInNextLinesExists()
+   {
+      Integer lineLength = gridSpec.getLineLength();
+      if (lineLength == null)
+      {
+         return true;
+      }
+      Map<Integer, Integer> remaining = isHorizontal() ? gridHeightsRemaining : gridWidthsRemaining;
+      for (int i = 0; i < lineLength; i++)
+      {
+         if (remaining.get(i) == null)
+         {
+            return true;
+         }
+      }
+      return false;
    }
 
    public void placeComponent(JComponent component, CellSpec givenSpec)
@@ -173,16 +200,21 @@ public class GridBagBuilder
    {
       Integer width = spec.getGridWidth();
       Integer height = spec.getGridHeight();
-      int x1 = x + width;
-      int y1 = y + height;
-      if (width == GridBagConstraints.REMAINDER)
+
+      boolean widthRemaining = width == GridBagConstraints.REMAINDER;
+      boolean heightRemaining = height == GridBagConstraints.REMAINDER;
+
+      int x1 = x + (widthRemaining ? 1 : width);
+      int y1 = y + (heightRemaining ? 1 : height);
+
+      if (widthRemaining)
       {
          for (int j = y; j < y1; j++)
          {
             gridWidthsRemaining.put(j, x);
          }
       }
-      if (height == GridBagConstraints.REMAINDER)
+      if (heightRemaining)
       {
          for (int i = x; i < x1; i++)
          {
@@ -196,6 +228,7 @@ public class GridBagBuilder
             usedCells.put(i, j, true);
          }
       }
+      empty = false;
    }
 
    private boolean isAreaFree(int x, int y, int width, int height)
@@ -224,6 +257,11 @@ public class GridBagBuilder
       }
       Integer columnSpanFrom = gridWidthsRemaining.get(y);
       if (columnSpanFrom != null && x >= columnSpanFrom)
+      {
+         return false;
+      }
+      Integer lineLength = gridSpec.getLineLength();
+      if (lineLength != null && (isHorizontal() ? x : y) >= lineLength)
       {
          return false;
       }

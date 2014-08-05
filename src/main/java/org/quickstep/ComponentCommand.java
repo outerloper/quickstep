@@ -1,23 +1,27 @@
 package org.quickstep;
 
+import java.util.logging.Level;
 import javax.swing.*;
 
+import org.quickstep.util.DebugSupport;
+
+import static org.quickstep.GridBagToolKit.logger;
 import static org.quickstep.GridBagToolKit.spec;
 
 public class ComponentCommand implements CellCommand<ComponentCommand>
 {
-   private final JComponent component;
+   private final JComponent wrappedComponent;
    private final CellSpec cellSpec = spec();
 
-   ComponentCommand(JComponent component)
+   ComponentCommand(JComponent wrappedComponent)
    {
-      this.component = component;
+      this.wrappedComponent = wrappedComponent;
    }
 
    @Override
    public JComponent getComponent()
    {
-      return component;
+      return wrappedComponent;
    }
 
    public ComponentCommand withSpec(CellSpec spec)
@@ -35,10 +39,17 @@ public class ComponentCommand implements CellCommand<ComponentCommand>
    @Override
    public void apply(GridBagBuilder builder)
    {
-      if (getComponent() != null)
+      JComponent component = getComponent();
+      if (component != null)
       {
-         builder.moveToFreeCell();
-         builder.placeComponent(getComponent(), getSpec());
+         if (builder.moveToFreeCell())
+         {
+            builder.placeComponent(component, getSpec());
+         }
+         else
+         {
+            logger.log(Level.WARNING, "No place for " + DebugSupport.objectId(component));
+         }
       }
    }
 }
