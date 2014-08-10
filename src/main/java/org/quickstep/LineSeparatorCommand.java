@@ -10,17 +10,17 @@ public class LineSeparatorCommand implements GridBagCommand
    public void apply(GridBagBuilder builder)
    {
       JSeparator separator = new JSeparator();
-      CellSpec spec = spec().withAnchor(A.BOTH);
+      CellSpec spec = spec();
 
       if (Orientation.HORIZONTAL.equals(builder.getGridSpec().getOrientation()))
       {
          separator.setOrientation(JSeparator.HORIZONTAL);
-         spec.withWeightY(0.0).withGridWidthRemaining();
+         spec.withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemaining();
       }
       else
       {
          separator.setOrientation(JSeparator.VERTICAL);
-         spec.withWeightX(0.0).withGridHeightRemaining();
+         spec.withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemaining();
       }
 
       line().add(separator, spec).apply(builder);

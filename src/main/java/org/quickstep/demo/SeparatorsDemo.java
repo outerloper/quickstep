@@ -10,13 +10,13 @@ public class SeparatorsDemo extends JFrame
    {
       buildContent(this, panel().
          withBorder().
-         specifyDefault(specWithFillX().withGridWidthRemaining()).
+         specifyDefault(specWithFill().withGridWidthRemaining()).
          add(new JButton("Button")).
          addLineSeparator().
          add(new JButton("Button")).
          addBlank().
          add(new JButton("Button")).
-         add(panel().withSpec(specWithFillY()).specifyDefault(specWithFillX()).
+         add(panel().withSpec(specWithFill()).specifyDefault(specWithFill()).
             add(new JButton("Button")).addSeparator().add(new JButton("Button"))
          )
       );

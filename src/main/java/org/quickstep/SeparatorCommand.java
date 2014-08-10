@@ -16,19 +16,19 @@ public class SeparatorCommand extends CellCommand<SeparatorCommand>
    public void apply(GridBagBuilder builder)
    {
       JSeparator separator = new JSeparator();
-      CellSpec spec = spec().withAnchor(A.BOTH);
+      CellSpec spec = spec();
 
       if (Orientation.HORIZONTAL.equals(builder.getGridSpec().getOrientation()))
       {
          separator.setOrientation(JSeparator.VERTICAL);
-         spec.withWeightX(0.0);
+         spec.withAnchor(AX.CENTER, AY.BOTH);
       }
       else
       {
          separator.setOrientation(JSeparator.HORIZONTAL);
-         spec.withWeightY(0.0);
+         spec.withAnchor(AX.BOTH, AY.CENTER);
       }
 
-      component(separator).withSpec(spec).apply(builder); // TODO test adding separators
+      component(separator).withSpec(spec).apply(builder);
    }
 }
