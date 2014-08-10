@@ -1,5 +1,6 @@
 package org.quickstep;
 
+import java.util.logging.Level;
 import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
@@ -23,7 +24,7 @@ public class HeaderCommand implements GridBagCommand
    @Override
    public void apply(GridBagBuilder builder)
    {
-      JComponent component = header == null ? builder.createDefaultHeader(text, willBePlacedInFirstRow(builder)) : header; // TODO test first row behavior
+      JComponent component = header == null ? builder.createDefaultHeader(text, willBePlacedInFirstRow(builder)) : header;
       CellSpec spec = spec().withAnchorX(AX.BOTH);
       GridBagCommand command;
 
@@ -48,7 +49,14 @@ public class HeaderCommand implements GridBagCommand
       }
       else
       {
-         builder.moveToFreeCell();
+         try
+         {
+            builder.moveToFreeCell();
+         }
+         catch (GridBagException e)
+         {
+            logger.log(Level.WARNING, "No place for header component.", e);
+         }
          return builder.getCurrentRowNumber() == 0;
       }
    }

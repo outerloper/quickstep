@@ -108,14 +108,14 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
             command.apply(builder);
          }
       }
-      catch (IllegalStateException e)
+      catch (GridBagException e)
       {
-         logger.log(Level.WARNING, e.getMessage());
+         logger.log(Level.WARNING, e.getMessage(), e);
       }
       builder.setEndOfLine(true);
    }
 
-   private int calculateThisLineNumber(GridBagBuilder builder)
+   private int calculateThisLineNumber(GridBagBuilder builder) throws GridBagException
    {
       if (builder.isEmpty())
       {
@@ -129,10 +129,8 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
          builder.moveToPreviousCell();
 
          builder.setEndOfLine(true);
-         if (!builder.moveToNextFreeCell())
-         {
-            throw new IllegalStateException("No place for another line in this grid. No components added.");
-         }
+         builder.moveToNextFreeCell();
+
          return builder.getCurrentLineNumber();
       }
    }
@@ -149,14 +147,14 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
       }
    }
 
-   private void validateWhetherStillInThisLine(GridBagBuilder builder, int lineNumber)
+   private void validateWhetherStillInThisLine(GridBagBuilder builder, int lineNumber) throws GridBagException
    {
       builder.moveToFreeCell();
       int currentLineNumber = builder.getCurrentLineNumber();
       if (lineNumber != currentLineNumber)
       {
          builder.moveToPreviousCell();
-         throw new IllegalStateException("Components from GridBagLine #" + lineNumber + " cannot be placed at line " + currentLineNumber + ".");
+         throw new GridBagException("Components from line " + lineNumber + " cannot be placed at line " + currentLineNumber + ".");
       }
    }
 

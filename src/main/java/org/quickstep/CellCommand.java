@@ -40,13 +40,14 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
       JComponent component = getComponent();
       if (component != null)
       {
-         if (builder.moveToFreeCell())
+         try
          {
+            builder.moveToFreeCell();
             builder.placeComponent(component, getSpec(builder.getGridSpec().getOrientation()));
          }
-         else
+         catch (GridBagException e)
          {
-            logger.log(Level.WARNING, "No place for " + DebugSupport.objectId(component));
+            logger.log(Level.WARNING, "No place for " + DebugSupport.objectId(component) + ".", e);
          }
       }
    }

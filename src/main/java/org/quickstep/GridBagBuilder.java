@@ -40,7 +40,7 @@ public class GridBagBuilder
       return gridSpec;
    }
 
-   private boolean moveToNextCell()
+   private void moveToNextCell() throws GridBagException
    {
       previousCursorX = cursorX;
       previousCursorY = cursorY;
@@ -57,9 +57,8 @@ public class GridBagBuilder
       //noinspection SimplifiableIfStatement
       if (gridSpec.getLineLength() != null && (isHorizontal() ? cursorX : cursorY) >= gridSpec.getLineLength() || endOfLine)
       {
-         return newLine();
+         newLine();
       }
-      return true;
    }
 
    public boolean isHorizontal() // refactor using method Orientation::isHorizontal()
@@ -99,35 +98,34 @@ public class GridBagBuilder
       endOfLine = previousEndOfLine;
    }
 
-   public boolean moveToFreeCell()
+   public void moveToFreeCell() throws GridBagException
    {
-      return isCellFree(cursorX, cursorY) || moveToNextFreeCell();
+      if (!isCellFree(cursorX, cursorY))
+      {
+         moveToNextFreeCell();
+      }
    }
 
-   public boolean moveToNextLine()
+   public void moveToNextLine() throws GridBagException
    {
       endOfLine = true;
-      return moveToNextFreeCell();
+      moveToNextFreeCell();
    }
 
-   public boolean moveToNextFreeCell() // TODO throw checked exception from places that may hang
+   public void moveToNextFreeCell() throws GridBagException
    {
       do
       {
-         if (!moveToNextCell())
-         {
-            return false;
-         }
+         moveToNextCell();
       }
       while (!isCellFree(cursorX, cursorY));
-      return true;
    }
 
-   private boolean newLine()
+   private void newLine() throws GridBagException
    {
       if (!freeCellInNextLinesExists())
       {
-         return false;
+         throw new GridBagException("No free cell below line " + getCurrentLineNumber() + ".");
       }
       if (isHorizontal())
       {
@@ -140,7 +138,6 @@ public class GridBagBuilder
          cursorY = 0;
       }
       endOfLine = false;
-      return true;
    }
 
    private boolean freeCellInNextLinesExists()
