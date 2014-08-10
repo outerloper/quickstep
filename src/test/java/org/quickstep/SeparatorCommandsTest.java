@@ -171,7 +171,6 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
       panel.add(anyObject(JSeparator.class), gbc(2, 0, defaultSpec().withInsetLeft(5)));
 
       replay(panel);
-      debug();
 
       panelCommand.
          withOrientation(Orientation.VERTICAL).

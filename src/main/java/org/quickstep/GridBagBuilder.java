@@ -62,7 +62,7 @@ public class GridBagBuilder
       return true;
    }
 
-   public boolean isHorizontal()
+   public boolean isHorizontal() // refactor using method Orientation::isHorizontal()
    {
       return Orientation.HORIZONTAL.equals(gridSpec.getOrientation());
    }

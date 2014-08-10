@@ -12,7 +12,7 @@ public class LabelCommand extends CellCommand<LabelCommand>
    }
 
    @Override
-   public JComponent getComponent()
+   public JComponent getComponent(GridBagToolKit.Orientation orientation)
    {
       return new JLabel(text);
    }

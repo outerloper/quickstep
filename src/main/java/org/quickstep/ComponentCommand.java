@@ -12,7 +12,7 @@ public class ComponentCommand extends CellCommand<ComponentCommand>
    }
 
    @Override
-   public JComponent getComponent()
+   public JComponent getComponent(GridBagToolKit.Orientation orientation)
    {
       return component;
    }

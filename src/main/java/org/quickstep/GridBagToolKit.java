@@ -26,7 +26,12 @@ public final class GridBagToolKit
 
    public enum Orientation
    {
-      HORIZONTAL, VERTICAL
+      HORIZONTAL, VERTICAL;
+
+      public boolean isHorizontal()
+      {
+         return this == HORIZONTAL;
+      }
    }
 
    public static Logger logger = Logger.getLogger(GridBagBuilder.class.getName());

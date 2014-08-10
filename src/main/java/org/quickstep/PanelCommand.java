@@ -108,7 +108,7 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
    }
 
    @Override
-   public JComponent getComponent()
+   public JComponent getComponent(Orientation orientation)
    {
       JPanel content = panel != null ? panel : new ResizablePanel();
       content.setLayout(new GridBagLayout());

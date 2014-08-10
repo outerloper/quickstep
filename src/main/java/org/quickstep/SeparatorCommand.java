@@ -7,28 +7,23 @@ import static org.quickstep.GridBagToolKit.*;
 public class SeparatorCommand extends CellCommand<SeparatorCommand>
 {
    @Override
-   public JComponent getComponent() // TODO improve design
+   public JComponent getComponent(Orientation orientation)
    {
-      return new JSeparator(JSeparator.VERTICAL);
+      return new JSeparator(orientation.isHorizontal() ? JSeparator.VERTICAL : JSeparator.HORIZONTAL);
    }
 
    @Override
-   public void apply(GridBagBuilder builder)
+   protected CellSpec getSpec(Orientation orientation)
    {
-      JSeparator separator = new JSeparator();
-      CellSpec spec = spec();
-
-      if (Orientation.HORIZONTAL.equals(builder.getGridSpec().getOrientation()))
+      CellSpec result = spec();
+      if (orientation.isHorizontal())
       {
-         separator.setOrientation(JSeparator.VERTICAL);
-         spec.withAnchor(AX.CENTER, AY.BOTH);
+         result.withAnchor(AX.CENTER, AY.BOTH);
       }
       else
       {
-         separator.setOrientation(JSeparator.HORIZONTAL);
-         spec.withAnchor(AX.BOTH, AY.CENTER);
+         result.withAnchor(AX.BOTH, AY.CENTER);
       }
-
-      component(separator).withSpec(spec).apply(builder);
+      return result.overrideWith(super.getSpec(orientation));
    }
 }
