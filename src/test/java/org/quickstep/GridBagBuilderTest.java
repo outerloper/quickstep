@@ -85,16 +85,16 @@ public class GridBagBuilderTest
    }
 
    @Test
-   public void wrapRowWhenRemainingGridWidthUsed()
+   public void wrapRowWhenGridWidthRemainderUsed()
    {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemainder()));
       panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInset(5, 0, 0, 0)));
       panel.add(anyComponent(), gbc(1, 1, defaultSpec().withInset(5, 5, 0, 0)));
 
       replay(panel);
 
       panelCommand.
-         add(aComponent(), spec().withGridWidthRemaining()).
+         add(aComponent(), spec().withGridWidthRemainder()).
          add(aComponent()).
          add(aComponent()).
          getComponent();
@@ -106,7 +106,7 @@ public class GridBagBuilderTest
    public void specifyCellDefaultsMethodOverridesImplicitDefaultSpecForAddedComponents()
    {
       panel.add(anyComponent(), gbc(0, 0, defaultSpec().withInset(0, 0, 3, 10)));
-      panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInset(0, 10, 3, 10).withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInset(0, 10, 3, 10).withGridWidthRemainder()));
       panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInset(3, 0, 3, 10)));
       panel.add(anyComponent(), gbc(1, 1, defaultSpec().withInset(3, 10, 3, 10)));
 
@@ -115,7 +115,7 @@ public class GridBagBuilderTest
       panelCommand.
          specifyDefault(spec().withInset(10, 3)).
          add(aComponent()).
-         add(aComponent(), spec().withGridWidthRemaining()).
+         add(aComponent(), spec().withGridWidthRemainder()).
          add(aComponent()).
          add(aComponent()).
          getComponent();
@@ -298,12 +298,12 @@ public class GridBagBuilderTest
    }
 
    @Test
-   public void noMoreComponentsArePlacedAtColumnWithComponentTakingRemainingGridHeight()
+   public void noMoreComponentsArePlacedAtColumnWithComponentWithGridHeightRemainder()
    {
       panel.add(anyComponent(), gbc(0, 0, defaultSpec()));
       panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInset(0, 5, 0, 0)));
       panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInset(5, 0, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, defaultSpec().withInset(5, 5, 0, 0).withGridHeightRemaining()));
+      panel.add(anyComponent(), gbc(1, 1, defaultSpec().withInset(5, 5, 0, 0).withGridHeightRemainder()));
       panel.add(anyComponent(), gbc(0, 2, defaultSpec().withInset(5, 0, 0, 0)));
       panel.add(anyComponent(), gbc(0, 3, defaultSpec().withInset(5, 0, 0, 0)));
 
@@ -314,7 +314,7 @@ public class GridBagBuilderTest
          add(aComponent()).
          add(aComponent()).
          add(aComponent()).
-         add(aComponent(), spec().withGridHeightRemaining()).
+         add(aComponent(), spec().withGridHeightRemainder()).
          add(aComponent()).
          add(aComponent()).
          getComponent();
@@ -368,15 +368,15 @@ public class GridBagBuilderTest
    }
 
    @Test
-   public void addLineWithOneElementWithGridWidthRemainingAndThenAnotherLine()
+   public void addLineWithOneElementWithGridWidthRemainderAndThenAnotherLine()
    {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemainder()));
       panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInsetTop(5)));
 
       replay(panel);
 
       panelCommand.
-         add(line().add(aComponent(), spec().withGridWidthRemaining())).
+         add(line().add(aComponent(), spec().withGridWidthRemainder())).
          add(line().add(aComponent())).
          getComponent();
 
@@ -438,15 +438,15 @@ public class GridBagBuilderTest
    }
 
    @Test
-   public void whenAllLineLengthUsedForComponentsWithGridHeightRemainingThenNoMoreComponentsArePlaced()
+   public void whenAllLineLengthUsedForComponentsWithGridHeightRemainderThenNoMoreComponentsArePlaced()
    {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridHeightRemaining()));
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridHeightRemainder()));
 
       replay(panel);
 
       panelCommand.
          withLineLength(1).
-         add(aComponent(), spec().withGridHeightRemaining()).
+         add(aComponent(), spec().withGridHeightRemainder()).
          add(aComponent(), spec().withIPad(1)).
          add(aComponent(), spec().withIPad(2)).
          add(aComponent(), spec().withIPad(3)).

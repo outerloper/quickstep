@@ -251,15 +251,15 @@ public class LineCommandTest
    }
 
    @Test
-   public void whenAddingLineWithElementWithGridWidthRemainingAndLineWithAnotherElementThenThoseElementsAddedInSeparateLines()
+   public void whenAddingLineWithElementWithGridWidthRemainderAndLineWithAnotherElementThenThoseElementsAddedInSeparateLines()
    {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemainder()));
       panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInsetTop(5)));
 
       replay(panel);
 
       panelCommand.
-         add(line().add(aComponent(), spec().withGridWidthRemaining())).
+         add(line().add(aComponent(), spec().withGridWidthRemainder())).
          add(line().add(aComponent())).
          getComponent();
 
@@ -267,15 +267,15 @@ public class LineCommandTest
    }
 
    @Test
-   public void whenAddingALineWhoseElementsAreNotLaidOutInOneLineBecauseOfGridWidthRemainingThenOnlyThoseForCurrentLineArePlaced()
+   public void whenAddingALineWhoseElementsAreNotLaidOutInOneLineBecauseOfGridWidthRemainderThenOnlyThoseForCurrentLineArePlaced()
    {
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemaining()));
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemainder()));
 
       replay(panel);
 
       panelCommand.
          add(line().
-            add(aComponent(), spec().withGridWidthRemaining()).
+            add(aComponent(), spec().withGridWidthRemainder()).
             add(aComponent())
          ).
          getComponent();

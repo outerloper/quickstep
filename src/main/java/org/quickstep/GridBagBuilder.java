@@ -23,8 +23,8 @@ public class GridBagBuilder
    private boolean previousEndOfLine = false;
 
    private final Table<Integer, Integer, Boolean> usedCells = TreeBasedTable.create();
-   private final Map<Integer, Integer> gridHeightsRemaining = new TreeMap<Integer, Integer>();
-   private final Map<Integer, Integer> gridWidthsRemaining = new TreeMap<Integer, Integer>();
+   private final Map<Integer, Integer> gridHeightRemainders = new TreeMap<Integer, Integer>();
+   private final Map<Integer, Integer> gridWidthRemainders = new TreeMap<Integer, Integer>();
 
    private final GridSpec gridSpec;
    private boolean empty = true;
@@ -147,10 +147,10 @@ public class GridBagBuilder
       {
          return true;
       }
-      Map<Integer, Integer> remaining = isHorizontal() ? gridHeightsRemaining : gridWidthsRemaining;
+      Map<Integer, Integer> remainders = isHorizontal() ? gridHeightRemainders : gridWidthRemainders;
       for (int i = 0; i < lineLength; i++)
       {
-         if (remaining.get(i) == null)
+         if (remainders.get(i) == null)
          {
             return true;
          }
@@ -208,24 +208,24 @@ public class GridBagBuilder
       Integer width = spec.getGridWidth();
       Integer height = spec.getGridHeight();
 
-      boolean widthRemaining = width == GridBagConstraints.REMAINDER;
-      boolean heightRemaining = height == GridBagConstraints.REMAINDER;
+      boolean widthRemainder = width == GridBagConstraints.REMAINDER;
+      boolean heightRemainder = height == GridBagConstraints.REMAINDER;
 
-      int x1 = x + (widthRemaining ? 1 : width);
-      int y1 = y + (heightRemaining ? 1 : height);
+      int x1 = x + (widthRemainder ? 1 : width);
+      int y1 = y + (heightRemainder ? 1 : height);
 
-      if (widthRemaining)
+      if (widthRemainder)
       {
          for (int j = y; j < y1; j++)
          {
-            gridWidthsRemaining.put(j, x);
+            gridWidthRemainders.put(j, x);
          }
       }
-      if (heightRemaining)
+      if (heightRemainder)
       {
          for (int i = x; i < x1; i++)
          {
-            gridHeightsRemaining.put(i, y);
+            gridHeightRemainders.put(i, y);
          }
       }
       for (int i = x; i < x1; i++)
@@ -257,12 +257,12 @@ public class GridBagBuilder
 
    private boolean isCellFree(int x, int y)
    {
-      Integer rowSpanFrom = gridHeightsRemaining.get(x);
+      Integer rowSpanFrom = gridHeightRemainders.get(x);
       if (rowSpanFrom != null && y >= rowSpanFrom)
       {
          return false;
       }
-      Integer columnSpanFrom = gridWidthsRemaining.get(y);
+      Integer columnSpanFrom = gridWidthRemainders.get(y);
       if (columnSpanFrom != null && x >= columnSpanFrom)
       {
          return false;

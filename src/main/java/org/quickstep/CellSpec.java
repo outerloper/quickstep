@@ -267,12 +267,12 @@ public final class CellSpec
       return this;
    }
 
-   public CellSpec withGridWidthRemaining()
+   public CellSpec withGridWidthRemainder()
    {
       return withGridWidth(GridBagConstraints.REMAINDER);
    }
 
-   public CellSpec withGridHeightRemaining()
+   public CellSpec withGridHeightRemainder()
    {
       return withGridHeight(GridBagConstraints.REMAINDER);
    }

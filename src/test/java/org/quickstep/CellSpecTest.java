@@ -235,10 +235,10 @@ public class CellSpecTest
       assertNull(spec.getGridWidth());
       assertNull(spec.getGridHeight());
 
-      spec = spec().withGridWidthRemaining();
+      spec = spec().withGridWidthRemainder();
       assertEquals(GridBagConstraints.REMAINDER, (int) spec.getGridWidth());
 
-      spec = spec().withGridHeightRemaining();
+      spec = spec().withGridHeightRemainder();
       assertEquals(GridBagConstraints.REMAINDER, (int) spec.getGridHeight());
    }
 

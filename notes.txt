@@ -1,4 +1,3 @@
 TODO use cases with menus, toolbars, split panes, tables with viewports, tabs
 TODO ability to add components to every component (as with TabbedPane, Toolbar)
-TODO CellsCommand
 TODO component(c).withSpec(spec), cell().with(c/"label"/...).withSpec(spec), container().with(menu/panel).add(...)

@@ -21,7 +21,7 @@ public class CustomPanelCommandDemo extends JFrame
             withBorder("Custom Panel")
          ).
          add(new MyPanel().
-            add(new JButton("Proceed"), spec().withGridWidthRemaining())
+            add(new JButton("Proceed"), spec().withGridWidthRemainder())
          )
       );
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

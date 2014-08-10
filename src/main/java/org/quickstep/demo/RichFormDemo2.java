@@ -78,7 +78,7 @@ public class RichFormDemo2 extends JFrame
             addHeader("Section 4").
             add(lineWithCombo().add("Criterion 3 Level:").add(criterion3ComboBox).add(criterion3TextField)).
             add(lineWithCombo().add("Criterion 4 Level:").add(criterion4ComboBox).add(criterion4TextField).
-               add(roundTripCheckBox, spec().withInsetLeft(5).withAnchorX(AX.LEFT).withGridWidthRemaining())
+               add(roundTripCheckBox, spec().withInsetLeft(5).withAnchorX(AX.LEFT).withGridWidthRemainder())
             ).
             addHeader("Additional Conditions").
             add(lineWithCombo().add("Other 1:").add(other1ComboBox).add(other1TextField).add("ABC:").add(abcTextField)).

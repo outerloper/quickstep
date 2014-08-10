@@ -85,7 +85,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    @Test
    public void addLineSeparatorToHorizontalPanel()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemainder()));
 
       replay(panel);
 
@@ -99,7 +99,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    @Test
    public void whenAddingLineSeparatorToHorizontalPanelWithGrowingComponentsThenSeparatorIsNotFilledVertically()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemaining().withWeight(1.0)));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemainder().withWeight(1.0)));
 
       replay(panel);
 
@@ -114,7 +114,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    @Test
    public void addLineSeparatorToVerticalPanel()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemainder()));
 
       replay(panel);
 
@@ -129,7 +129,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    @Test
    public void whenAddingLineSeparatorToVerticalPanelWithGrowingComponentsThenSeparatorIsNotFilledHorizontally()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemaining().withWeight(1.0)));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemainder().withWeight(1.0)));
 
       replay(panel);
 
@@ -147,7 +147,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    {
       panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec()));
       panel.add(anyObject(JSeparator.class), gbc(1, 0, defaultSpec().withInsetLeft(5)));
-      panel.add(anyObject(JSeparator.class), gbc(0, 1, defaultSpec().withInsetTop(5).withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 1, defaultSpec().withInsetTop(5).withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemainder()));
       panel.add(anyObject(JSeparator.class), gbc(0, 2, defaultSpec().withInsetTop(5)));
 
       replay(panel);
@@ -167,7 +167,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    {
       panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec()));
       panel.add(anyObject(JSeparator.class), gbc(0, 1, defaultSpec().withInsetTop(5)));
-      panel.add(anyObject(JSeparator.class), gbc(1, 0, defaultSpec().withInsetLeft(5).withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(1, 0, defaultSpec().withInsetLeft(5).withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemainder()));
       panel.add(anyObject(JSeparator.class), gbc(2, 0, defaultSpec().withInsetLeft(5)));
 
       replay(panel);
@@ -186,7 +186,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    @Test
    public void whenAddingLineSeparatorWithSpecThisSpecOverridesDefaultHeaderSpec()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.LEFT, AY.CENTER).withGridWidthRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.LEFT, AY.CENTER).withGridWidthRemainder()));
 
       replay(panel);
 

@@ -32,7 +32,7 @@ public class HeaderCommandTest
    {
       panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec()));
       panel.add(anyObject(JSeparator.class), gbc(1, 0, defaultSpec().withInsetLeft(5)));
-      panel.add(anyObject(JSeparator.class), gbc(0, 1, defaultSpec().withInsetTop(5).withAnchorX(AX.BOTH).withGridWidthRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 1, defaultSpec().withInsetTop(5).withAnchorX(AX.BOTH).withGridWidthRemainder()));
       panel.add(anyObject(JSeparator.class), gbc(0, 2, defaultSpec().withInsetTop(5)));
 
       replay(panel);
@@ -73,7 +73,7 @@ public class HeaderCommandTest
    @Test
    public void whenAddingHeaderAsFirstElementItIsHandledInSpecialWay()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchorX(AX.BOTH).withGridWidthRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchorX(AX.BOTH).withGridWidthRemainder()));
       panel.add(anyObject(JSeparator.class), gbc(0, 1, defaultSpec().withInsetTop(5)));
 
       replay(panel);
@@ -113,7 +113,7 @@ public class HeaderCommandTest
    @Test
    public void whenAddingHeaderWithSpecThisSpecOverridesDefaultHeaderSpec()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchorX(AX.LEFT).withGridWidthRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchorX(AX.LEFT).withGridWidthRemainder()));
 
       replay(panel);
 
