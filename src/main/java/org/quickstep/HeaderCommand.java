@@ -21,7 +21,7 @@ public class HeaderCommand implements GridBagCommand
    }
 
    @Override
-   public void apply(GridBagBuilder builder) // TODO test header in vertical panel
+   public void apply(GridBagBuilder builder)
    {
       JComponent component = header == null ? builder.createDefaultHeader(text, willBePlacedInFirstRow(builder)) : header; // TODO test first row behavior
       CellSpec spec = spec().withAnchorX(AX.BOTH);
@@ -42,22 +42,13 @@ public class HeaderCommand implements GridBagCommand
 
    private boolean willBePlacedInFirstRow(GridBagBuilder builder)
    {
-      if (builder.isEmpty())
+      if (builder.isHorizontal())
       {
-         return true;
+         return builder.isEmpty();
       }
       else
       {
          builder.moveToFreeCell();
-
-         builder.setEndOfLine(true);
-         builder.moveToPreviousCell();
-
-         builder.setEndOfLine(true);
-         if (!builder.moveToNextFreeCell())
-         {
-            throw new IllegalStateException("No place for another line in this grid. No components added.");
-         }
          return builder.getCurrentRowNumber() == 0;
       }
    }

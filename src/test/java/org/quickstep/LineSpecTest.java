@@ -55,7 +55,6 @@ public class LineSpecTest
       panel.add(anyComponent(), gbc(0, 2, defaultSpec().withInsetTop(5)));
 
       replay(panel);
-      debug();
       panelCommand.
          add(aComponent()).
          add(aComponent()).

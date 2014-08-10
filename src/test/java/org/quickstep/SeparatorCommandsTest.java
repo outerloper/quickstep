@@ -18,7 +18,6 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    @Before
    public void setUp()
    {
-      debug();
       panel.setLayout((LayoutManager) anyObject());
       panelCommand = panel().with(panel);
    }
@@ -100,13 +99,13 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    @Test
    public void whenAddingLineSeparatorToHorizontalPanelWithGrowingComponentsThenSeparatorIsNotFilledVertically()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.CENTER, AY.BOTH).withWeight(1.0)));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemaining().withWeight(1.0)));
 
       replay(panel);
 
       panelCommand.
          specifyDefault(specWithFill()).
-         addSeparator().
+         addLineSeparator().
          getComponent();
 
       verify(panel);
@@ -130,14 +129,56 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
    @Test
    public void whenAddingLineSeparatorToVerticalPanelWithGrowingComponentsThenSeparatorIsNotFilledHorizontally()
    {
-      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.BOTH, AY.CENTER).withWeight(1.0)));
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemaining().withWeight(1.0)));
 
       replay(panel);
 
       panelCommand.
          withOrientation(Orientation.VERTICAL).
          specifyDefault(specWithFill()).
-         addSeparator().
+         addLineSeparator().
+         getComponent();
+
+      verify(panel);
+   }
+
+   @Test
+   public void addingLineSeparatorToHorizontalPanelPutsSeparatorInSeparateLine()
+   {
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec()));
+      panel.add(anyObject(JSeparator.class), gbc(1, 0, defaultSpec().withInsetLeft(5)));
+      panel.add(anyObject(JSeparator.class), gbc(0, 1, defaultSpec().withInsetTop(5).withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 2, defaultSpec().withInsetTop(5)));
+
+      replay(panel);
+
+      panelCommand.
+         add(aComponent()).
+         add(aComponent()).
+         addLineSeparator().
+         add(aComponent()).
+         getComponent();
+
+      verify(panel);
+   }
+
+   @Test
+   public void addingLineSeparatorToVerticalPanelPutsSeparatorInSeparateLine()
+   {
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec()));
+      panel.add(anyObject(JSeparator.class), gbc(0, 1, defaultSpec().withInsetTop(5)));
+      panel.add(anyObject(JSeparator.class), gbc(1, 0, defaultSpec().withInsetLeft(5).withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemaining()));
+      panel.add(anyObject(JSeparator.class), gbc(2, 0, defaultSpec().withInsetLeft(5)));
+
+      replay(panel);
+      debug();
+
+      panelCommand.
+         withOrientation(Orientation.VERTICAL).
+         add(aComponent()).
+         add(aComponent()).
+         addLineSeparator().
+         add(aComponent()).
          getComponent();
 
       verify(panel);

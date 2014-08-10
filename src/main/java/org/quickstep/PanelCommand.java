@@ -13,7 +13,7 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
 
    private final GridBagCommandsCollectorComponent<PanelCommand> commandsCollector = new GridBagCommandsCollectorComponent<PanelCommand>(this);
 
-   private GridSpec gridSpec = new GridSpec();
+   protected GridSpec gridSpec = new GridSpec();
    private Border border;
    private JScrollPane scroll;
 

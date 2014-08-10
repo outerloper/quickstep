@@ -110,7 +110,7 @@ public class GridBagBuilder
       return moveToNextFreeCell();
    }
 
-   public boolean moveToNextFreeCell()
+   public boolean moveToNextFreeCell() // TODO throw checked exception from places that may hang
    {
       do
       {
