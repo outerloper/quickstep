@@ -330,19 +330,19 @@ public class GridBagBuilderTest
       {
          checkBoxes.add(new JCheckBox());
       }
-      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withInset(0, 30, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(2, 0, defaultSpec().withInset(0, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInset(5, 30, 0, 0)));
-      panel.add(anyComponent(), gbc(1, 1, defaultSpec().withInset(5, 5, 0, 0)));
-      panel.add(anyComponent(), gbc(2, 1, defaultSpec().withInset(5, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 0, defaultSpec().withInset(20, 30, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInset(20, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(2, 0, defaultSpec().withInset(20, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInset(20, 30, 0, 0)));
+      panel.add(anyComponent(), gbc(1, 1, defaultSpec().withInset(20, 5, 0, 0)));
+      panel.add(anyComponent(), gbc(2, 1, defaultSpec().withInset(20, 5, 0, 0)));
 
       replay(panel);
 
       panelCommand.
          withLineLength(3).
-         specifyColumn(0, spec().withAnchorX(AX.RIGHT).withInsetLeft(30)).
-         addAll(checkBoxes, defaultSpec()).
+         specifyColumn(0, spec().withInsetLeft(30)).
+         addAll(checkBoxes, spec().withInsetTop(20)).
          getComponent();
 
       verify(panel);
@@ -406,7 +406,7 @@ public class GridBagBuilderTest
    }
 
    @Test
-   public void subsequentLineBreaksCumulate() // TODO make a decision if line() and lineBreak should both always start a new line or not
+   public void subsequentLineBreaksCumulate()
    {
       panel.add(anyComponent(), gbc(0, 2, defaultSpec().withInsetTop(5)));
       panel.add(anyComponent(), gbc(0, 4, defaultSpec().withInsetTop(5)));
