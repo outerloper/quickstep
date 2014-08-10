@@ -43,7 +43,7 @@ public class GridBagBuilderTest
    }
 
    @Test
-   public void wrapRowWhenBuilderGridWidthIsSet()
+   public void givenLineLengthSetWhenAddingMoreComponentsThanLineLengthThenWrapLine()
    {
       panel.add(anyComponent(), gbc(0, 0, defaultSpec()));
       panel.add(anyComponent(), gbc(1, 0, defaultSpec().withInset(0, 5, 0, 0)));
@@ -66,7 +66,7 @@ public class GridBagBuilderTest
    }
 
    @Test
-   public void wrapRowWhenNextRowInvoked()
+   public void whenLineBreakAddedThenAddFollowingComponentsInNewLine()
    {
       panel.add(anyComponent(), gbc(0, 0, defaultSpec()));
       panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInset(5, 0, 0, 0)));
@@ -85,7 +85,7 @@ public class GridBagBuilderTest
    }
 
    @Test
-   public void wrapRowWhenGridWidthRemainderUsed()
+   public void whenGridWidthRemainderUsedThenAddFollowingComponentsInNewLine()
    {
       panel.add(anyComponent(), gbc(0, 0, defaultSpec().withGridWidthRemainder()));
       panel.add(anyComponent(), gbc(0, 1, defaultSpec().withInset(5, 0, 0, 0)));
