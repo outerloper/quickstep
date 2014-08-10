@@ -182,4 +182,18 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
 
       verify(panel);
    }
+
+   @Test
+   public void whenAddingLineSeparatorWithSpecThisSpecOverridesDefaultHeaderSpec()
+   {
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchor(AX.LEFT, AY.CENTER).withGridWidthRemaining()));
+
+      replay(panel);
+
+      panelCommand.
+         add(new LineSeparatorCommand().withSpec(spec().withAnchorX(AX.LEFT))).
+         getComponent();
+
+      verify(panel);
+   }
 }

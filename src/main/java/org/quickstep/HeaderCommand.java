@@ -7,41 +7,47 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class HeaderCommand implements GridBagCommand
 {
-   private final JComponent header;
+   private final CellSpec cellSpec = spec();
    private final String text;
 
    public HeaderCommand(String text)
    {
-      this(null, text);
+      this.text = text;
    }
 
-   public HeaderCommand(JComponent customHeader, String text)
+   public HeaderCommand withSpec(CellSpec spec)
    {
-      header = customHeader;
-      this.text = text;
+      this.cellSpec.overrideWith(spec);
+      return this;
    }
 
    @Override
    public void apply(GridBagBuilder builder)
    {
-      JComponent component = header == null ? builder.createDefaultHeader(text, willBePlacedInFirstRow(builder)) : header;
-      CellSpec spec = spec().withAnchorX(AX.BOTH);
-      GridBagCommand command;
-
-      if (builder.isHorizontal())
+      try
       {
-         spec.withGridWidthRemaining();
-         command = line().add(component, spec);
-      }
-      else
-      {
-         command = component(component).withSpec(spec);
-      }
+         JComponent component = builder.createDefaultHeader(text, willBePlacedInFirstRow(builder));
+         CellSpec spec = spec().withAnchorX(AX.BOTH);
+         GridBagCommand command;
 
-      command.apply(builder);
+         if (builder.isHorizontal())
+         {
+            command = line().add(component(component).withSpec(spec.withGridWidthRemaining().overrideWith(cellSpec)));
+         }
+         else
+         {
+            command = component(component).withSpec(spec.overrideWith(cellSpec));
+         }
+
+         command.apply(builder);
+      }
+      catch (GridBagException e)
+      {
+         logger.log(Level.WARNING, "No place for header component.", e);
+      }
    }
 
-   private boolean willBePlacedInFirstRow(GridBagBuilder builder)
+   private boolean willBePlacedInFirstRow(GridBagBuilder builder) throws GridBagException
    {
       if (builder.isHorizontal())
       {
@@ -49,14 +55,7 @@ public class HeaderCommand implements GridBagCommand
       }
       else
       {
-         try
-         {
-            builder.moveToFreeCell();
-         }
-         catch (GridBagException e)
-         {
-            logger.log(Level.WARNING, "No place for header component.", e);
-         }
+         builder.moveToFreeCell();
          return builder.getCurrentRowNumber() == 0;
       }
    }

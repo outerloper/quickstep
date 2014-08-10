@@ -110,6 +110,20 @@ public class HeaderCommandTest
       assertTrue(headerInFirstRowHandled);
    }
 
+   @Test
+   public void whenAddingHeaderWithSpecThisSpecOverridesDefaultHeaderSpec()
+   {
+      panel.add(anyObject(JSeparator.class), gbc(0, 0, defaultSpec().withAnchorX(AX.LEFT).withGridWidthRemaining()));
+
+      replay(panel);
+
+      panelCommand.
+         add(new HeaderCommand("header").withSpec(spec().withAnchorX(AX.LEFT))).
+         getComponent();
+
+      verify(panel);
+   }
+
    private class TestPanelCommand extends PanelCommand
    {
       @Override
