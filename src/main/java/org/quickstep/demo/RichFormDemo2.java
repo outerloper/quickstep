@@ -58,41 +58,31 @@ public class RichFormDemo2 extends JFrame
          specifyDefault(specWithFillX()).
          add(panel().
             withBorder("Conditions").
-            specifyColumn(0, spec().withAnchorX(AX.RIGHT)).
-            specifyColumn(1, spec().withPreferredWidth(70)).
-            specifyColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
-            specifyColumn(3, spec().withPreferredWidth(70)).
-            specifyColumn(4, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
-            specifyColumn(5, spec().withPreferredWidth(60)).
+            specifyGrid(getGridSpec()).
             addHeader("Section 1").
             add(line().
                add("Start Date:").add(startDateTextField).
                add("End Date:").add(endDateTextField).add("Freq:").add(freqTextField)
             ).
-            addBlank().
             addHeader("Section 2").
             add(line().
                add("Criterion 1:").add(criterion1TextField).
                add("Criterion 2:").add(criterion2TextField)
             ).
-            addBlank().
             addHeader("Section 3").
             add(line().
                add("Additional Criterion 1:").add(additionalCriterion1TextField).
                add("Additional Criterion 2:").add(additionalCriterion2TextField)
             ).
-            addBlank().
             addHeader("Section 4").
             add(lineWithCombo().add("Criterion 3 Level:").add(criterion3ComboBox).add(criterion3TextField)).
             add(lineWithCombo().add("Criterion 4 Level:").add(criterion4ComboBox).add(criterion4TextField).
-               add(roundTripCheckBox, spec().withInsetLeft(10).withGridWidthRemaining())
+               add(roundTripCheckBox, spec().withInsetLeft(5).withAnchorX(AX.LEFT).withGridWidthRemaining())
             ).
-            addBlank().
             addHeader("Additional Conditions").
             add(lineWithCombo().add("Other 1:").add(other1ComboBox).add(other1TextField).add("ABC:").add(abcTextField)).
             add(lineWithCombo().add("Other 2:").add(other2ComboBox).add(other2TextField)).
-            add(lineWithCombo().add("Other 3:").add(other3ComboBox).add(other3TextField)).
-            addBlank()
+            add(lineWithCombo().add("Other 3:").add(other3ComboBox).add(other3TextField))
          ).
          add(panel().
             withSpec(specWithFillX()).
@@ -120,6 +110,17 @@ public class RichFormDemo2 extends JFrame
             add(seq(clearButton, findAllButton, findNextButton, closeButton))
          )
       );
+   }
+
+   private GridSpec getGridSpec()
+   {
+      return gridSpec().
+         specifyColumn(0, spec().withAnchorX(AX.RIGHT)).
+         specifyColumn(1, spec().withPreferredWidth(70)).
+         specifyColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
+         specifyColumn(3, spec().withPreferredWidth(70)).
+         specifyColumn(4, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
+         specifyColumn(5, spec().withPreferredWidth(60));
    }
 
    private LineCommand lineWithCombo()

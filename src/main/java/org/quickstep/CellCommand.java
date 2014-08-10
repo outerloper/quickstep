@@ -1,12 +1,50 @@
 package org.quickstep;
 
+import java.util.logging.Level;
 import javax.swing.*;
 
-public interface CellCommand<T extends CellCommand<T>> extends GridBagCommand
+import org.quickstep.util.DebugSupport;
+
+import static org.quickstep.GridBagToolKit.logger;
+import static org.quickstep.GridBagToolKit.spec;
+
+public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCommand
 {
-   JComponent getComponent();
+   private final CellSpec cellSpec = spec();
 
-   CellSpec getSpec();
+   public abstract JComponent getComponent();
 
-   T withSpec(CellSpec spec);
+   public T withSpec(CellSpec spec)
+   {
+      this.cellSpec.overrideWith(spec);
+      return self();
+   }
+
+   public CellSpec getSpec()
+   {
+      return cellSpec.derive();
+   }
+
+   @Override
+   public void apply(GridBagBuilder builder)
+   {
+      JComponent component = getComponent();
+      if (component != null)
+      {
+         if (builder.moveToFreeCell())
+         {
+            builder.placeComponent(component, getSpec());
+         }
+         else
+         {
+            logger.log(Level.WARNING, "No place for " + DebugSupport.objectId(component));
+         }
+      }
+   }
+
+   @SuppressWarnings("unchecked")
+   protected T self()
+   {
+      return (T) this;
+   }
 }

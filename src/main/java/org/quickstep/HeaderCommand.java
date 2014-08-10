@@ -2,9 +2,7 @@ package org.quickstep;
 
 import javax.swing.*;
 
-import static org.quickstep.GridBagToolKit.component;
-import static org.quickstep.GridBagToolKit.line;
-import static org.quickstep.GridBagToolKit.spec;
+import static org.quickstep.GridBagToolKit.*;
 
 public class HeaderCommand implements GridBagCommand
 {
@@ -23,10 +21,10 @@ public class HeaderCommand implements GridBagCommand
    }
 
    @Override
-   public void apply(GridBagBuilder builder)
+   public void apply(GridBagBuilder builder) // TODO test header in vertical panel
    {
-      JComponent component = header == null ? builder.createDefaultHeader(text) : header;
-      CellSpec spec = spec().withAnchorX(GridBagToolKit.AX.BOTH);
+      JComponent component = header == null ? builder.createDefaultHeader(text, willBePlacedInFirstRow(builder)) : header; // TODO test first row behavior
+      CellSpec spec = spec().withAnchorX(AX.BOTH);
       GridBagCommand command;
 
       if (builder.isHorizontal())
@@ -40,5 +38,27 @@ public class HeaderCommand implements GridBagCommand
       }
 
       command.apply(builder);
+   }
+
+   private boolean willBePlacedInFirstRow(GridBagBuilder builder)
+   {
+      if (builder.isEmpty())
+      {
+         return true;
+      }
+      else
+      {
+         builder.moveToFreeCell();
+
+         builder.setEndOfLine(true);
+         builder.moveToPreviousCell();
+
+         builder.setEndOfLine(true);
+         if (!builder.moveToNextFreeCell())
+         {
+            throw new IllegalStateException("No place for another line in this grid. No components added.");
+         }
+         return builder.getCurrentRowNumber() == 0;
+      }
    }
 }

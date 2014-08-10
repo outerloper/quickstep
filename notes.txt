@@ -1,0 +1,10 @@
+TODO use cases with menus, toolbars, split panes, tables with viewports, tabs
+TODO ability to add components to every component (as with TabbedPane, Toolbar)
+TODO more modularity? component commands not such tightly coupled with core functionality, add*(*) -> add(*(*))
+TODO less flexibility with command builders, more commands implementing CellCommand
+TODO CellSpec -> LineSpec -> GridSpec - ability to override
+TODO CellsCommand
+TODO component(c).withSpec(spec), cell().with(c/"label"/...).withSpec(spec), container().with(menu/panel).add(...)
+TODO separator - go back to lineSeparator and separator
+TODO line() accepts only cell commands
+TODO CellCommand::getComponent(component)

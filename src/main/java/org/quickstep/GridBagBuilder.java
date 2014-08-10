@@ -77,6 +77,16 @@ public class GridBagBuilder
       endOfLine = value;
    }
 
+   public int getCurrentRowNumber()
+   {
+      return cursorY;
+   }
+
+   public int getCurrentColumnNumber()
+   {
+      return cursorX;
+   }
+
    public int getCurrentLineNumber()
    {
       return isHorizontal() ? cursorY : cursorX;
@@ -270,14 +280,15 @@ public class GridBagBuilder
    }
 
 
-   protected JComponent createDefaultLabel(String text)
-   {
-      return new JLabel(text);
-   }
 
-   protected JComponent createDefaultHeader(String title)
+   protected JComponent createDefaultHeader(String title, boolean first)
    {
-      return panel().add(title).add(createDefaultSeparator(), specWithFillX()).getComponent();
+      PanelCommand result = panel().add(title).add(createDefaultSeparator(), specWithFillX());
+      if (!first)
+      {
+         result.specifyRow(0, spec().withInsetTop(5));
+      }
+      return result.getComponent();
    }
 
    protected JSeparator createDefaultSeparator()

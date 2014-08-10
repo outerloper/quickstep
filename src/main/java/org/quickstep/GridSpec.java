@@ -105,4 +105,30 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
          overrideWith(lineSpecs[(i + 1) % 2]).
          overrideWith(cellSpecs.get(x, y));
    }
+
+   public GridSpec overrideWith(GridSpec that)
+   {
+      if (that.lineLength != null)
+      {
+         lineLength = that.lineLength;
+      }
+      if (that.orientation != null)
+      {
+         orientation = that.orientation;
+      }
+      specifyDefault(that.defaultSpec);
+      for (Map.Entry<Integer, CellSpec> entry : that.rowSpecs.entrySet())
+      {
+         specifyRow(entry.getKey(), entry.getValue());
+      }
+      for (Map.Entry<Integer, CellSpec> entry : that.columnSpecs.entrySet())
+      {
+         specifyColumn(entry.getKey(), entry.getValue());
+      }
+      for (Table.Cell<Integer, Integer, CellSpec> cell : cellSpecs.cellSet())
+      {
+         specifyCell(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
+      }
+      return this;
+   }
 }

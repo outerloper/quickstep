@@ -24,9 +24,9 @@ interface GridBagCommandsCollector<T extends GridBagCommandsCollector<T>>
 
    T addHeader(String title);
 
-   T addVerticalSeparator();
+   T addSeparator();
 
-   T addHorizontalSeparator();
+   T addLineSeparator();
 
    T add(GridBagCommand command);
 }

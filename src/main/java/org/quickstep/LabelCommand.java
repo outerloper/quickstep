@@ -1,35 +1,19 @@
 package org.quickstep;
 
-import java.util.logging.Level;
-
 import javax.swing.*;
 
-import org.quickstep.util.DebugSupport;
-
-import static org.quickstep.GridBagToolKit.logger;
-
-public class LabelCommand implements GridBagCommand
+public class LabelCommand extends CellCommand<LabelCommand>
 {
-   private CellSpec spec;
    private String text;
 
-   protected LabelCommand(String text, CellSpec spec)
+   protected LabelCommand(String text)
    {
       this.text = text;
-      this.spec = spec.derive();
    }
 
    @Override
-   public void apply(GridBagBuilder builder)
+   public JComponent getComponent()
    {
-      JComponent component = builder.createDefaultLabel(text);
-      if (builder.moveToFreeCell())
-      {
-         builder.placeComponent(component, spec);
-      }
-      else
-      {
-         logger.log(Level.WARNING, "No place for " + DebugSupport.objectId(component));
-      }
+      return new JLabel(text);
    }
 }

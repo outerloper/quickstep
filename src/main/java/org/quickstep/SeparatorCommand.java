@@ -4,57 +4,31 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class SeparatorCommand implements GridBagCommand
+public class SeparatorCommand extends CellCommand<SeparatorCommand>
 {
-   private final boolean vertical;
-   private final JSeparator customSeparator;
-
-   public SeparatorCommand(boolean vertical)
+   @Override
+   public JComponent getComponent() // TODO improve design
    {
-      this(null, vertical);
-   }
-
-   protected SeparatorCommand(JSeparator separator, boolean vertical)
-   {
-      this.vertical = vertical;
-      this.customSeparator = separator;
+      return new JSeparator(JSeparator.VERTICAL);
    }
 
    @Override
    public void apply(GridBagBuilder builder)
    {
-      JSeparator separator = customSeparator == null ? builder.createDefaultSeparator() : customSeparator;
-      CellSpec spec = spec();
-      GridBagCommand command;
+      JSeparator separator = new JSeparator();
+      CellSpec spec = spec().withAnchor(A.BOTH);
 
-      if (vertical)
+      if (Orientation.HORIZONTAL.equals(builder.getGridSpec().getOrientation()))
       {
          separator.setOrientation(JSeparator.VERTICAL);
-         spec.withWeightX(0.0).withAnchor(AX.CENTER, AY.BOTH);
+         spec.withWeightX(0.0);
       }
       else
       {
          separator.setOrientation(JSeparator.HORIZONTAL);
-         spec.withWeightY(0.0).withAnchor(AX.BOTH, AY.CENTER);
+         spec.withWeightY(0.0);
       }
 
-      if (builder.isHorizontal() && !vertical)
-      {
-         if (builder.isHorizontal())
-         {
-            spec.withGridWidthRemaining();
-         }
-         else
-         {
-            spec.withGridHeightRemaining();
-         }
-         command = line().add(separator, spec);
-      }
-      else
-      {
-         command = component(separator).withSpec(spec);
-      }
-
-      command.apply(builder);
+      component(separator).withSpec(spec).apply(builder); // TODO test adding separators
    }
 }

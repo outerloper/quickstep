@@ -37,13 +37,23 @@ public class LineSpec implements LineSpecBuilder<LineSpec>
       return defaultSpec.derive();
    }
 
-   public Map<Integer, CellSpec> getSpecifiedCells()
+   public Map<Integer, CellSpec> getSpecifiedCells() // TODO test deep copy of specified cells
    {
-      Map<Integer,CellSpec> result = new TreeMap<Integer, CellSpec>();
+      Map<Integer, CellSpec> result = new TreeMap<Integer, CellSpec>();
       for (Map.Entry<Integer, CellSpec> entry : cellsSpecs.entrySet())
       {
          result.put(entry.getKey(), entry.getValue().derive());
       }
       return result;
+   }
+
+   public LineSpec overrideWith(LineSpec that) // TODO test
+   {
+      specifyDefault(that.defaultSpec);
+      for (Map.Entry<Integer, CellSpec> entry : that.cellsSpecs.entrySet())
+      {
+         specifyCell(entry.getKey(), entry.getValue());
+      }
+      return this;
    }
 }

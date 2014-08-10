@@ -428,7 +428,7 @@ public final class CellSpec
       );
    }
 
-   public int getAnchor() // TODO getAnchor/getAlignment
+   public int getAnchor()
    {
       AX x = anchorX == null ? AX.CENTER : anchorX;
       AY y = anchorY == null ? AY.CENTER : anchorY;

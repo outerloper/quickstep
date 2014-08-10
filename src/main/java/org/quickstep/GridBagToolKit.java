@@ -64,6 +64,13 @@ public final class GridBagToolKit
    }
 
 
+   public static GridSpec gridSpec()
+   {
+      return new GridSpec();
+   }
+   // TODO LineSpec
+
+
    public static PanelCommand panel()
    {
       return new PanelCommand();

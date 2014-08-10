@@ -1,19 +1,15 @@
 package org.quickstep;
 
 import java.awt.*;
-import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.border.Border;
-
-import org.quickstep.util.DebugSupport;
 
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class PanelCommand implements CellCommand<PanelCommand>, GridBagCommandsCollector<PanelCommand>, GridSpecBuilder<PanelCommand>
+public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCommandsCollector<PanelCommand>, GridSpecBuilder<PanelCommand>
 {
    private JPanel panel;
-   private CellSpec spec = spec();
 
    private final GridBagCommandsCollectorComponent<PanelCommand> commandsCollector = new GridBagCommandsCollectorComponent<PanelCommand>(this);
 
@@ -94,27 +90,21 @@ public class PanelCommand implements CellCommand<PanelCommand>, GridBagCommandsC
    }
 
    @Override
-   public PanelCommand addVerticalSeparator()
+   public PanelCommand addSeparator()
    {
-      return commandsCollector.addVerticalSeparator();
+      return commandsCollector.addSeparator();
    }
 
    @Override
-   public PanelCommand addHorizontalSeparator()
+   public PanelCommand addLineSeparator()
    {
-      return commandsCollector.addHorizontalSeparator();
+      return commandsCollector.addLineSeparator();
    }
 
    @Override
    public PanelCommand add(GridBagCommand command)
    {
       return commandsCollector.add(command);
-   }
-
-   public final PanelCommand withSpec(CellSpec spec)
-   {
-      this.spec.overrideWith(spec);
-      return this;
    }
 
    @Override
@@ -146,10 +136,10 @@ public class PanelCommand implements CellCommand<PanelCommand>, GridBagCommandsC
       return new GridBagBuilder(gridSpec, panel);
    }
 
-   @Override
-   public final CellSpec getSpec()
+   public PanelCommand specifyGrid(GridSpec gridSpec)
    {
-      return spec;
+      this.gridSpec.overrideWith(gridSpec);
+      return this;
    }
 
    @Override
@@ -244,19 +234,5 @@ public class PanelCommand implements CellCommand<PanelCommand>, GridBagCommandsC
    {
       scroll = scrollPane;
       return this;
-   }
-
-   @Override
-   public void apply(GridBagBuilder builder)
-   {
-      JComponent panel = getComponent();
-      if (builder.moveToFreeCell())
-      {
-         builder.placeComponent(panel, getSpec());
-      }
-      else
-      {
-         logger.log(Level.WARNING, "No place for " + DebugSupport.objectId(panel));
-      }
    }
 }

@@ -42,7 +42,7 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    @Override
    public T add(String text, CellSpec spec)
    {
-      return add(new LabelCommand(text, spec));
+      return add(new LabelCommand(text).withSpec(spec));
    }
 
    @Override
@@ -80,15 +80,15 @@ public class GridBagCommandsCollectorComponent<T extends GridBagCommandsCollecto
    }
 
    @Override
-   public T addVerticalSeparator()
+   public T addSeparator()
    {
-      return add(new SeparatorCommand(true));
+      return add(new SeparatorCommand());
    }
 
    @Override
-   public T addHorizontalSeparator()
+   public T addLineSeparator()
    {
-      return add(new SeparatorCommand(false));
+      return add(new LineSeparatorCommand());
    }
 
    @Override
