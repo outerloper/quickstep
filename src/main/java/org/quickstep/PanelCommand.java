@@ -150,24 +150,38 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
    }
 
    @Override
-   public final PanelCommand specifyColumn(int x, CellSpec spec)
+   public final PanelCommand specifyColumn(int columnIndex, CellSpec spec)
    {
-      gridSpec.specifyColumn(x, spec);
+      gridSpec.specifyColumn(columnIndex, spec);
+      return this;
+   }
+
+   @Override
+   public final PanelCommand specifyColumn(int columnIndex, LineSpec lineSpec)
+   {
+      gridSpec.specifyColumn(columnIndex, lineSpec);
       return this;
    }
 
    @Override
    public final PanelCommand specifyRow
-      (int y, CellSpec spec)
+      (int rowIndex, CellSpec spec)
    {
-      gridSpec.specifyRow(y, spec);
+      gridSpec.specifyRow(rowIndex, spec);
       return this;
    }
 
    @Override
-   public final PanelCommand specifyCell(int x, int y, CellSpec spec)
+   public final PanelCommand specifyRow(int rowIndex, LineSpec lineSpec)
    {
-      gridSpec.specifyCell(x, y, spec);
+      gridSpec.specifyRow(rowIndex, lineSpec);
+      return this;
+   }
+
+   @Override
+   public final PanelCommand specifyCell(int columnIndex, int rowIndex, CellSpec spec)
+   {
+      gridSpec.specifyCell(columnIndex, rowIndex, spec);
       return this;
    }
 
@@ -177,15 +191,15 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
       return this;
    }
 
-   public final PanelCommand withOrientation(Orientation value)
+   public final PanelCommand withOrientation(Orientation orientation)
    {
-      gridSpec.withOrientation(value);
+      gridSpec.withOrientation(orientation);
       return this;
    }
 
-   public final PanelCommand withLineLength(Integer value)
+   public final PanelCommand withLineLength(Integer lineLength)
    {
-      gridSpec.withLineLength(value);
+      gridSpec.withLineLength(lineLength);
       return this;
    }
 

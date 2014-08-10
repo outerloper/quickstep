@@ -33,9 +33,9 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       return orientation;
    }
 
-   public final GridSpec withLineLength(Integer value)
+   public final GridSpec withLineLength(Integer lineLength)
    {
-      lineLength = value;
+      this.lineLength = lineLength;
       return this;
    }
 
@@ -52,58 +52,80 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
    }
 
    @Override
-   public final GridSpec specifyColumn(int x, CellSpec spec)
+   public final GridSpec specifyColumn(int columnIndex, CellSpec spec)
    {
-      for (Integer y : rowSpecsOverridingColumnSpecs.column(x).keySet())
+      for (Integer y : rowSpecsOverridingColumnSpecs.column(columnIndex).keySet())
       {
-         rowSpecsOverridingColumnSpecs.remove(x, y);
+         rowSpecsOverridingColumnSpecs.remove(columnIndex, y);
       }
-      CellSpec columnSpec = columnSpecs.get(x);
+      CellSpec columnSpec = columnSpecs.get(columnIndex);
       if (columnSpec == null)
       {
          columnSpec = spec();
       }
-      columnSpecs.put(x, columnSpec.overrideWith(spec));
+      columnSpecs.put(columnIndex, columnSpec.overrideWith(spec));
       return this;
    }
 
    @Override
-   public final GridSpec specifyRow(int y, CellSpec spec)
+   public final GridSpec specifyColumn(int columnIndex, LineSpec lineSpec)
+   {
+      specifyColumn(columnIndex, lineSpec.getDefaultSpec());
+      for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
+      {
+         specifyCell(columnIndex, entry.getKey(), entry.getValue());
+      }
+      return this;
+   }
+
+   @Override
+   public final GridSpec specifyRow(int rowIndex, CellSpec spec)
    {
       for (Integer x : columnSpecs.keySet())
       {
-         rowSpecsOverridingColumnSpecs.put(x, y, spec);
+         rowSpecsOverridingColumnSpecs.put(x, rowIndex, spec);
       }
-      CellSpec rowSpec = rowSpecs.get(y);
+      CellSpec rowSpec = rowSpecs.get(rowIndex);
       if (rowSpec == null)
       {
          rowSpec = spec();
       }
-      rowSpecs.put(y, rowSpec.overrideWith(spec));
+      rowSpecs.put(rowIndex, rowSpec.overrideWith(spec));
       return this;
    }
 
    @Override
-   public final GridSpec specifyCell(int x, int y, CellSpec spec)
+   public final GridSpec specifyRow(int rowIndex, LineSpec lineSpec)
    {
-      CellSpec cellSpec = cellSpecs.get(x, y);
+      specifyRow(rowIndex, lineSpec.getDefaultSpec());
+      for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
+      {
+         specifyCell(entry.getKey(), rowIndex, entry.getValue());
+      }
+      return this;
+   }
+
+   @Override
+   public final GridSpec specifyCell(int columnIndex, int rowIndex, CellSpec spec)
+   {
+      CellSpec cellSpec = cellSpecs.get(columnIndex, rowIndex);
       if (cellSpec == null)
       {
          cellSpec = spec();
       }
-      cellSpecs.put(x, y, cellSpec.overrideWith(spec));
+      cellSpecs.put(columnIndex, rowIndex, cellSpec.overrideWith(spec));
       return this;
    }
 
-   public CellSpec getSpecAt(int x, int y)
+   public CellSpec getSpecAt(int columnIndex, int rowIndex)
    {
-      CellSpec[] lineSpecs = new CellSpec[]{columnSpecs.get(x), rowSpecs.get(y)};
-      int i = rowSpecsOverridingColumnSpecs.get(x, y) != null ? 0 : 1;
+      CellSpec[] lineSpecs = new CellSpec[]{columnSpecs.get(columnIndex), rowSpecs.get(rowIndex)};
+      int i = rowSpecsOverridingColumnSpecs.get(columnIndex, rowIndex) != null ? 0 : 1;
       return spec().
          overrideWith(defaultSpec).
          overrideWith(lineSpecs[i]).
          overrideWith(lineSpecs[(i + 1) % 2]).
-         overrideWith(cellSpecs.get(x, y));
+         overrideWith(cellSpecs.get(columnIndex, rowIndex));
    }
 
    public GridSpec overrideWith(GridSpec that)

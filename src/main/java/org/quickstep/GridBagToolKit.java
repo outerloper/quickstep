@@ -68,17 +68,16 @@ public final class GridBagToolKit
    {
       return new GridSpec();
    }
-   // TODO LineSpec
+
+   public static LineSpec lineSpec()
+   {
+      return new LineSpec();
+   }
 
 
    public static PanelCommand panel()
    {
       return new PanelCommand();
-   }
-
-   public static PanelCommand verticalPanel()
-   {
-      return panel().withOrientation(Orientation.VERTICAL);
    }
 
    public static LineCommand line()

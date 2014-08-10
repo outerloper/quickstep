@@ -65,7 +65,8 @@ public class GridSpecTest
    }
 
    @Test
-   public void specifyDefaultMoreThanOnceOverridesPreviousDefault() {
+   public void specifyDefaultMoreThanOnceOverridesPreviousDefault()
+   {
       gridSpec
          .specifyDefault(spec().withInset(3))
          .specifyDefault(spec().withInsetTop(6));
@@ -73,7 +74,8 @@ public class GridSpecTest
    }
 
    @Test
-   public void whenRowAndColumnSpecifiedThenCellForThisRowAndColumnInheritsSpecFromBoth() {
+   public void whenRowAndColumnSpecifiedThenCellForThisRowAndColumnInheritsSpecFromBoth()
+   {
       gridSpec
          .specifyColumn(1, spec().withInsetBottom(20))
          .specifyRow(2, spec().withInsetTop(10));
@@ -81,7 +83,8 @@ public class GridSpecTest
    }
 
    @Test
-   public void whenColumnAndThenRowSpecifiedThenColumnOverridesRow() {
+   public void whenColumnAndThenRowSpecifiedThenColumnOverridesRow()
+   {
       gridSpec
          .specifyColumn(1, spec().withInset(10))
          .specifyRow(2, spec().withInsetBottom(20));
@@ -89,10 +92,39 @@ public class GridSpecTest
    }
 
    @Test
-   public void whenRowAndThenColumnSpecifiedThenColumnOverridesRow() {
+   public void whenRowAndThenColumnSpecifiedThenColumnOverridesRow()
+   {
       gridSpec
          .specifyRow(2, spec().withInset(10))
          .specifyColumn(1, spec().withInsetBottom(20));
       assertEquals(spec().withInset(10).withInsetBottom(20), gridSpec.getSpecAt(1, 2));
+   }
+
+   @Test
+   public void whenRowSpecifiedWithLineSpecThenGridRowAndItsCellsAreOverriddenWithLineSpecs()
+   {
+      gridSpec
+         .specifyRow(1, lineSpec()
+            .specifyDefault(spec().withInset(10))
+            .specifyCell(1, spec().withInsetX(5))
+         );
+      assertEquals(spec(), gridSpec.getSpecAt(0, 0));
+      assertEquals(spec(), gridSpec.getSpecAt(1, 0));
+      assertEquals(spec().withInset(10), gridSpec.getSpecAt(0, 1));
+      assertEquals(spec().withInset(10).withInsetX(5), gridSpec.getSpecAt(1, 1));
+   }
+
+   @Test
+   public void whenColumnSpecifiedWithLineSpecThenGridColumnAndItsCellsAreOverriddenWithLineSpecs()
+   {
+      gridSpec
+         .specifyColumn(1, lineSpec()
+            .specifyDefault(spec().withInset(10))
+            .specifyCell(1, spec().withInsetX(5))
+         );
+      assertEquals(spec(), gridSpec.getSpecAt(0, 0));
+      assertEquals(spec(), gridSpec.getSpecAt(0, 1));
+      assertEquals(spec().withInset(10), gridSpec.getSpecAt(1, 0));
+      assertEquals(spec().withInset(10).withInsetX(5), gridSpec.getSpecAt(1, 1));
    }
 }

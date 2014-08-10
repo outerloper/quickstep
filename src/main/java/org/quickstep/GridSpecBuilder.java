@@ -6,13 +6,17 @@ public interface GridSpecBuilder<T extends GridSpecBuilder<T>>
 {
    T specifyDefault(CellSpec spec);
 
-   T specifyColumn(int x, CellSpec spec);
+   T specifyColumn(int columnIndex, CellSpec spec);
 
-   T specifyRow(int y, CellSpec spec);
+   T specifyColumn(int columnIndex, LineSpec spec);
 
-   T specifyCell(int x, int y, CellSpec spec);
+   T specifyRow(int rowIndex, CellSpec spec);
+
+   T specifyRow(int rowIndex, LineSpec spec);
+
+   T specifyCell(int columnIndex, int rowIndex, CellSpec spec);
 
    T withOrientation(Orientation orientation);
 
-   T withLineLength(Integer maxLineLength);
+   T withLineLength(Integer lineLength);
 }

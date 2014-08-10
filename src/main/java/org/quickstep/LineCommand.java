@@ -139,22 +139,13 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
 
    private void applyLineSpecToGrid(GridBagBuilder builder, int lineNumber)
    {
-      GridSpec gridSpec = builder.getGridSpec();
       if (builder.isHorizontal())
       {
-         gridSpec.specifyRow(lineNumber, lineSpec.getDefaultSpec());
-         for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
-         {
-            gridSpec.specifyCell(entry.getKey(), lineNumber, entry.getValue());
-         }
+         builder.getGridSpec().specifyRow(lineNumber, lineSpec); // TODO refactor not to expose gridSpec
       }
       else
       {
-         gridSpec.specifyColumn(lineNumber, lineSpec.getDefaultSpec());
-         for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
-         {
-            gridSpec.specifyCell(entry.getKey(), lineNumber, entry.getValue());
-         }
+         builder.getGridSpec().specifyColumn(lineNumber, lineSpec);
       }
    }
 

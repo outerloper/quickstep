@@ -14,7 +14,7 @@ import static org.quickstep.TestUtils.*;
 import static org.quickstep.TestUtils.aComponent;
 import static org.quickstep.TestUtils.defaultSpec;
 
-public class LineSpecTest
+public class LineCommandTest
 {
    private JPanel panel = createMock(JPanel.class);
    private PanelCommand panelCommand;
