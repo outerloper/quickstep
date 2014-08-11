@@ -56,7 +56,7 @@ public class HeaderCommand implements GridBagCommand
       else
       {
          builder.moveToFreeCell();
-         return builder.getCurrentRowNumber() == 0;
+         return builder.getCurrentRowIndex() == 0;
       }
    }
 }

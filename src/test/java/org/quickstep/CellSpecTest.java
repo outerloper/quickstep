@@ -175,17 +175,17 @@ public class CellSpecTest
    public void testSpecToString()
    {
       spec = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorY(AY.BOTTOM).withInsetY(5);
-      assertEquals("GBSpec{preferredSize=200,60 gridSize=3,null weight=null,null anchorX=null anchorY=BOTTOM " +
-                      "insets(top=5 left=null bottom=5 right=null) pad=null,null}", spec.toString());
+      assertEquals("CellSpec{preferredSize=200,60 gridSize=3,* weight=*,* anchorX=* anchorY=BOTTOM " +
+                      "insets(top=5 left=* bottom=5 right=*) pad=*,*}", spec.toString());
    }
 
    @Test
    public void testConstraintsToString()
    {
-      GridBagConstraints constraints = new GridBagConstraints(1, GridBagConstraints.REMAINDER, 1, 2, 1.0, 2.0,
+      GridBagConstraints constraints = new GridBagConstraints(-1, 0, 1, GridBagConstraints.REMAINDER, 1.0, 2.0,
                                                               GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                                                               new Insets(1, 2, 3, 4), 0, 10);
-      assertEquals("GBC{grid=1,0 gridsize=1,2 weight=1.0,2.0 anchor=CENTER fill=BOTH insets(top=1 left=2 bottom=3 right=4) ipad=0,10}",
+      assertEquals("GBC{grid=RELATIVE,0 gridsize=1,REMAINDER weight=1.0,2.0 anchor=CENTER fill=BOTH insets(top=1 left=2 bottom=3 right=4) ipad=0,10}",
                    gbcToString(constraints));
    }
 

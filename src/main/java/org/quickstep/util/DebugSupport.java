@@ -81,7 +81,8 @@ public class DebugSupport
    {
       return String.format("GBC{grid=%s,%s gridsize=%s,%s weight=%s,%s anchor=%s fill=%s " +
                               "insets(top=%s left=%s bottom=%s right=%s) ipad=%s,%s}",
-                           c.gridx, c.gridy, gridSizeToString(c.gridwidth), gridSizeToString(c.gridheight), c.weightx, c.weighty,
+                           gridToString(c.gridx), gridToString(c.gridy),
+                           gridSizeToString(c.gridwidth), gridSizeToString(c.gridheight), c.weightx, c.weighty,
                            anchorToString(c.anchor), fillToString(c.fill),
                            c.insets.top, c.insets.left, c.insets.bottom, c.insets.right, c.ipadx, c.ipady);
    }
@@ -105,9 +106,14 @@ public class DebugSupport
          c1.ipady == c2.ipady;
    }
 
-   public static String gridSizeToString(int size) // TODO test
+   public static String gridToString(int size)
    {
-      return size == 0 ? "REMAINDER" : Integer.toString(size);
+      return size == GridBagConstraints.RELATIVE ? "RELATIVE" : Integer.toString(size);
+   }
+
+   public static String gridSizeToString(int size)
+   {
+      return size == GridBagConstraints.REMAINDER ? "REMAINDER" : Integer.toString(size);
    }
 
    public static String anchorToString(int anchorConstant)

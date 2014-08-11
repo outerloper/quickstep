@@ -147,10 +147,62 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       {
          specifyColumn(entry.getKey(), entry.getValue());
       }
-      for (Table.Cell<Integer, Integer, CellSpec> cell : cellSpecs.cellSet())
+      for (Table.Cell<Integer, Integer, CellSpec> cell : that.cellSpecs.cellSet())
       {
          specifyCell(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
       }
       return this;
+   }
+
+   @Override
+   public boolean equals(Object o)
+   {
+      if (this == o) return true;
+      if (!(o instanceof GridSpec)) return false;
+
+      GridSpec spec = (GridSpec) o;
+
+      if (!cellSpecs.equals(spec.cellSpecs)) return false;
+      if (!columnSpecs.equals(spec.columnSpecs)) return false;
+      if (!defaultSpec.equals(spec.defaultSpec)) return false;
+      if (lineLength != null ? !lineLength.equals(spec.lineLength) : spec.lineLength != null) return false;
+      if (orientation != spec.orientation) return false;
+      if (!rowSpecs.equals(spec.rowSpecs)) return false;
+      if (!rowSpecsOverridingColumnSpecs.equals(spec.rowSpecsOverridingColumnSpecs)) return false;
+      //noinspection SimplifiableIfStatement
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      int result = lineLength != null ? lineLength.hashCode() : 0;
+      result = 31 * result + orientation.hashCode();
+      result = 31 * result + defaultSpec.hashCode();
+      result = 31 * result + columnSpecs.hashCode();
+      result = 31 * result + rowSpecs.hashCode();
+      result = 31 * result + cellSpecs.hashCode();
+      result = 31 * result + rowSpecsOverridingColumnSpecs.hashCode();
+      return result;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = "GridSpec{orientation=" + orientation + ", lineLength=" + lineLength + "\n " +
+         defaultSpec + "\n";
+      for (Map.Entry<Integer, CellSpec> entry : columnSpecs.entrySet())
+      {
+         result += " col " + entry.getKey() + ": " + entry.getValue() + "\n";
+      }
+      for (Map.Entry<Integer, CellSpec> entry : rowSpecs.entrySet())
+      {
+         result += " row " + entry.getKey() + ": " + entry.getValue() + "\n";
+      }
+      for (Table.Cell<Integer, Integer, CellSpec> cell : cellSpecs.cellSet())
+      {
+         result += " cell " + cell.getRowKey() + "," + cell.getColumnKey() + ": " + cell.getValue() + "\n";
+      }
+      return result + "}";
    }
 }

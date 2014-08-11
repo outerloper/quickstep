@@ -76,17 +76,17 @@ public class GridBagBuilder
       endOfLine = value;
    }
 
-   public int getCurrentRowNumber()
+   public int getCurrentRowIndex()
    {
       return cursorY;
    }
 
-   public int getCurrentColumnNumber()
+   public int getCurrentColumnIndex()
    {
       return cursorX;
    }
 
-   public int getCurrentLineNumber()
+   public int getCurrentLineIndex()
    {
       return isHorizontal() ? cursorY : cursorX;
    }
@@ -125,7 +125,7 @@ public class GridBagBuilder
    {
       if (!freeCellInNextLinesExists())
       {
-         throw new GridBagException("No free cell below line " + getCurrentLineNumber() + ".");
+         throw new GridBagException("No free cell below line " + getCurrentLineIndex() + ".");
       }
       if (isHorizontal())
       {
@@ -174,7 +174,7 @@ public class GridBagBuilder
       panel.add(getComponentToAdd(component, calculatedSpec), constraints);
 
       if (isHorizontal() && calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER ||
-         !isHorizontal() && calculatedSpec.getGridHeight() == GridBagConstraints.REMAINDER) // TODO test this
+         !isHorizontal() && calculatedSpec.getGridHeight() == GridBagConstraints.REMAINDER)
       {
          endOfLine = true;
       }

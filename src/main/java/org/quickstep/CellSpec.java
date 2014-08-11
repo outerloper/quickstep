@@ -7,6 +7,8 @@ import static org.quickstep.util.DebugSupport.*;
 
 public final class CellSpec
 {
+   private static final String WILDCARD = "*";
+
    private Integer preferredWidth;
    private Integer preferredHeight;
    private Integer gridWidth;
@@ -581,12 +583,22 @@ public final class CellSpec
    @Override
    public String toString()
    {
-      return String.format("GBSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s " +
+      return String.format("CellSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s " +
                               "insets(top=%s left=%s bottom=%s right=%s) pad=%s,%s}",
-                           preferredWidth, preferredHeight,
-                           gridWidth == null ? gridWidth : gridSizeToString(gridWidth),
-                           gridHeight == null ? gridHeight : gridSizeToString(gridHeight),
-                           weightX, weightY, anchorX, anchorY,
-                           insetTop, insetLeft, insetBottom, insetRight, iPadX, iPadY);
+                           preferredWidth == null ? WILDCARD : preferredWidth,
+                           preferredHeight == null ? WILDCARD : preferredHeight,
+                           gridWidth == null ? WILDCARD : gridSizeToString(gridWidth),
+                           gridHeight == null ? WILDCARD : gridSizeToString(gridHeight),
+                           weightX == null ? WILDCARD : weightX,
+                           weightY == null ? WILDCARD : weightY,
+                           anchorX == null ? WILDCARD : anchorX,
+                           anchorY == null ? WILDCARD : anchorY,
+                           insetTop == null ? WILDCARD : insetTop,
+                           insetLeft == null ? WILDCARD : insetLeft,
+                           insetBottom == null ? WILDCARD : insetBottom,
+                           insetRight == null ? WILDCARD : insetRight,
+                           iPadX == null ? WILDCARD : iPadX,
+                           iPadY == null ? WILDCARD : iPadY);
    }
+
 }

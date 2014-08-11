@@ -1,6 +1,5 @@
 package org.quickstep;
 
-import java.util.Map;
 import java.util.logging.Level;
 
 import javax.swing.*;
@@ -99,12 +98,12 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
    {
       try
       {
-         int lineNumber = calculateThisLineNumber(builder);
-         applyLineSpecToGrid(builder, lineNumber);
+         int lineIndex = calculateThisLineIndex(builder);
+         applyLineSpecToGrid(builder, lineIndex);
 
          for (GridBagCommand command : commandsCollector)
          {
-            validateWhetherStillInThisLine(builder, lineNumber);
+            validateWhetherStillInThisLine(builder, lineIndex);
             command.apply(builder);
          }
       }
@@ -115,7 +114,7 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
       builder.setEndOfLine(true);
    }
 
-   private int calculateThisLineNumber(GridBagBuilder builder) throws GridBagException
+   private int calculateThisLineIndex(GridBagBuilder builder) throws GridBagException
    {
       if (builder.isEmpty())
       {
@@ -131,30 +130,30 @@ public class LineCommand implements GridBagCommand, GridBagCommandsCollector<Lin
          builder.setEndOfLine(true);
          builder.moveToNextFreeCell();
 
-         return builder.getCurrentLineNumber();
+         return builder.getCurrentLineIndex();
       }
    }
 
-   private void applyLineSpecToGrid(GridBagBuilder builder, int lineNumber)
+   private void applyLineSpecToGrid(GridBagBuilder builder, int lineIndex)
    {
       if (builder.isHorizontal())
       {
-         builder.getGridSpec().specifyRow(lineNumber, lineSpec); // TODO refactor not to expose gridSpec
+         builder.getGridSpec().specifyRow(lineIndex, lineSpec); // TODO refactor not to expose gridSpec
       }
       else
       {
-         builder.getGridSpec().specifyColumn(lineNumber, lineSpec);
+         builder.getGridSpec().specifyColumn(lineIndex, lineSpec);
       }
    }
 
-   private void validateWhetherStillInThisLine(GridBagBuilder builder, int lineNumber) throws GridBagException
+   private void validateWhetherStillInThisLine(GridBagBuilder builder, int lineIndex) throws GridBagException
    {
       builder.moveToFreeCell();
-      int currentLineNumber = builder.getCurrentLineNumber();
-      if (lineNumber != currentLineNumber)
+      int currentLineIndex = builder.getCurrentLineIndex();
+      if (lineIndex != currentLineIndex)
       {
          builder.moveToPreviousCell();
-         throw new GridBagException("Components from line " + lineNumber + " cannot be placed at line " + currentLineNumber + ".");
+         throw new GridBagException("Components from line " + lineIndex + " cannot be placed at line " + currentLineIndex + ".");
       }
    }
 

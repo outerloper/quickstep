@@ -7,12 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.easymock.EasyMock.*;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
 import static org.quickstep.GridBagToolKit.*;
 import static org.quickstep.TestUtils.*;
-import static org.quickstep.TestUtils.aComponent;
-import static org.quickstep.TestUtils.defaultSpec;
 
 public class LineCommandTest
 {

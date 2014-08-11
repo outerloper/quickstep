@@ -3,6 +3,7 @@ package org.quickstep;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.quickstep.GridBagToolKit.*;
 
 public class GridSpecTest
@@ -126,5 +127,48 @@ public class GridSpecTest
       assertEquals(spec(), gridSpec.getSpecAt(0, 1));
       assertEquals(spec().withInset(10), gridSpec.getSpecAt(1, 0));
       assertEquals(spec().withInset(10).withInsetX(5), gridSpec.getSpecAt(1, 1));
+   }
+
+   @Test
+   public void equals() {
+      gridSpec
+         .specifyDefault(spec().withGap(5))
+         .specifyColumn(1, spec().withIPad(10))
+         .specifyRow(2, spec().withWeightX(0.6));
+      GridSpec expected = gridSpec().specifyDefault(spec().withGap(5))
+         .specifyColumn(1, spec().withIPad(10))
+         .specifyRow(2, spec().withWeightX(0.6));
+      assertEquals(expected, gridSpec);
+   }
+
+   @Test
+   public void specsAreNotEqualWhenDefaultOrLinesOrCellsAreSpecifiedDifferentlyEvenWhenForEachCellSpecReturnsTheSameSpec() {
+      gridSpec
+         .specifyDefault(spec().withGap(5))
+         .specifyColumn(1, spec().withIPad(10))
+         .specifyRow(2, spec().withWeightX(0.6));
+      GridSpec expected = gridSpec().specifyDefault(spec().withGap(5))
+         .specifyColumn(1, spec().withIPad(10))
+         .specifyRow(2, spec().withWeightX(0.6))
+         .specifyCell(1, 2, spec().withIPad(10));
+      assertFalse(expected.equals(gridSpec));
+   }
+
+   @Test
+   public void whenOverridingLineSpecThenDefaultsAndLinesAndCellsAreOverridden()
+   {
+      gridSpec
+         .specifyDefault(spec().withIPadX(5))
+         .specifyCell(1, 3, specWithFillX());
+      GridSpec overriding = gridSpec()
+         .specifyDefault(spec().withIPadY(5))
+         .specifyCell(1, 3, specWithFillY())
+         .specifyRow(2, specWithFillY());
+      gridSpec.overrideWith(overriding);
+      GridSpec expected = gridSpec()
+         .specifyDefault(spec().withIPad(5))
+         .specifyCell(1, 3, specWithFill())
+         .specifyRow(2, specWithFillY());
+      assertEquals(expected, gridSpec.overrideWith(overriding));
    }
 }

@@ -47,7 +47,7 @@ public class LineSpec implements LineSpecBuilder<LineSpec>
       return result;
    }
 
-   public LineSpec overrideWith(LineSpec that) // TODO test
+   public LineSpec overrideWith(LineSpec that)
    {
       specifyDefault(that.defaultSpec);
       for (Map.Entry<Integer, CellSpec> entry : that.cellsSpecs.entrySet())
@@ -55,5 +55,38 @@ public class LineSpec implements LineSpecBuilder<LineSpec>
          specifyCell(entry.getKey(), entry.getValue());
       }
       return this;
+   }
+
+   @Override
+   public boolean equals(Object o)
+   {
+      if (this == o) return true;
+      if (!(o instanceof LineSpec)) return false;
+
+      LineSpec spec = (LineSpec) o;
+
+      if (!cellsSpecs.equals(spec.cellsSpecs)) return false;
+      if (!defaultSpec.equals(spec.defaultSpec)) return false;
+      //noinspection SimplifiableIfStatement
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      int result = defaultSpec.hashCode();
+      result = 31 * result + cellsSpecs.hashCode();
+      return result;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = "LineSpec{\n " + defaultSpec + "\n";
+      for (Map.Entry<Integer, CellSpec> entry : cellsSpecs.entrySet())
+      {
+         result += " " + entry.getKey() + ": " + entry.getValue() + "\n";
+      }
+      return result + "}";
    }
 }
