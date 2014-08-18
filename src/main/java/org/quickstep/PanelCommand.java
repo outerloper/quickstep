@@ -17,6 +17,9 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
    private Border border;
    private JScrollPane scroll;
 
+   private AX anchorX;
+   private AY anchorY;
+
    protected PanelCommand()
    {
       this(spec().withGap(5).withAnchorX(AX.LEFT));
@@ -110,9 +113,12 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
    @Override
    public JComponent getComponent(Orientation orientation)
    {
-      JPanel content = panel != null ? panel : new ResizablePanel();
-      content.setLayout(new GridBagLayout());
-      GridBagBuilder builder = createBuilder(content);
+      JPanel gridContainer = panel != null ? panel : new ResizablePanel();
+      gridContainer.setLayout(new GridBagLayout());
+
+      JPanel component = applyContentAnchor(gridContainer);
+
+      GridBagBuilder builder = createBuilder(gridContainer);
       for (GridBagCommand command : commandsCollector)
       {
          command.apply(builder);
@@ -120,15 +126,15 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
 
       if (scroll != null)
       {
-         scroll.setViewportView(content);
-         content = new ResizablePanel();
-         content.add(scroll);
+         scroll.setViewportView(component);
+         component = new ResizablePanel();
+         component.add(scroll);
       }
       if (border != null)
       {
-         content.setBorder(border);
+         component.setBorder(border);
       }
-      return content;
+      return component;
    }
 
    protected GridBagBuilder createBuilder(JPanel panel)
@@ -191,6 +197,32 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
       return this;
    }
 
+   public PanelCommand withContentAnchor(AX anchorX, AY anchorY)
+   {
+      return withContentAnchorX(anchorX).withContentAnchorY(anchorY);
+   }
+
+   public PanelCommand withContentAnchor(A anchorXAndY)
+   {
+      if (A.CENTER.equals(anchorXAndY))
+      {
+         return withContentAnchor(AX.CENTER, AY.CENTER);
+      }
+      return withContentAnchor(AX.BOTH, AY.BOTH);
+   }
+
+   public PanelCommand withContentAnchorX(AX anchorX)
+   {
+      this.anchorX = anchorX;
+      return this;
+   }
+
+   public PanelCommand withContentAnchorY(AY anchorY)
+   {
+      this.anchorY = anchorY;
+      return this;
+   }
+
    public final PanelCommand withOrientation(Orientation orientation)
    {
       gridSpec.withOrientation(orientation);
@@ -248,5 +280,82 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
    {
       scroll = scrollPane;
       return this;
+   }
+
+   private JPanel applyContentAnchor(JPanel panel)
+   {
+      JPanel result = panel;
+
+      Integer contentX = null;
+      if (anchorX == null)
+      {
+         anchorX = AX.CENTER;
+      }
+      switch (anchorX)
+      {
+         case LEFT:
+            contentX = 0;
+            break;
+         case RIGHT:
+            contentX = 1;
+            break;
+         case BOTH:
+            gridSpec.specifyDefault(spec().withWeightX(1.0).withAnchorX(AX.BOTH));
+            break;
+      }
+      Integer contentY = null;
+      if (anchorY == null)
+      {
+         anchorY = AY.CENTER;
+      }
+      switch (anchorY)
+      {
+         case TOP:
+            contentY = 0;
+            break;
+         case BOTTOM:
+            contentY = 1;
+            break;
+         case BOTH:
+            gridSpec.specifyDefault(spec().withWeightY(1.0).withAnchorY(AY.BOTH));
+            break;
+      }
+      if (contentX != null || contentY != null)
+      {
+         int fillX = 0;
+         CellSpec fillSpec = spec();
+         if (contentX != null)
+         {
+            fillSpec.withWeightX(1.0);
+            fillX = 1 - contentX;
+         }
+         else
+         {
+            contentX = 0;
+         }
+         int fillY = 0;
+         if (contentY != null)
+         {
+            fillSpec.withWeightY(1.0);
+            fillY = 1 - contentY;
+         }
+         else
+         {
+            contentY = 0;
+         }
+         result = new JPanel(new GridBagLayout());
+         CellSpec contentSpec = spec();
+         if (anchorX == AX.BOTH)
+         {
+            contentSpec.withWeightX(1.0).withAnchorX(AX.BOTH);
+         }
+         if (anchorY == AY.BOTH)
+         {
+            contentSpec.withWeightY(1.0).withAnchorY(AY.BOTH);
+         }
+         result.add(new JLabel(), fillSpec.toConstraints(fillX, fillY));
+         result.add(panel, contentSpec.toConstraints(contentX, contentY));
+      }
+      return result;
    }
 }
