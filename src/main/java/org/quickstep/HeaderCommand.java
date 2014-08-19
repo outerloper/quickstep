@@ -26,7 +26,7 @@ public class HeaderCommand implements GridBagCommand
    {
       try
       {
-         JComponent component = builder.createDefaultHeader(text, willBePlacedInFirstRow(builder));
+         JComponent component = builder.getComponentFactory().createHeader(text, willBePlacedInFirstRow(builder));
          CellSpec spec = spec().withAnchorX(AX.BOTH);
          GridBagCommand command;
 

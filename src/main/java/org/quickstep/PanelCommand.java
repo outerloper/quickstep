@@ -13,12 +13,14 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
 
    private final GridBagCommandsCollectorComponent<PanelCommand> commandsCollector = new GridBagCommandsCollectorComponent<PanelCommand>(this);
 
-   protected GridSpec gridSpec = new GridSpec();
-   private Border border;
-   private JScrollPane scroll;
+   private final GridSpec gridSpec = new GridSpec();
+   private Decoration<Border> borderDecoration;
+   private Decoration<JScrollPane> scrollDecoration;
 
    private AX anchorX;
    private AY anchorY;
+
+   private ComponentFactory componentFactory;
 
    protected PanelCommand()
    {
@@ -111,35 +113,33 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
    }
 
    @Override
-   public JComponent getComponent(Orientation orientation)
+   public JComponent getComponent(Orientation orientation, ComponentFactory factory)
    {
-      JPanel gridContainer = panel != null ? panel : new ResizablePanel();
+      ComponentFactory usedFactory = componentFactory != null ? componentFactory : factory;
+
+      JPanel gridContainer = panel != null ? panel : usedFactory.createPanel();
       gridContainer.setLayout(new GridBagLayout());
 
       JPanel component = applyContentAnchor(gridContainer);
 
-      GridBagBuilder builder = createBuilder(gridContainer);
+      GridBagBuilder builder = usedFactory.createGridBagBuilder(gridContainer, gridSpec, usedFactory.getChildFactory());
       for (GridBagCommand command : commandsCollector)
       {
          command.apply(builder);
       }
 
-      if (scroll != null)
+      if (scrollDecoration != null)
       {
+         JScrollPane scroll = scrollDecoration.getDecoration(usedFactory);
          scroll.setViewportView(component);
          component = new ResizablePanel();
          component.add(scroll);
       }
-      if (border != null)
+      if (borderDecoration != null)
       {
-         component.setBorder(border);
+         component.setBorder(borderDecoration.getDecoration(usedFactory));
       }
       return component;
-   }
-
-   protected GridBagBuilder createBuilder(JPanel panel)
-   {
-      return new GridBagBuilder(gridSpec, panel);
    }
 
    public PanelCommand specifyGrid(GridSpec gridSpec)
@@ -235,50 +235,52 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
       return this;
    }
 
-   protected Border createDefaultBorder(String title)
-   {
-      return createCompoundBorder(createTitledBorder(title), createEmptyBorder(5, 5, 5, 5));
-   }
-
    public final PanelCommand withBorder()
    {
-      return withBorder(null);
+      return withBorderDecoration(null);
    }
 
    public final PanelCommand withBorder(String title)
    {
-      return withBorder(createDefaultBorder(title));
+      return withBorderDecoration(new DefaultBorderDecoration(title));
+   }
+
+   private PanelCommand withBorderDecoration(DefaultBorderDecoration borderDecoration)
+   {
+      this.borderDecoration = borderDecoration;
+      return this;
    }
 
    public final PanelCommand withBorder(Border innerBorder, Border... outerBorders)
    {
-      border = innerBorder;
+      Border border = innerBorder;
       for (Border outerBorder : outerBorders)
       {
          border = createCompoundBorder(outerBorder, border);
       }
+      borderDecoration = new CustomBorderDecoration(border);
       return this;
-   }
-
-   protected JScrollPane createDefaultScrollPane()
-   {
-      JScrollPane result = new JScrollPane();
-      result.getHorizontalScrollBar().setUnitIncrement(10);
-      result.getHorizontalScrollBar().setBlockIncrement(10);
-      result.getVerticalScrollBar().setUnitIncrement(10);
-      result.getVerticalScrollBar().setBlockIncrement(10);
-      result.setBorder(createEmptyBorder());
-      return result;
    }
 
    public final PanelCommand withScroll()
    {
-      return withScroll(createDefaultScrollPane());
+      return withScrollDecoration(new DefaultScrollDecoration());
    }
 
-   public final PanelCommand withScroll(JScrollPane scrollPane)
+   public final PanelCommand withScroll(JScrollPane scroll)
    {
-      scroll = scrollPane;
+      return withScrollDecoration(new CustomScrollDecoration(scroll));
+   }
+
+   private PanelCommand withScrollDecoration(Decoration<JScrollPane> scrollDecoration)
+   {
+      this.scrollDecoration = scrollDecoration;
+      return this;
+   }
+
+   public final PanelCommand withComponentFactory(ComponentFactory componentFactory)
+   {
+      this.componentFactory = componentFactory;
       return this;
    }
 
@@ -357,5 +359,67 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
          result.add(panel, contentSpec.toConstraints(contentX, contentY));
       }
       return result;
+   }
+
+   static interface Decoration<D>
+   {
+      D getDecoration(ComponentFactory componentFactory);
+   }
+
+   static class DefaultBorderDecoration implements Decoration<Border>
+   {
+      private String title;
+
+      DefaultBorderDecoration(String title)
+      {
+         this.title = title;
+      }
+
+      @Override
+      public Border getDecoration(ComponentFactory componentFactory)
+      {
+         return componentFactory.createBorder(title);
+      }
+   }
+
+   static class CustomBorderDecoration implements Decoration<Border>
+   {
+      private Border border;
+
+      CustomBorderDecoration(Border border)
+      {
+         this.border = border;
+      }
+
+      @Override
+      public Border getDecoration(ComponentFactory componentFactory)
+      {
+         return border;
+      }
+   }
+
+   static class DefaultScrollDecoration implements Decoration<JScrollPane>
+   {
+      @Override
+      public JScrollPane getDecoration(ComponentFactory componentFactory)
+      {
+         return componentFactory.createScrollPane();
+      }
+   }
+
+   static class CustomScrollDecoration implements Decoration<JScrollPane>
+   {
+      private JScrollPane scrollPane;
+
+      CustomScrollDecoration(JScrollPane scrollPane)
+      {
+         this.scrollPane = scrollPane;
+      }
+
+      @Override
+      public JScrollPane getDecoration(ComponentFactory componentFactory)
+      {
+         return scrollPane;
+      }
    }
 }

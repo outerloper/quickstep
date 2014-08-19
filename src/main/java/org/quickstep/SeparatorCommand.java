@@ -7,9 +7,9 @@ import static org.quickstep.GridBagToolKit.*;
 public class SeparatorCommand extends CellCommand<SeparatorCommand>
 {
    @Override
-   public JComponent getComponent(Orientation orientation)
+   public JComponent getComponent(Orientation orientation, ComponentFactory factory)
    {
-      return new JSeparator(orientation.isHorizontal() ? JSeparator.VERTICAL : JSeparator.HORIZONTAL);
+      return factory.createSeparator(orientation.getOther());
    }
 
    @Override

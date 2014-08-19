@@ -24,7 +24,17 @@ public class HeaderCommandTest
    public void setUp()
    {
       panel.setLayout((LayoutManager) anyObject());
-      panelCommand = new TestPanelCommand().with(panel);
+      panelCommand = panel().
+         with(panel).
+         withComponentFactory(new DefaultComponentFactory()
+         {
+            @Override
+            public JComponent createHeader(String title, boolean first)
+            {
+               headerInFirstRowHandled = first;
+               return super.createHeader(title, first);
+            }
+         });
    }
 
    @Test
@@ -122,29 +132,5 @@ public class HeaderCommandTest
          getComponent();
 
       verify(panel);
-   }
-
-   private class TestPanelCommand extends PanelCommand
-   {
-      @Override
-      protected GridBagBuilder createBuilder(JPanel panel)
-      {
-         return new TestGridBagBuilder(gridSpec, panel);
-      }
-
-      private class TestGridBagBuilder extends GridBagBuilder
-      {
-         protected TestGridBagBuilder(GridSpec gridSpec, JPanel panel)
-         {
-            super(gridSpec, panel);
-         }
-
-         @Override
-         protected JComponent createDefaultHeader(String title, boolean first)
-         {
-            headerInFirstRowHandled = first;
-            return super.createDefaultHeader(title, first);
-         }
-      }
    }
 }

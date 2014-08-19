@@ -11,11 +11,11 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
 {
    private final CellSpec cellSpec = spec();
 
-   public abstract JComponent getComponent(Orientation orientation);
+   public abstract JComponent getComponent(Orientation orientation, ComponentFactory factory);
 
    public final JComponent getComponent()
    {
-      return getComponent(Orientation.HORIZONTAL);
+      return getComponent(Orientation.HORIZONTAL, getDefaultComponentFactory());
    }
 
    public final T withSpec(CellSpec spec)
@@ -37,13 +37,14 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
    @Override
    public void apply(GridBagBuilder builder)
    {
-      JComponent component = getComponent();
+      Orientation orientation = builder.getGridSpec().getOrientation();
+      JComponent component = getComponent(orientation, builder.getComponentFactory());
       if (component != null)
       {
          try
          {
             builder.moveToFreeCell();
-            builder.placeComponent(component, getSpec(builder.getGridSpec().getOrientation()));
+            builder.placeComponent(component, getSpec(orientation));
          }
          catch (GridBagException e)
          {

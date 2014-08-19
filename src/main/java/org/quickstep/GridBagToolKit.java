@@ -32,10 +32,21 @@ public final class GridBagToolKit
       {
          return this == HORIZONTAL;
       }
+
+      public Orientation getOther()
+      {
+         return this == HORIZONTAL ? VERTICAL : HORIZONTAL;
+      }
    }
 
    public static Logger logger = Logger.getLogger(GridBagBuilder.class.getName());
 
+   private static ComponentFactory defaultComponentFactory = new DefaultComponentFactory();
+
+   public static ComponentFactory getDefaultComponentFactory()
+   {
+      return defaultComponentFactory;
+   }
 
    private GridBagToolKit()
    {

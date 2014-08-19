@@ -29,15 +29,23 @@ public class GridBagBuilder
    private final GridSpec gridSpec;
    private boolean empty = true;
 
-   protected GridBagBuilder(GridSpec gridSpec, JPanel panel)
+   private final ComponentFactory componentFactory;
+
+   protected GridBagBuilder(JPanel panel, GridSpec gridSpec, ComponentFactory componentFactory)
    {
       this.panel = panel;
       this.gridSpec = gridSpec;
+      this.componentFactory = componentFactory;
    }
 
    public GridSpec getGridSpec()
    {
       return gridSpec;
+   }
+
+   public ComponentFactory getComponentFactory()
+   {
+      return componentFactory;
    }
 
    private void moveToNextCell() throws GridBagException
@@ -274,22 +282,5 @@ public class GridBagBuilder
       }
       //noinspection SimplifiableIfStatement
       return usedCells.get(x, y) == null;
-   }
-
-
-
-   protected JComponent createDefaultHeader(String title, boolean first)
-   {
-      PanelCommand result = panel().add(title).add(createDefaultSeparator(), specWithFillX());
-      if (!first)
-      {
-         result.specifyRow(0, spec().withInsetTop(5));
-      }
-      return result.getComponent();
-   }
-
-   protected JSeparator createDefaultSeparator()
-   {
-      return new JSeparator();
    }
 }

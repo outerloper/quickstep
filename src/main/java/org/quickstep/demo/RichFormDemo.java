@@ -113,7 +113,7 @@ public class RichFormDemo extends JFrame
 
    public static void main(String[] args) throws Exception
    {
-      debug();
+//      debug();
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       new RichFormDemo();
    }
