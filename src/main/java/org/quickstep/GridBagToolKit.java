@@ -41,7 +41,7 @@ public final class GridBagToolKit
 
    public static Logger logger = Logger.getLogger(GridBagBuilder.class.getName());
 
-   private static ComponentFactory defaultComponentFactory = new DefaultComponentFactory();
+   private static ComponentFactory defaultComponentFactory = new ComponentFactory();
 
    public static ComponentFactory getDefaultComponentFactory()
    {

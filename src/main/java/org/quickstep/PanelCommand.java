@@ -7,11 +7,11 @@ import javax.swing.border.Border;
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCommandsCollector<PanelCommand>, GridSpecBuilder<PanelCommand>
+public class PanelCommand extends CellCommand<PanelCommand> implements GridSpecBuilder<PanelCommand>
 {
    private JPanel panel;
 
-   private final GridBagCommandsCollectorComponent<PanelCommand> commandsCollector = new GridBagCommandsCollectorComponent<PanelCommand>(this);
+   private final SeqCommand commands = seq();
 
    private final GridSpec gridSpec = new GridSpec();
    private Decoration<Border> borderDecoration;
@@ -34,82 +34,82 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
       specifyColumn(0, spec().withInsetLeft(0));
    }
 
-   @Override
    public final PanelCommand addLineBreak()
    {
-      return commandsCollector.addLineBreak();
+      commands.addLineBreak();
+      return this;
    }
 
-   @Override
    public final PanelCommand addBlank()
    {
-      return commandsCollector.addBlank();
+      commands.addBlank();
+      return this;
    }
 
-   @Override
    public PanelCommand addBlank(CellSpec spec)
    {
-      return commandsCollector.addBlank(spec);
+      commands.addBlank(spec);
+      return this;
    }
 
-   @Override
    public final PanelCommand add(String text)
    {
-      return commandsCollector.add(text);
+      commands.add(text);
+      return this;
    }
 
-   @Override
    public PanelCommand add(String text, CellSpec spec)
    {
-      return commandsCollector.add(text, spec);
+      commands.add(text, spec);
+      return this;
    }
 
-   @Override
    public final PanelCommand add(JComponent component)
    {
-      return commandsCollector.add(component);
+      commands.add(component);
+      return this;
    }
 
-   @Override
    public PanelCommand add(JComponent component, CellSpec spec)
    {
-      return commandsCollector.add(component, spec);
+      commands.add(component, spec);
+      return this;
    }
 
-   @Override
    public final PanelCommand addAll(Iterable<? extends JComponent> components)
    {
-      return commandsCollector.addAll(components);
+      commands.addAll(components);
+      return this;
    }
 
-   @Override
    public final PanelCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
-      return commandsCollector.addAll(components, spec);
+      commands.addAll(components, spec);
+      return this;
    }
 
-   @Override
    public PanelCommand addHeader(String title)
    {
-      return commandsCollector.addHeader(title);
+      commands.addHeader(title);
+      return this;
    }
 
-   @Override
    public PanelCommand addSeparator()
    {
-      return commandsCollector.addSeparator();
+      commands.addSeparator();
+      return this;
    }
 
-   @Override
    public PanelCommand addLineSeparator()
    {
-      return commandsCollector.addLineSeparator();
+      commands.addLineSeparator();
+      return this;
    }
 
-   @Override
    public PanelCommand add(GridBagCommand command)
    {
-      return commandsCollector.add(command);
+      commands.add(command);
+      return this;
    }
 
    @Override
@@ -123,7 +123,7 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
       JPanel component = applyContentAnchor(gridContainer);
 
       GridBagBuilder builder = usedFactory.createGridBagBuilder(gridContainer, gridSpec, usedFactory.getChildFactory());
-      for (GridBagCommand command : commandsCollector)
+      for (GridBagCommand command : commands)
       {
          command.apply(builder);
       }
@@ -237,7 +237,7 @@ public class PanelCommand extends CellCommand<PanelCommand> implements GridBagCo
 
    public final PanelCommand withBorder()
    {
-      return withBorderDecoration(null);
+      return withBorderDecoration(new DefaultBorderDecoration(null));
    }
 
    public final PanelCommand withBorder(String title)

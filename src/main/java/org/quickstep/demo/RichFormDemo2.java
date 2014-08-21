@@ -126,7 +126,7 @@ public class RichFormDemo2 extends JFrame
          specifyColumn(5, spec().withPreferredWidth(60));
    }
 
-   private LineCommand lineWithCombo()
+   private static LineCommand lineWithCombo()
    {
       return line().specifyCell(1, spec().withGridWidth(2).withAnchorX(AX.BOTH));
    }

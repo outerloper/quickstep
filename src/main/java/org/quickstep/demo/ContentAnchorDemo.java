@@ -1,6 +1,5 @@
 package org.quickstep.demo;
 
-import java.awt.*;
 import javax.swing.*;
 
 import org.quickstep.GridBagCommand;

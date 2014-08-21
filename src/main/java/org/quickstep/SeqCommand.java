@@ -1,97 +1,101 @@
 package org.quickstep;
 
+import java.util.*;
 import javax.swing.*;
 
-public class SeqCommand implements GridBagCommand, GridBagCommandsCollector<SeqCommand>
+import static org.quickstep.GridBagToolKit.*;
+
+public class SeqCommand implements GridBagCommand, Iterable<GridBagCommand>
 {
-   private final GridBagCommandsCollectorComponent<SeqCommand> commandsCollector = new GridBagCommandsCollectorComponent<SeqCommand>(this);
+   private final List<GridBagCommand> commands = new LinkedList<GridBagCommand>();
 
-   protected SeqCommand()
+   public SeqCommand()
    {
    }
 
-   @Override
-   public SeqCommand addLineBreak()
+   public final SeqCommand addLineBreak()
    {
-      return commandsCollector.addLineBreak();
+      return add(new LineBreakCommand());
    }
 
-   @Override
-   public SeqCommand add(GridBagCommand command)
+   public final SeqCommand addBlank()
    {
-      return commandsCollector.add(command);
+      return addBlank(spec());
    }
 
-   @Override
-   public SeqCommand add(JComponent component)
-   {
-      return commandsCollector.add(component);
-   }
-
-   @Override
-   public SeqCommand add(JComponent component, CellSpec spec)
-   {
-      return commandsCollector.add(component, spec);
-   }
-
-   @Override
-   public SeqCommand add(String text)
-   {
-      return commandsCollector.add(text);
-   }
-
-   @Override
-   public SeqCommand add(String text, CellSpec spec)
-   {
-      return commandsCollector.add(text, spec);
-   }
-
-   @Override
-   public SeqCommand addAll(Iterable<? extends JComponent> components)
-   {
-      return commandsCollector.addAll(components);
-   }
-
-   @Override
-   public SeqCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
-   {
-      return commandsCollector.addAll(components, spec);
-   }
-
-   @Override
-   public SeqCommand addBlank()
-   {
-      return commandsCollector.addBlank();
-   }
-
-   @Override
    public SeqCommand addBlank(CellSpec spec)
    {
-      return commandsCollector.addBlank(spec);
+      return add((String) null, spec);
    }
 
-   @Override
+   public final SeqCommand add(String text)
+   {
+      return add(text, spec());
+   }
+
+   public SeqCommand add(String text, CellSpec spec)
+   {
+      return add(new LabelCommand(text).withSpec(spec));
+   }
+
+   public final SeqCommand add(JComponent component)
+   {
+      return add(component, spec());
+   }
+
+   public SeqCommand add(JComponent component, CellSpec spec)
+   {
+      return add(component(component).withSpec(spec));
+   }
+
+   public final SeqCommand addAll(Iterable<? extends JComponent> components)
+   {
+      return addAll(components, spec());
+   }
+
+   public final SeqCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
+   {
+      for (JComponent component : components)
+      {
+         add(component, spec);
+      }
+      return this;
+   }
+
    public SeqCommand addHeader(String title)
    {
-      return commandsCollector.addHeader(title);
+      return add(new HeaderCommand(title));
    }
 
-   @Override
-   public SeqCommand addLineSeparator()
-   {
-      return commandsCollector.addLineSeparator();
-   }
-
-   @Override
    public SeqCommand addSeparator()
    {
-      return commandsCollector.addSeparator();
+      return add(new SeparatorCommand());
+   }
+
+   public SeqCommand addLineSeparator()
+   {
+      return add(new LineSeparatorCommand());
+   }
+
+   public SeqCommand add(GridBagCommand command)
+   {
+      if (command == null)
+      {
+         throw new NullPointerException();
+      }
+      commands.add(command);
+      return this;
+   }
+
+   public Iterator<GridBagCommand> iterator()
+   {
+      return commands.iterator();
    }
 
    @Override
    public void apply(GridBagBuilder builder)
    {
-      for (GridBagCommand command : commandsCollector)
+      for (GridBagCommand command : this)
       {
          command.apply(builder);
       }

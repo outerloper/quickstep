@@ -1,6 +1,5 @@
 package org.quickstep.demo;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
@@ -10,7 +9,7 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class VerticalOrientationDemo extends JFrame
 {
-   public VerticalOrientationDemo() throws HeadlessException
+   public VerticalOrientationDemo()
    {
       buildContent(this, panel().
          withOrientation(Orientation.VERTICAL).

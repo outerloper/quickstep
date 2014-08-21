@@ -33,12 +33,12 @@ public class CustomComponentFactoryDemo extends JFrame
 
    private ComponentFactory createComponentFactory()
    {
-      return new DefaultComponentFactory()
+      return new ComponentFactory()
       {
          @Override
          public ComponentFactory getChildFactory()
          {
-            return new DefaultComponentFactory()
+            return new ComponentFactory()
             {
                @Override
                public Border createBorder(String title)

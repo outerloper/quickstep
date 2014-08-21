@@ -26,7 +26,7 @@ public class HeaderCommandTest
       panel.setLayout((LayoutManager) anyObject());
       panelCommand = panel().
          with(panel).
-         withComponentFactory(new DefaultComponentFactory()
+         withComponentFactory(new ComponentFactory()
          {
             @Override
             public JComponent createHeader(String title, boolean first)

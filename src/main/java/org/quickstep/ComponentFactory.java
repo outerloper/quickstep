@@ -3,21 +3,59 @@ package org.quickstep;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public interface ComponentFactory
+import static javax.swing.BorderFactory.*;
+import static org.quickstep.GridBagToolKit.*;
+
+public class ComponentFactory
 {
-   JComponent createLabel(String text);
+   public JComponent createLabel(String text)
+   {
+      return new JLabel(text);
+   }
 
-   JComponent createHeader(String title, boolean first);
+   public JComponent createHeader(String title, boolean first)
+   {
+      PanelCommand result = panel().add(title).add(createSeparator(Orientation.HORIZONTAL), specWithFillX());
+      if (!first)
+      {
+         result.specifyRow(0, spec().withInsetTop(5));
+      }
+      return result.getComponent();
+   }
 
-   JComponent createSeparator(GridBagToolKit.Orientation orientation);
+   public JComponent createSeparator(Orientation orientation)
+   {
+      return new JSeparator(orientation.isHorizontal() ? JSeparator.HORIZONTAL : JSeparator.VERTICAL);
+   }
 
-   JPanel createPanel();
+   public JPanel createPanel()
+   {
+      return new ResizablePanel();
+   }
 
-   Border createBorder(String title);
+   public Border createBorder(String title)
+   {
+      return createCompoundBorder(createTitledBorder(title), createEmptyBorder(5, 5, 5, 5));
+   }
 
-   JScrollPane createScrollPane();
+   public JScrollPane createScrollPane()
+   {
+      JScrollPane result = new JScrollPane();
+      result.getHorizontalScrollBar().setUnitIncrement(10);
+      result.getHorizontalScrollBar().setBlockIncrement(10);
+      result.getVerticalScrollBar().setUnitIncrement(10);
+      result.getVerticalScrollBar().setBlockIncrement(10);
+      result.setBorder(createEmptyBorder());
+      return result;
+   }
 
-   GridBagBuilder createGridBagBuilder(JPanel gridContainer, GridSpec gridSpec, ComponentFactory factory);
+   public GridBagBuilder createGridBagBuilder(JPanel gridContainer, GridSpec gridSpec, ComponentFactory factory)
+   {
+      return new GridBagBuilder(gridContainer, gridSpec, factory);
+   }
 
-   ComponentFactory getChildFactory();
+   public ComponentFactory getChildFactory()
+   {
+      return this;
+   }
 }
