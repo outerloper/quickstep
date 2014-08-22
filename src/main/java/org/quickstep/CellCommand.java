@@ -11,7 +11,7 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
 {
    private final CellSpec cellSpec = spec();
 
-   public abstract JComponent getComponent(Orientation orientation, ComponentFactory factory);
+   public abstract JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory);
 
    public final JComponent getComponent()
    {
@@ -24,7 +24,7 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
       return self();
    }
 
-   protected CellSpec getSpec(Orientation orientation)
+   protected CellSpec getSpec(Orientation parentOrientation)
    {
       return cellSpec.derive();
    }

@@ -12,8 +12,8 @@ public class LabelCommand extends CellCommand<LabelCommand>
    }
 
    @Override
-   public JComponent getComponent(GridBagToolKit.Orientation orientation, ComponentFactory factory)
+   public JComponent getComponent(GridBagToolKit.Orientation parentOrientation, ComponentFactory parentFactory)
    {
-      return factory.createLabel(text);
+      return parentFactory.createLabel(text);
    }
 }

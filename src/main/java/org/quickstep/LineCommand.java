@@ -9,70 +9,60 @@ import static org.quickstep.GridBagToolKit.*;
 public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
 {
    private final LineSpec lineSpec = new LineSpec();
-   private final SeqCommand commands = seq();
+   private final CommandsCollector<LineCommand> commandsCollector = new CommandsCollector<LineCommand>(this);
 
    protected LineCommand()
    {
    }
 
-   public LineCommand add(GridBagCommand command)
-   {
-      commands.add(command);
-      return this;
-   }
-
-   public LineCommand add(JComponent component)
-   {
-      commands.add(component);
-      return this;
-   }
-
-   public LineCommand add(JComponent component, CellSpec spec)
-   {
-      commands.add(component, spec);
-      return this;
-   }
-
-   public LineCommand add(String text)
-   {
-      commands.add(text);
-      return this;
-   }
-
-   public LineCommand add(String text, CellSpec spec)
-   {
-      commands.add(text, spec);
-      return this;
-   }
-
-   public LineCommand addAll(Iterable<? extends JComponent> components)
-   {
-      commands.addAll(components);
-      return this;
-   }
-
-   public LineCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
-   {
-      commands.addAll(components, spec);
-      return this;
-   }
-
    public LineCommand addBlank()
    {
-      commands.addBlank();
-      return this;
+      return commandsCollector.addBlank();
    }
 
    public LineCommand addBlank(CellSpec spec)
    {
-      commands.addBlank(spec);
-      return this;
+      return commandsCollector.addBlank(spec);
+   }
+
+   public LineCommand add(String text)
+   {
+      return commandsCollector.add(text);
+   }
+
+   public LineCommand add(String text, CellSpec spec)
+   {
+      return commandsCollector.add(text, spec);
+   }
+
+   public LineCommand add(JComponent component)
+   {
+      return commandsCollector.add(component);
+   }
+
+   public LineCommand add(JComponent component, CellSpec spec)
+   {
+      return commandsCollector.add(component, spec);
+   }
+
+   public LineCommand addAll(Iterable<? extends JComponent> components)
+   {
+      return commandsCollector.addAll(components);
+   }
+
+   public LineCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
+   {
+      return commandsCollector.addAll(components, spec);
    }
 
    public LineCommand addSeparator()
    {
-      commands.addSeparator();
-      return this;
+      return commandsCollector.addSeparator();
+   }
+
+   public LineCommand add(GridBagCommand command)
+   {
+      return commandsCollector.add(command);
    }
 
    @Override
@@ -83,7 +73,7 @@ public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
          int lineIndex = calculateThisLineIndex(builder);
          applyLineSpecToGrid(builder, lineIndex);
 
-         for (GridBagCommand command : commands)
+         for (GridBagCommand command : commandsCollector)
          {
             validateWhetherStillInThisLine(builder, lineIndex);
             command.apply(builder);

@@ -12,7 +12,7 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class GridBagBuilder
 {
-   private final JPanel panel;
+   private final JComponent gridContainer;
 
    private int cursorY = 0;
    private int cursorX = 0;
@@ -31,9 +31,9 @@ public class GridBagBuilder
 
    private final ComponentFactory componentFactory;
 
-   protected GridBagBuilder(JPanel panel, GridSpec gridSpec, ComponentFactory componentFactory)
+   protected GridBagBuilder(JComponent gridContainer, GridSpec gridSpec, ComponentFactory componentFactory)
    {
-      this.panel = panel;
+      this.gridContainer = gridContainer;
       this.gridSpec = gridSpec;
       this.componentFactory = componentFactory;
    }
@@ -178,8 +178,8 @@ public class GridBagBuilder
 
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
-      DebugSupport.attachDebugInfo(component, panel, constraints);
-      panel.add(getComponentToAdd(component, calculatedSpec), constraints);
+      DebugSupport.attachDebugInfo(component, gridContainer, constraints);
+      gridContainer.add(getComponentToAdd(component, calculatedSpec), constraints);
 
       if (isHorizontal() && calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER ||
          !isHorizontal() && calculatedSpec.getGridHeight() == GridBagConstraints.REMAINDER)

@@ -2,6 +2,8 @@ package org.quickstep;
 
 import javax.swing.*;
 
+import static org.quickstep.GridBagToolKit.*;
+
 public class ComponentCommand extends CellCommand<ComponentCommand>
 {
    private final JComponent component;
@@ -12,7 +14,7 @@ public class ComponentCommand extends CellCommand<ComponentCommand>
    }
 
    @Override
-   public JComponent getComponent(GridBagToolKit.Orientation orientation, ComponentFactory factory)
+   public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
    {
       return component;
    }

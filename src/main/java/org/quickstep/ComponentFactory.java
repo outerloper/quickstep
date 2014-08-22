@@ -15,7 +15,7 @@ public class ComponentFactory
 
    public JComponent createHeader(String title, boolean first)
    {
-      PanelCommand result = panel().add(title).add(createSeparator(Orientation.HORIZONTAL), specWithFillX());
+      GridContainerCommand result = panel().add(title).add(createSeparator(Orientation.HORIZONTAL), specWithFillX());
       if (!first)
       {
          result.specifyRow(0, spec().withInsetTop(5));
@@ -49,7 +49,7 @@ public class ComponentFactory
       return result;
    }
 
-   public GridBagBuilder createGridBagBuilder(JPanel gridContainer, GridSpec gridSpec, ComponentFactory factory)
+   public GridBagBuilder createGridBagBuilder(JComponent gridContainer, GridSpec gridSpec, ComponentFactory factory)
    {
       return new GridBagBuilder(gridContainer, gridSpec, factory);
    }
