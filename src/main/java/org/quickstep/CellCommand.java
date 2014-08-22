@@ -54,7 +54,7 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
    }
 
    @SuppressWarnings("unchecked")
-   protected T self()
+   protected final T self()
    {
       return (T) this;
    }
