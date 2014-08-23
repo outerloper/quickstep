@@ -121,7 +121,7 @@ public final class GridBagToolKit
    {
       container.setLayout(new GridBagLayout());
       JComponent component = command.getComponent();
-      GridBagConstraints constraints = specWithFill().withInset(5).overrideWith(command.getSpec()).toConstraints(0, 0);
+      GridBagConstraints constraints = specWithFill().withInset(5).overrideWith(command.getDefaultSpec(Orientation.HORIZONTAL)).toConstraints(0, 0);
 
       container.add(component, constraints);
       DebugSupport.attachDebugInfo(component, container, constraints);

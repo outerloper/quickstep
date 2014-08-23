@@ -24,14 +24,9 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
       return self();
    }
 
-   protected CellSpec getSpec(Orientation parentOrientation)
+   protected CellSpec getDefaultSpec(Orientation parentOrientation)
    {
-      return cellSpec.derive();
-   }
-
-   public final CellSpec getSpec()
-   {
-      return getSpec(Orientation.HORIZONTAL);
+      return spec();
    }
 
    @Override
@@ -44,7 +39,7 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
          try
          {
             builder.moveToFreeCell();
-            builder.placeComponent(component, getSpec(orientation));
+            builder.placeComponent(component, getDefaultSpec(orientation).overrideWith(cellSpec));
          }
          catch (GridBagException e)
          {

@@ -112,9 +112,9 @@ class ToolBarCommand extends GridContainerCommand<ToolBarCommand>
    }
 
    @Override
-   protected CellSpec getSpec(Orientation parentOrientation)
+   protected CellSpec getDefaultSpec(Orientation parentOrientation)
    {
-      return spec().overrideWith(super.getSpec(parentOrientation).withWeightY(0.0));
+      return spec().withWeightY(0.0);
    }
 }
 
@@ -175,9 +175,9 @@ class TabCommand extends GridContainerCommand<TabCommand>
 
    // TODO find sth more elegant with this default spec..
    @Override
-   protected CellSpec getSpec(Orientation parentOrientation)
+   protected CellSpec getDefaultSpec(Orientation parentOrientation)
    {
-      return spec().withInset(5).overrideWith(super.getSpec(parentOrientation));
+      return spec().withInset(5);
    }
 }
 
@@ -207,9 +207,9 @@ class ButtonsCommand extends CellCommand<ButtonsCommand>
    }
 
    @Override
-   protected CellSpec getSpec(Orientation parentOrientation)
+   protected CellSpec getDefaultSpec(Orientation parentOrientation)
    {
-      return spec().overrideWith(super.getSpec(parentOrientation).withWeightY(0.0));
+      return spec().withWeightY(0.0);
    }
 }
 

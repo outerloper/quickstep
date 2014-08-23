@@ -13,17 +13,15 @@ public class SeparatorCommand extends CellCommand<SeparatorCommand>
    }
 
    @Override
-   protected CellSpec getSpec(Orientation parentOrientation)
+   protected CellSpec getDefaultSpec(Orientation parentOrientation)
    {
-      CellSpec result = spec();
       if (parentOrientation.isHorizontal())
       {
-         result.withAnchor(AX.CENTER, AY.BOTH);
+         return spec().withAnchor(AX.CENTER, AY.BOTH);
       }
       else
       {
-         result.withAnchor(AX.BOTH, AY.CENTER);
+         return spec().withAnchor(AX.BOTH, AY.CENTER);
       }
-      return result.overrideWith(super.getSpec(parentOrientation));
    }
 }
