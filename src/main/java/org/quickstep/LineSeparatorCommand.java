@@ -24,7 +24,7 @@ public class LineSeparatorCommand implements GridBagCommand
       JSeparator separator = new JSeparator();
       CellSpec spec = spec();
 
-      if (Orientation.HORIZONTAL.equals(builder.getGridSpec().getOrientation()))
+      if (builder.isHorizontal())
       {
          separator.setOrientation(JSeparator.HORIZONTAL);
          spec.withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemainder();

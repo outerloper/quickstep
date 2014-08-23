@@ -49,6 +49,10 @@ public class LineSpec implements LineSpecBuilder<LineSpec>
 
    public LineSpec overrideWith(LineSpec that)
    {
+      if (that == null) // TODO test override with null
+      {
+         return this;
+      }
       specifyDefault(that.defaultSpec);
       for (Map.Entry<Integer, CellSpec> entry : that.cellsSpecs.entrySet())
       {

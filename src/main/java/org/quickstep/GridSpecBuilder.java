@@ -2,21 +2,72 @@ package org.quickstep;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public interface GridSpecBuilder<T extends GridSpecBuilder<T>>
+public class GridSpecBuilder<T>
 {
-   T specifyDefault(CellSpec spec);
+   private final GridSpec gridSpec = new GridSpec();
+   private final T owner;
 
-   T specifyColumn(int columnIndex, CellSpec spec);
+   public GridSpecBuilder(T owner)
+   {
+      this.owner = owner;
+   }
 
-   T specifyColumn(int columnIndex, LineSpec spec);
+   public T specifyDefault(CellSpec spec)
+   {
+      gridSpec.specifyDefault(spec);
+      return owner;
+   }
 
-   T specifyRow(int rowIndex, CellSpec spec);
+   public T specifyColumn(int columnIndex, CellSpec spec)
+   {
+      gridSpec.specifyColumn(columnIndex, spec);
+      return owner;
+   }
 
-   T specifyRow(int rowIndex, LineSpec spec);
+   public T specifyColumn(int columnIndex, LineSpec spec)
+   {
+      gridSpec.specifyColumn(columnIndex, spec);
+      return owner;
+   }
 
-   T specifyCell(int columnIndex, int rowIndex, CellSpec spec);
+   public T specifyRow(int rowIndex, CellSpec spec)
+   {
+      gridSpec.specifyRow(rowIndex, spec);
+      return owner;
+   }
 
-   T withOrientation(Orientation orientation);
+   public T specifyRow(int rowIndex, LineSpec spec)
+   {
+      gridSpec.specifyRow(rowIndex, spec);
+      return owner;
+   }
 
-   T withLineLength(Integer lineLength);
+   public T specifyCell(int columnIndex, int rowIndex, CellSpec spec)
+   {
+      gridSpec.specifyCell(columnIndex, rowIndex, spec);
+      return owner;
+   }
+
+   public T withOrientation(Orientation orientation)
+   {
+      gridSpec.withOrientation(orientation);
+      return owner;
+   }
+
+   public T withLineLength(Integer lineLength)
+   {
+      gridSpec.withLineLength(lineLength);
+      return owner;
+   }
+
+   public T overrideWith(GridSpec spec)
+   {
+      gridSpec.overrideWith(spec);
+      return owner;
+   }
+
+   public GridSpec getGridSpec()
+   {
+      return gridSpec;
+   }
 }

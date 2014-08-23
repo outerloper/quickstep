@@ -8,7 +8,7 @@ import com.google.common.collect.TreeBasedTable;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class GridSpec implements GridSpecBuilder<GridSpec>
+public class GridSpec
 {
    private Integer lineLength;
    private Orientation orientation = Orientation.HORIZONTAL;
@@ -44,14 +44,12 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       return lineLength;
    }
 
-   @Override
    public final GridSpec specifyDefault(CellSpec spec)
    {
       defaultSpec.overrideWith(spec);
       return this;
    }
 
-   @Override
    public final GridSpec specifyColumn(int columnIndex, CellSpec spec)
    {
       for (Integer y : rowSpecsOverridingColumnSpecs.column(columnIndex).keySet())
@@ -67,7 +65,6 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       return this;
    }
 
-   @Override
    public final GridSpec specifyColumn(int columnIndex, LineSpec lineSpec)
    {
       specifyColumn(columnIndex, lineSpec.getDefaultSpec());
@@ -78,7 +75,6 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       return this;
    }
 
-   @Override
    public final GridSpec specifyRow(int rowIndex, CellSpec spec)
    {
       for (Integer x : columnSpecs.keySet())
@@ -94,7 +90,6 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       return this;
    }
 
-   @Override
    public final GridSpec specifyRow(int rowIndex, LineSpec lineSpec)
    {
       specifyRow(rowIndex, lineSpec.getDefaultSpec());
@@ -105,7 +100,6 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       return this;
    }
 
-   @Override
    public final GridSpec specifyCell(int columnIndex, int rowIndex, CellSpec spec)
    {
       CellSpec cellSpec = cellSpecs.get(columnIndex, rowIndex);
@@ -130,6 +124,10 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
 
    public GridSpec overrideWith(GridSpec that)
    {
+      if (that == null) // TODO test override with null
+      {
+         return this;
+      }
       if (that.lineLength != null)
       {
          lineLength = that.lineLength;
@@ -150,6 +148,10 @@ public class GridSpec implements GridSpecBuilder<GridSpec>
       for (Table.Cell<Integer, Integer, CellSpec> cell : that.cellSpecs.cellSet())
       {
          specifyCell(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
+      }
+      for (Table.Cell<Integer, Integer, CellSpec> cell : that.rowSpecsOverridingColumnSpecs.cellSet())
+      {
+         rowSpecsOverridingColumnSpecs.put(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
       }
       return this;
    }

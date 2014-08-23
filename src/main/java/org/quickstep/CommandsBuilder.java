@@ -5,12 +5,12 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class CommandsCollector<T> implements Iterable<GridBagCommand>
+public class CommandsBuilder<T> implements Iterable<GridBagCommand>
 {
    private final List<GridBagCommand> commands = new LinkedList<GridBagCommand>();
    private T owner;
 
-   public CommandsCollector(T owner)
+   public CommandsBuilder(T owner)
    {
       this.owner = owner;
    }

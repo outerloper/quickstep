@@ -49,9 +49,9 @@ public class ComponentFactory
       return result;
    }
 
-   public GridBagBuilder createGridBagBuilder(JComponent gridContainer, GridSpec gridSpec, ComponentFactory factory)
+   public GridSpec getDefaultGridSpec()
    {
-      return new GridBagBuilder(gridContainer, gridSpec, factory);
+      return new GridSpec();
    }
 
    public ComponentFactory getChildFactory()

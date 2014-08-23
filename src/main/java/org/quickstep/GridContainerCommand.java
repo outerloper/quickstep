@@ -6,15 +6,14 @@ import javax.swing.border.Border;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class GridContainerCommand<T extends GridContainerCommand<T>> extends CellCommand<T> implements GridSpecBuilder<T>
+public class GridContainerCommand<T extends GridContainerCommand<T>> extends CellCommand<T>
 {
    private JComponent container;
 
-   private final CommandsCollector<T> commandsCollector = new CommandsCollector<T>(self());
+   private final CommandsBuilder<T> commandsBuilder = new CommandsBuilder<T>(self());
    private final ContentAnchorSupport<T> contentAnchorSupport = new ContentAnchorSupport<T>(self());
    private final DecorationSupport<T> decorationSupport = new DecorationSupport<T>(self());
-
-   private final GridSpec gridSpec = new GridSpec();
+   private final GridSpecBuilder<T> gridSpecBuilder = new GridSpecBuilder<T>(self());
 
    private ComponentFactory componentFactory;
 
@@ -32,134 +31,127 @@ public class GridContainerCommand<T extends GridContainerCommand<T>> extends Cel
 
    public final T addLineBreak()
    {
-      return commandsCollector.addLineBreak();
+      return commandsBuilder.addLineBreak();
    }
 
    public final T addBlank()
    {
-      return commandsCollector.addBlank();
+      return commandsBuilder.addBlank();
    }
 
    public T addBlank(CellSpec spec)
    {
-      return commandsCollector.addBlank(spec);
+      return commandsBuilder.addBlank(spec);
    }
 
    public final T add(String text)
    {
-      return commandsCollector.add(text);
+      return commandsBuilder.add(text);
    }
 
    public T add(String text, CellSpec spec)
    {
-      return commandsCollector.add(text, spec);
+      return commandsBuilder.add(text, spec);
    }
 
    public final T add(JComponent component)
    {
-      return commandsCollector.add(component);
+      return commandsBuilder.add(component);
    }
 
    public T add(JComponent component, CellSpec spec)
    {
-      return commandsCollector.add(component, spec);
+      return commandsBuilder.add(component, spec);
    }
 
    public final T addAll(Iterable<? extends JComponent> components)
    {
-      return commandsCollector.addAll(components);
+      return commandsBuilder.addAll(components);
    }
 
    public final T addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
-      return commandsCollector.addAll(components, spec);
+      return commandsBuilder.addAll(components, spec);
    }
 
    public T addHeader(String title)
    {
-      return commandsCollector.addHeader(title);
+      return commandsBuilder.addHeader(title);
    }
 
    public T addSeparator()
    {
-      return commandsCollector.addSeparator();
+      return commandsBuilder.addSeparator();
    }
 
    public T addLineSeparator()
    {
-      return commandsCollector.addLineSeparator();
+      return commandsBuilder.addLineSeparator();
    }
 
    public T add(GridBagCommand command)
    {
-      return commandsCollector.add(command);
+      return commandsBuilder.add(command);
    }
 
    @Override
    public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
    {
-      ComponentFactory usedFactory = componentFactory != null ? componentFactory : parentFactory;
+      ComponentFactory factory = componentFactory != null ? componentFactory : parentFactory;
 
-      JComponent gridContainer = container != null ? container : usedFactory.createPanel();
+      JComponent gridContainer = container != null ? container : factory.createPanel();
       gridContainer.setLayout(new GridBagLayout());
 
+      GridSpec gridSpec = factory.getDefaultGridSpec().overrideWith(gridSpecBuilder.getGridSpec());
       JComponent component = contentAnchorSupport.applyContentAnchor(gridContainer, gridSpec);
+      GridBagBuilder builder = new GridBagBuilder(gridContainer, gridSpec, factory.getChildFactory());
 
-      GridBagBuilder builder = usedFactory.createGridBagBuilder(gridContainer, gridSpec, usedFactory.getChildFactory());
-      for (GridBagCommand command : commandsCollector)
+      for (GridBagCommand command : commandsBuilder)
       {
          command.apply(builder);
       }
-
-      return decorationSupport.decorate(component, usedFactory);
+      return decorationSupport.decorate(component, factory);
    }
 
    public T specifyGrid(GridSpec gridSpec)
    {
-      this.gridSpec.overrideWith(gridSpec);
-      return self();
+      return gridSpecBuilder.overrideWith(gridSpec);
    }
 
-   @Override
    public final T specifyDefault(CellSpec spec)
    {
-      gridSpec.specifyDefault(spec);
+      gridSpecBuilder.specifyDefault(spec);
       return self();
    }
 
-   @Override
    public final T specifyColumn(int columnIndex, CellSpec spec)
    {
-      gridSpec.specifyColumn(columnIndex, spec);
+      gridSpecBuilder.specifyColumn(columnIndex, spec);
       return self();
    }
 
-   @Override
    public final T specifyColumn(int columnIndex, LineSpec lineSpec)
    {
-      gridSpec.specifyColumn(columnIndex, lineSpec);
+      gridSpecBuilder.specifyColumn(columnIndex, lineSpec);
       return self();
    }
 
-   @Override
    public final T specifyRow
       (int rowIndex, CellSpec spec)
    {
-      gridSpec.specifyRow(rowIndex, spec);
+      gridSpecBuilder.specifyRow(rowIndex, spec);
       return self();
    }
 
-   @Override
    public final T specifyRow(int rowIndex, LineSpec lineSpec)
    {
-      gridSpec.specifyRow(rowIndex, lineSpec);
+      gridSpecBuilder.specifyRow(rowIndex, lineSpec);
       return self();
    }
 
-   @Override
    public final T specifyCell(int columnIndex, int rowIndex, CellSpec spec)
    {
-      gridSpec.specifyCell(columnIndex, rowIndex, spec);
+      gridSpecBuilder.specifyCell(columnIndex, rowIndex, spec);
       return self();
    }
 
@@ -191,13 +183,13 @@ public class GridContainerCommand<T extends GridContainerCommand<T>> extends Cel
 
    public final T withOrientation(Orientation orientation)
    {
-      gridSpec.withOrientation(orientation);
+      gridSpecBuilder.withOrientation(orientation);
       return self();
    }
 
    public final T withLineLength(Integer lineLength)
    {
-      gridSpec.withLineLength(lineLength);
+      gridSpecBuilder.withLineLength(lineLength);
       return self();
    }
 

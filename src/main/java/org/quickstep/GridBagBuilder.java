@@ -69,9 +69,9 @@ public class GridBagBuilder
       }
    }
 
-   public boolean isHorizontal() // refactor using method Orientation::isHorizontal()
+   public boolean isHorizontal()
    {
-      return Orientation.HORIZONTAL.equals(gridSpec.getOrientation());
+      return gridSpec.getOrientation().isHorizontal();
    }
 
    public boolean isEmpty()

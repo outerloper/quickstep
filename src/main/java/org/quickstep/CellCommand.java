@@ -37,7 +37,7 @@ public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCo
    @Override
    public void apply(GridBagBuilder builder)
    {
-      Orientation orientation = builder.getGridSpec().getOrientation();
+      Orientation orientation = builder.isHorizontal() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
       JComponent component = getComponent(orientation, builder.getComponentFactory());
       if (component != null)
       {

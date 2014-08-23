@@ -9,7 +9,7 @@ import static org.quickstep.GridBagToolKit.*;
 public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
 {
    private final LineSpec lineSpec = new LineSpec();
-   private final CommandsCollector<LineCommand> commandsCollector = new CommandsCollector<LineCommand>(this);
+   private final CommandsBuilder<LineCommand> commandsBuilder = new CommandsBuilder<LineCommand>(this);
 
    protected LineCommand()
    {
@@ -17,52 +17,52 @@ public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
 
    public LineCommand addBlank()
    {
-      return commandsCollector.addBlank();
+      return commandsBuilder.addBlank();
    }
 
    public LineCommand addBlank(CellSpec spec)
    {
-      return commandsCollector.addBlank(spec);
+      return commandsBuilder.addBlank(spec);
    }
 
    public LineCommand add(String text)
    {
-      return commandsCollector.add(text);
+      return commandsBuilder.add(text);
    }
 
    public LineCommand add(String text, CellSpec spec)
    {
-      return commandsCollector.add(text, spec);
+      return commandsBuilder.add(text, spec);
    }
 
    public LineCommand add(JComponent component)
    {
-      return commandsCollector.add(component);
+      return commandsBuilder.add(component);
    }
 
    public LineCommand add(JComponent component, CellSpec spec)
    {
-      return commandsCollector.add(component, spec);
+      return commandsBuilder.add(component, spec);
    }
 
    public LineCommand addAll(Iterable<? extends JComponent> components)
    {
-      return commandsCollector.addAll(components);
+      return commandsBuilder.addAll(components);
    }
 
    public LineCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
-      return commandsCollector.addAll(components, spec);
+      return commandsBuilder.addAll(components, spec);
    }
 
    public LineCommand addSeparator()
    {
-      return commandsCollector.addSeparator();
+      return commandsBuilder.addSeparator();
    }
 
    public LineCommand add(GridBagCommand command)
    {
-      return commandsCollector.add(command);
+      return commandsBuilder.add(command);
    }
 
    @Override
@@ -73,7 +73,7 @@ public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
          int lineIndex = calculateThisLineIndex(builder);
          applyLineSpecToGrid(builder, lineIndex);
 
-         for (GridBagCommand command : commandsCollector)
+         for (GridBagCommand command : commandsBuilder)
          {
             validateWhetherStillInThisLine(builder, lineIndex);
             command.apply(builder);
@@ -110,7 +110,7 @@ public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
    {
       if (builder.isHorizontal())
       {
-         builder.getGridSpec().specifyRow(lineIndex, lineSpec); // TODO refactor not to expose gridSpec
+         builder.getGridSpec().specifyRow(lineIndex, lineSpec);
       }
       else
       {

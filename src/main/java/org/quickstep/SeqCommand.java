@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class SeqCommand implements GridBagCommand
 {
-   private final CommandsCollector<SeqCommand> commandsCollector = new CommandsCollector<SeqCommand>(this);
+   private final CommandsBuilder<SeqCommand> commandsBuilder = new CommandsBuilder<SeqCommand>(this);
 
    public SeqCommand()
    {
@@ -12,73 +12,73 @@ public class SeqCommand implements GridBagCommand
 
    public final SeqCommand addLineBreak()
    {
-      return commandsCollector.addLineBreak();
+      return commandsBuilder.addLineBreak();
    }
 
    public final SeqCommand addBlank()
    {
-      return commandsCollector.addBlank();
+      return commandsBuilder.addBlank();
    }
 
    public SeqCommand addBlank(CellSpec spec)
    {
-      return commandsCollector.addBlank(spec);
+      return commandsBuilder.addBlank(spec);
    }
 
    public final SeqCommand add(String text)
    {
-      return commandsCollector.add(text);
+      return commandsBuilder.add(text);
    }
 
    public SeqCommand add(String text, CellSpec spec)
    {
-      return commandsCollector.add(text, spec);
+      return commandsBuilder.add(text, spec);
    }
 
    public final SeqCommand add(JComponent component)
    {
-      return commandsCollector.add(component);
+      return commandsBuilder.add(component);
    }
 
    public SeqCommand add(JComponent component, CellSpec spec)
    {
-      return commandsCollector.add(component, spec);
+      return commandsBuilder.add(component, spec);
    }
 
    public final SeqCommand addAll(Iterable<? extends JComponent> components)
    {
-      return commandsCollector.addAll(components);
+      return commandsBuilder.addAll(components);
    }
 
    public final SeqCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
-      return commandsCollector.addAll(components, spec);
+      return commandsBuilder.addAll(components, spec);
    }
 
    public SeqCommand addHeader(String title)
    {
-      return commandsCollector.addHeader(title);
+      return commandsBuilder.addHeader(title);
    }
 
    public SeqCommand addSeparator()
    {
-      return commandsCollector.addSeparator();
+      return commandsBuilder.addSeparator();
    }
 
    public SeqCommand addLineSeparator()
    {
-      return commandsCollector.addLineSeparator();
+      return commandsBuilder.addLineSeparator();
    }
 
    public SeqCommand add(GridBagCommand command)
    {
-      return commandsCollector.add(command);
+      return commandsBuilder.add(command);
    }
 
    @Override
    public void apply(GridBagBuilder builder)
    {
-      for (GridBagCommand command : commandsCollector)
+      for (GridBagCommand command : commandsBuilder)
       {
          command.apply(builder);
       }
