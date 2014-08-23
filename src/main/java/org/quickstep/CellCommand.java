@@ -3,7 +3,7 @@ package org.quickstep;
 import java.util.logging.Level;
 import javax.swing.*;
 
-import org.quickstep.util.DebugSupport;
+import org.quickstep.support.DebugSupport;
 
 import static org.quickstep.GridBagToolKit.*;
 

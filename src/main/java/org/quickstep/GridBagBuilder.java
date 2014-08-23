@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import javax.swing.*;
 
 import com.google.common.collect.*;
-import org.quickstep.util.DebugSupport;
+import org.quickstep.support.DebugSupport;
 
 import static org.quickstep.GridBagToolKit.*;
 

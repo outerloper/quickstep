@@ -3,7 +3,7 @@ package org.quickstep;
 import java.awt.*;
 
 import static org.quickstep.GridBagToolKit.*;
-import static org.quickstep.util.DebugSupport.*;
+import static org.quickstep.support.DebugSupport.*;
 
 public final class CellSpec
 {

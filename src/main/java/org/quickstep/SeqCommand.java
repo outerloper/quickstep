@@ -2,6 +2,8 @@ package org.quickstep;
 
 import javax.swing.*;
 
+import org.quickstep.support.CommandsBuilder;
+
 public class SeqCommand implements GridBagCommand
 {
    private final CommandsBuilder<SeqCommand> commandsBuilder = new CommandsBuilder<SeqCommand>(this);

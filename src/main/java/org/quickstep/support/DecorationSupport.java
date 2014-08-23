@@ -1,7 +1,10 @@
-package org.quickstep;
+package org.quickstep.support;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import org.quickstep.ComponentFactory;
+import org.quickstep.GridBagToolKit;
 
 import static javax.swing.BorderFactory.createCompoundBorder;
 

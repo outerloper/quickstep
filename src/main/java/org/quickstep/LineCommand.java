@@ -4,11 +4,14 @@ import java.util.logging.Level;
 
 import javax.swing.*;
 
+import org.quickstep.support.CommandsBuilder;
+import org.quickstep.support.LineSpecBuilder;
+
 import static org.quickstep.GridBagToolKit.*;
 
-public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
+public class LineCommand implements GridBagCommand
 {
-   private final LineSpec lineSpec = new LineSpec();
+   private final LineSpecBuilder<LineCommand> lineSpecBuilder = new LineSpecBuilder<LineCommand>(this);
    private final CommandsBuilder<LineCommand> commandsBuilder = new CommandsBuilder<LineCommand>(this);
 
    protected LineCommand()
@@ -110,11 +113,11 @@ public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
    {
       if (builder.isHorizontal())
       {
-         builder.getGridSpec().specifyRow(lineIndex, lineSpec);
+         builder.getGridSpec().specifyRow(lineIndex, lineSpecBuilder.getLineSpec());
       }
       else
       {
-         builder.getGridSpec().specifyColumn(lineIndex, lineSpec);
+         builder.getGridSpec().specifyColumn(lineIndex, lineSpecBuilder.getLineSpec());
       }
    }
 
@@ -129,17 +132,18 @@ public class LineCommand implements GridBagCommand, LineSpecBuilder<LineCommand>
       }
    }
 
-   @Override
    public LineCommand specifyDefault(CellSpec spec)
    {
-      lineSpec.specifyDefault(spec);
-      return this;
+      return lineSpecBuilder.specifyDefault(spec);
    }
 
-   @Override
    public LineCommand specifyCell(int i, CellSpec spec)
    {
-      lineSpec.specifyCell(i, spec);
-      return this;
+      return lineSpecBuilder.specifyCell(i, spec);
+   }
+
+   public LineCommand specifyLine(LineSpec lineSpec)
+   {
+      return lineSpecBuilder.specifyLine(lineSpec);
    }
 }

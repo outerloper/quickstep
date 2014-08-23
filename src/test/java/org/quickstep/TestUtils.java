@@ -8,8 +8,8 @@ import org.easymock.IArgumentMatcher;
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.reportMatcher;
 import static org.quickstep.GridBagToolKit.*;
-import static org.quickstep.util.DebugSupport.gbcEquals;
-import static org.quickstep.util.DebugSupport.gbcToString;
+import static org.quickstep.support.DebugSupport.gbcEquals;
+import static org.quickstep.support.DebugSupport.gbcToString;
 
 public class TestUtils
 {

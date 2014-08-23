@@ -1,4 +1,4 @@
-package org.quickstep.util;
+package org.quickstep.support;
 
 import java.awt.*;
 import java.awt.event.*;

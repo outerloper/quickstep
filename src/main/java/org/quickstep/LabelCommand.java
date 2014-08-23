@@ -6,7 +6,7 @@ public class LabelCommand extends CellCommand<LabelCommand>
 {
    private String text;
 
-   protected LabelCommand(String text)
+   public LabelCommand(String text)
    {
       this.text = text;
    }

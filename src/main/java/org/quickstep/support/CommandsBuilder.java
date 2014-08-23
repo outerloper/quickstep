@@ -1,14 +1,16 @@
-package org.quickstep;
+package org.quickstep.support;
 
 import java.util.*;
 import javax.swing.*;
+
+import org.quickstep.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
 public class CommandsBuilder<T> implements Iterable<GridBagCommand>
 {
+   private final T owner;
    private final List<GridBagCommand> commands = new LinkedList<GridBagCommand>();
-   private T owner;
 
    public CommandsBuilder(T owner)
    {

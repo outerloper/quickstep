@@ -4,7 +4,7 @@ import java.util.*;
 
 import static org.quickstep.GridBagToolKit.spec;
 
-public class LineSpec implements LineSpecBuilder<LineSpec>
+public class LineSpec
 {
    private final CellSpec defaultSpec = spec();
    private final Map<Integer, CellSpec> cellsSpecs = new TreeMap<Integer, CellSpec>();
@@ -13,14 +13,12 @@ public class LineSpec implements LineSpecBuilder<LineSpec>
    {
    }
 
-   @Override
    public LineSpec specifyDefault(CellSpec spec)
    {
       defaultSpec.overrideWith(spec);
       return this;
    }
 
-   @Override
    public LineSpec specifyCell(int i, CellSpec spec)
    {
       CellSpec cellSpec = cellsSpecs.get(i);

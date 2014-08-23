@@ -1,7 +1,9 @@
-package org.quickstep;
+package org.quickstep.support;
 
 import java.awt.*;
 import javax.swing.*;
+
+import org.quickstep.*;
 
 import static org.quickstep.GridBagToolKit.spec;
 

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-import org.quickstep.util.DebugSupport;
+import org.quickstep.support.DebugSupport;
 
 public final class GridBagToolKit
 {
@@ -158,7 +158,7 @@ public final class GridBagToolKit
    }
 
 
-   static class ResizablePanel extends JPanel
+   public static class ResizablePanel extends JPanel
    {
       public ResizablePanel()
       {

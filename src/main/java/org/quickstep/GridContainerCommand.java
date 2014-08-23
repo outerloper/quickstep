@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import org.quickstep.support.*;
+
 import static org.quickstep.GridBagToolKit.*;
 
 public class GridContainerCommand<T extends GridContainerCommand<T>> extends CellCommand<T>
