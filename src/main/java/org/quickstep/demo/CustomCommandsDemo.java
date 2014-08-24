@@ -118,7 +118,7 @@ class ToolBarCommand extends GridContainerCommand<ToolBarCommand>
 }
 
 
-class TabsCommand extends CellCommand<TabsCommand>
+class TabsCommand extends AbstractComponentCommand<TabsCommand>
 {
    private final List<TabCommand> tabs = new LinkedList<TabCommand>();
 
@@ -179,7 +179,7 @@ class TabCommand extends GridContainerCommand<TabCommand>
    }
 }
 
-class ButtonsCommand extends CellCommand<ButtonsCommand>
+class ButtonsCommand extends AbstractComponentCommand<ButtonsCommand>
 {
    List<JButton> buttons = new LinkedList<JButton>();
 
@@ -211,7 +211,7 @@ class ButtonsCommand extends CellCommand<ButtonsCommand>
    }
 }
 
-class SplitCommand extends CellCommand<SplitCommand>
+class SplitCommand extends AbstractComponentCommand<SplitCommand>
 {
    private PanelCommand first;
    private PanelCommand second;

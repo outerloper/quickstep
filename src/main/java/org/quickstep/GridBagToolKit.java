@@ -117,7 +117,7 @@ public final class GridBagToolKit
    }
 
 
-   private static <C extends Container> C genericBuildContent(C container, CellCommand command)
+   private static <C extends Container> C genericBuildContent(C container, AbstractComponentCommand command)
    {
       container.setLayout(new GridBagLayout());
       JComponent component = command.getComponent();
@@ -129,14 +129,14 @@ public final class GridBagToolKit
       return container;
    }
 
-   public static Window buildContent(Window window, CellCommand command)
+   public static Window buildContent(Window window, AbstractComponentCommand command)
    {
       Window result = genericBuildContent(window, command);
       window.pack();
       return result;
    }
 
-   public static JComponent buildContent(JComponent component, CellCommand command)
+   public static JComponent buildContent(JComponent component, AbstractComponentCommand command)
    {
       return genericBuildContent(component, command);
    }

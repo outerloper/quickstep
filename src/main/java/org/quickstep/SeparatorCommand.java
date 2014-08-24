@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class SeparatorCommand extends CellCommand<SeparatorCommand>
+public class SeparatorCommand extends AbstractComponentCommand<SeparatorCommand>
 {
    @Override
    public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)

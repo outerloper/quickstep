@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class ComponentCommand extends CellCommand<ComponentCommand>
+public class ComponentCommand extends AbstractComponentCommand<ComponentCommand>
 {
    private final JComponent component;
 

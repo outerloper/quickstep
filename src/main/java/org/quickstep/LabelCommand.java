@@ -2,7 +2,7 @@ package org.quickstep;
 
 import javax.swing.*;
 
-public class LabelCommand extends CellCommand<LabelCommand>
+public class LabelCommand extends AbstractComponentCommand<LabelCommand>
 {
    private String text;
 

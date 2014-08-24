@@ -8,7 +8,7 @@ import org.quickstep.support.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class GridContainerCommand<T extends GridContainerCommand<T>> extends CellCommand<T>
+public class GridContainerCommand<T extends GridContainerCommand<T>> extends AbstractComponentCommand<T>
 {
    private JComponent container;
 

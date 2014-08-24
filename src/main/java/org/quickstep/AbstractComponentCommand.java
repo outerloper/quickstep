@@ -7,7 +7,7 @@ import org.quickstep.support.DebugSupport;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public abstract class CellCommand<T extends CellCommand<T>> implements GridBagCommand
+public abstract class AbstractComponentCommand<T extends AbstractComponentCommand<T>> implements GridBagCommand
 {
    private final CellSpec cellSpec = spec();
 
