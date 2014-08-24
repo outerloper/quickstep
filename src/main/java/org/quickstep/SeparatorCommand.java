@@ -13,7 +13,7 @@ public class SeparatorCommand extends CellCommand<SeparatorCommand>
    }
 
    @Override
-   protected CellSpec getDefaultSpec(Orientation parentOrientation)
+   public CellSpec getDefaultSpec(Orientation parentOrientation)
    {
       if (parentOrientation.isHorizontal())
       {

@@ -8,10 +8,6 @@ public class LineSeparatorCommand implements GridBagCommand
 {
    private final CellSpec cellSpec = spec();
 
-   public LineSeparatorCommand()
-   {
-   }
-
    public LineSeparatorCommand withSpec(CellSpec spec)
    {
       this.cellSpec.overrideWith(spec);
