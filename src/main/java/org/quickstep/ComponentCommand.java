@@ -8,7 +8,7 @@ public class ComponentCommand extends CellCommand<ComponentCommand>
 {
    private final JComponent component;
 
-   ComponentCommand(JComponent component)
+   protected ComponentCommand(JComponent component)
    {
       this.component = component;
    }
