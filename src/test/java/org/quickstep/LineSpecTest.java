@@ -54,4 +54,16 @@ public class LineSpecTest
          specifyCell(2, specWithFillY());
       assertEquals(expected, lineSpec.overrideWith(overriding));
    }
+
+   @Test
+   public void whenOverridingLineSpecWithNullThenEqualSpecIsReturned()
+   {
+      lineSpec = lineSpec().
+         specifyDefault(spec().withIPadX(5)).
+         specifyCell(1, specWithFillX());
+      LineSpec expected = lineSpec().
+         specifyDefault(spec().withIPadX(5)).
+         specifyCell(1, specWithFillX());
+      assertEquals(expected, lineSpec.overrideWith(null));
+   }
 }

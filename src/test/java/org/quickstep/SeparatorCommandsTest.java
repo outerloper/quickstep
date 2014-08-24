@@ -6,20 +6,30 @@ import javax.swing.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.easymock.EasyMock.*;
 import static org.quickstep.GridBagToolKit.*;
 import static org.quickstep.TestUtils.*;
 
-public class SeparatorCommandsTest // TODO ability to provide custom separator: separator().on(new JSeparator) and then add JSeparator's orientation asserts to those tests
+public class SeparatorCommandsTest
 {
    private JPanel panel = createMock(JPanel.class);
    private PanelCommand panelCommand;
+   private Orientation actualOrientation;
 
    @Before
    public void setUp()
    {
       panel.setLayout((LayoutManager) anyObject());
-      panelCommand = panel().with(panel);
+      panelCommand = panel().with(panel).withComponentFactory(new ComponentFactory()
+      {
+         @Override
+         public JComponent createSeparator(Orientation orientation)
+         {
+            actualOrientation = orientation;
+            return super.createSeparator(orientation);
+         }
+      });
    }
 
    @Test
@@ -34,6 +44,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
          getComponent();
 
       verify(panel);
+      assertEquals(actualOrientation, Orientation.VERTICAL);
    }
 
    @Test
@@ -64,6 +75,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
          getComponent();
 
       verify(panel);
+      assertEquals(actualOrientation, Orientation.HORIZONTAL);
    }
 
    @Test
@@ -94,6 +106,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
          getComponent();
 
       verify(panel);
+      assertEquals(actualOrientation, Orientation.HORIZONTAL);
    }
 
    @Test
@@ -124,6 +137,7 @@ public class SeparatorCommandsTest // TODO ability to provide custom separator: 
          getComponent();
 
       verify(panel);
+      assertEquals(actualOrientation, Orientation.VERTICAL);
    }
 
    @Test

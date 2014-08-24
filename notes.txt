@@ -1,2 +1,0 @@
-TODO tables with viewports
-TODO how are those 'fancy borders' realized in airflite?

@@ -35,7 +35,7 @@ public class LineSpec
       return defaultSpec.derive();
    }
 
-   public Map<Integer, CellSpec> getSpecifiedCells() // TODO test deep copy of specified cells
+   public Map<Integer, CellSpec> getSpecifiedCells()
    {
       Map<Integer, CellSpec> result = new TreeMap<Integer, CellSpec>();
       for (Map.Entry<Integer, CellSpec> entry : cellsSpecs.entrySet())
@@ -47,7 +47,7 @@ public class LineSpec
 
    public LineSpec overrideWith(LineSpec that)
    {
-      if (that == null) // TODO test override with null
+      if (that == null)
       {
          return this;
       }

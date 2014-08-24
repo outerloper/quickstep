@@ -173,7 +173,6 @@ class TabCommand extends GridContainerCommand<TabCommand>
       return this;
    }
 
-   // TODO find sth more elegant with this default spec..
    @Override
    protected CellSpec getDefaultSpec(Orientation parentOrientation)
    {

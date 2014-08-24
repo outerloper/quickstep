@@ -21,17 +21,16 @@ public class LineSeparatorCommand implements GridBagCommand
    @Override
    public void apply(GridBagBuilder builder)
    {
-      JSeparator separator = new JSeparator();
+      boolean horizontal = builder.isHorizontal();
+      JComponent separator = builder.getComponentFactory().createSeparator(horizontal ? Orientation.HORIZONTAL : Orientation.VERTICAL);
       CellSpec spec = spec();
 
-      if (builder.isHorizontal())
+      if (horizontal)
       {
-         separator.setOrientation(JSeparator.HORIZONTAL);
          spec.withAnchor(AX.BOTH, AY.CENTER).withGridWidthRemainder();
       }
       else
       {
-         separator.setOrientation(JSeparator.VERTICAL);
          spec.withAnchor(AX.CENTER, AY.BOTH).withGridHeightRemainder();
       }
 

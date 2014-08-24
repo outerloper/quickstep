@@ -5,50 +5,48 @@ import javax.swing.*;
 
 import org.quickstep.*;
 
-import static org.quickstep.GridBagToolKit.spec;
+import static org.quickstep.GridBagToolKit.*;
 
 public class ContentAnchorSupport<T>
 {
    private final T owner;
 
-   private GridBagToolKit.AX anchorX;
-   private GridBagToolKit.AY anchorY;
+   private AX anchorX;
+   private AY anchorY;
 
    public ContentAnchorSupport(T owner)
    {
       this.owner = owner;
    }
 
-   public T withContentAnchor(GridBagToolKit.AX anchorX, GridBagToolKit.AY anchorY)
+   public T withContentAnchor(AX anchorX, AY anchorY)
    {
       withContentAnchorX(anchorX);
       withContentAnchorY(anchorY);
       return owner;
    }
 
-   public T withContentAnchor(GridBagToolKit.A anchorXAndY)
+   public T withContentAnchor(A anchorXAndY)
    {
-      if (GridBagToolKit.A.CENTER.equals(anchorXAndY))
+      if (A.CENTER.equals(anchorXAndY))
       {
-         return withContentAnchor(GridBagToolKit.AX.CENTER, GridBagToolKit.AY.CENTER);
+         return withContentAnchor(AX.CENTER, AY.CENTER);
       }
-      return withContentAnchor(GridBagToolKit.AX.BOTH, GridBagToolKit.AY.BOTH);
+      return withContentAnchor(AX.BOTH, AY.BOTH);
    }
 
-   public T withContentAnchorX(GridBagToolKit.AX anchorX)
+   public T withContentAnchorX(AX anchorX)
    {
       this.anchorX = anchorX;
       return owner;
    }
 
-   public T withContentAnchorY(GridBagToolKit.AY anchorY)
+   public T withContentAnchorY(AY anchorY)
    {
       this.anchorY = anchorY;
       return owner;
    }
 
-   // TODO extract GridSpecBuilderComponent, let ComponentCommand not override GridSpecBuilder
-   // TODO think about doing the same with LineSpecBuilder
    public JComponent applyContentAnchor(JComponent container, GridSpec gridSpec)
    {
       JComponent result = container;
@@ -56,7 +54,7 @@ public class ContentAnchorSupport<T>
       Integer contentX = null;
       if (anchorX == null)
       {
-         anchorX = GridBagToolKit.AX.CENTER;
+         anchorX = AX.CENTER;
       }
       switch (anchorX)
       {
@@ -67,13 +65,13 @@ public class ContentAnchorSupport<T>
             contentX = 1;
             break;
          case BOTH:
-            gridSpec.specifyDefault(spec().withWeightX(1.0).withAnchorX(GridBagToolKit.AX.BOTH));
+            gridSpec.specifyDefault(spec().withWeightX(1.0).withAnchorX(AX.BOTH));
             break;
       }
       Integer contentY = null;
       if (anchorY == null)
       {
-         anchorY = GridBagToolKit.AY.CENTER;
+         anchorY = AY.CENTER;
       }
       switch (anchorY)
       {
@@ -84,7 +82,7 @@ public class ContentAnchorSupport<T>
             contentY = 1;
             break;
          case BOTH:
-            gridSpec.specifyDefault(spec().withWeightY(1.0).withAnchorY(GridBagToolKit.AY.BOTH));
+            gridSpec.specifyDefault(spec().withWeightY(1.0).withAnchorY(AY.BOTH));
             break;
       }
       if (contentX != null || contentY != null)
@@ -112,13 +110,13 @@ public class ContentAnchorSupport<T>
          }
          result = new JPanel(new GridBagLayout());
          CellSpec contentSpec = spec();
-         if (anchorX == GridBagToolKit.AX.BOTH)
+         if (anchorX == AX.BOTH)
          {
-            contentSpec.withWeightX(1.0).withAnchorX(GridBagToolKit.AX.BOTH);
+            contentSpec.withWeightX(1.0).withAnchorX(AX.BOTH);
          }
-         if (anchorY == GridBagToolKit.AY.BOTH)
+         if (anchorY == AY.BOTH)
          {
-            contentSpec.withWeightY(1.0).withAnchorY(GridBagToolKit.AY.BOTH);
+            contentSpec.withWeightY(1.0).withAnchorY(AY.BOTH);
          }
          result.add(new JLabel(), fillSpec.toConstraints(fillX, fillY));
          result.add(container, contentSpec.toConstraints(contentX, contentY));

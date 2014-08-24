@@ -124,7 +124,7 @@ public class GridSpec
 
    public GridSpec overrideWith(GridSpec that)
    {
-      if (that == null) // TODO test override with null
+      if (that == null)
       {
          return this;
       }

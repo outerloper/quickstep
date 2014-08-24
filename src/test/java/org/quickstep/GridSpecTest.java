@@ -171,4 +171,18 @@ public class GridSpecTest
          .specifyRow(2, specWithFillY());
       assertEquals(expected, gridSpec.overrideWith(overriding));
    }
+
+   @Test
+   public void whenOverridingGridSpecWithNullThenEqualSpecIsReturned()
+   {
+      gridSpec
+         .specifyDefault(spec().withIPadX(5))
+         .specifyCell(1, 3, specWithFillX())
+         .specifyRow(2, specWithFillY());
+      GridSpec expected = gridSpec()
+         .specifyDefault(spec().withIPadX(5))
+         .specifyCell(1, 3, specWithFillX())
+         .specifyRow(2, specWithFillY());
+      assertEquals(expected, gridSpec.overrideWith(null));
+   }
 }
