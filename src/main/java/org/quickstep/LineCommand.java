@@ -4,15 +4,15 @@ import java.util.logging.Level;
 
 import javax.swing.*;
 
-import org.quickstep.support.CommandsBuilder;
-import org.quickstep.support.LineSpecBuilder;
+import org.quickstep.support.CommandListSupport;
+import org.quickstep.support.LineSpecSupport;
 
 import static org.quickstep.GridBagToolKit.*;
 
 public class LineCommand implements GridBagCommand
 {
-   private final LineSpecBuilder<LineCommand> lineSpecBuilder = new LineSpecBuilder<LineCommand>(this);
-   private final CommandsBuilder<LineCommand> commandsBuilder = new CommandsBuilder<LineCommand>(this);
+   private final LineSpecSupport<LineCommand> lineSpecSupport = new LineSpecSupport<LineCommand>(this);
+   private final CommandListSupport<LineCommand> commandListSupport = new CommandListSupport<LineCommand>(this);
 
    protected LineCommand()
    {
@@ -20,52 +20,52 @@ public class LineCommand implements GridBagCommand
 
    public LineCommand addBlank()
    {
-      return commandsBuilder.addBlank();
+      return commandListSupport.addBlank();
    }
 
    public LineCommand addBlank(CellSpec spec)
    {
-      return commandsBuilder.addBlank(spec);
+      return commandListSupport.addBlank(spec);
    }
 
    public LineCommand add(String text)
    {
-      return commandsBuilder.add(text);
+      return commandListSupport.add(text);
    }
 
    public LineCommand add(String text, CellSpec spec)
    {
-      return commandsBuilder.add(text, spec);
+      return commandListSupport.add(text, spec);
    }
 
    public LineCommand add(JComponent component)
    {
-      return commandsBuilder.add(component);
+      return commandListSupport.add(component);
    }
 
    public LineCommand add(JComponent component, CellSpec spec)
    {
-      return commandsBuilder.add(component, spec);
+      return commandListSupport.add(component, spec);
    }
 
    public LineCommand addAll(Iterable<? extends JComponent> components)
    {
-      return commandsBuilder.addAll(components);
+      return commandListSupport.addAll(components);
    }
 
    public LineCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
-      return commandsBuilder.addAll(components, spec);
+      return commandListSupport.addAll(components, spec);
    }
 
    public LineCommand addSeparator()
    {
-      return commandsBuilder.addSeparator();
+      return commandListSupport.addSeparator();
    }
 
    public LineCommand add(GridBagCommand command)
    {
-      return commandsBuilder.add(command);
+      return commandListSupport.add(command);
    }
 
    @Override
@@ -76,7 +76,7 @@ public class LineCommand implements GridBagCommand
          int lineIndex = calculateThisLineIndex(builder);
          applyLineSpecToGrid(builder, lineIndex);
 
-         for (GridBagCommand command : commandsBuilder)
+         for (GridBagCommand command : commandListSupport)
          {
             validateWhetherStillInThisLine(builder, lineIndex);
             command.apply(builder);
@@ -113,11 +113,11 @@ public class LineCommand implements GridBagCommand
    {
       if (builder.isHorizontal())
       {
-         builder.getGridSpec().specifyRow(lineIndex, lineSpecBuilder.getLineSpec());
+         builder.getGridSpec().specifyRow(lineIndex, lineSpecSupport.getLineSpec());
       }
       else
       {
-         builder.getGridSpec().specifyColumn(lineIndex, lineSpecBuilder.getLineSpec());
+         builder.getGridSpec().specifyColumn(lineIndex, lineSpecSupport.getLineSpec());
       }
    }
 
@@ -134,16 +134,16 @@ public class LineCommand implements GridBagCommand
 
    public LineCommand specifyDefault(CellSpec spec)
    {
-      return lineSpecBuilder.specifyDefault(spec);
+      return lineSpecSupport.specifyDefault(spec);
    }
 
    public LineCommand specifyCell(int i, CellSpec spec)
    {
-      return lineSpecBuilder.specifyCell(i, spec);
+      return lineSpecSupport.specifyCell(i, spec);
    }
 
    public LineCommand specifyLine(LineSpec lineSpec)
    {
-      return lineSpecBuilder.specifyLine(lineSpec);
+      return lineSpecSupport.specifyLine(lineSpec);
    }
 }
