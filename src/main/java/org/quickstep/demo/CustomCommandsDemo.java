@@ -93,13 +93,19 @@ public class CustomCommandsDemo extends JFrame
       return new SplitCommand(orientation);
    }
 
-   static class ToolBarCommand extends GridContainerCommand<ToolBarCommand>
+   static class ToolBarCommand extends GridContainerCommand<JToolBar, ToolBarCommand>
    {
       @Override
       public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
       {
-         on(new JToolBar()).withContentAnchorX(AX.LEFT);
+         withContentAnchorX(AX.LEFT);
          return super.getComponent(parentOrientation, parentFactory);
+      }
+
+      @Override
+      protected JToolBar createDefaultContainer(ComponentFactory factory)
+      {
+         return new JToolBar();
       }
 
       @Override
@@ -137,7 +143,7 @@ public class CustomCommandsDemo extends JFrame
       }
    }
 
-   static class TabCommand extends GridContainerCommand<TabCommand>
+   static class TabCommand extends GridContainerCommand<JPanel, TabCommand>
    {
       private String title;
       private Icon icon;
@@ -167,6 +173,12 @@ public class CustomCommandsDemo extends JFrame
       protected CellSpec getDefaultSpec(Orientation parentOrientation)
       {
          return spec().withInset(5);
+      }
+
+      @Override
+      protected JPanel createDefaultContainer(ComponentFactory factory)
+      {
+         return factory.createPanel();
       }
    }
 

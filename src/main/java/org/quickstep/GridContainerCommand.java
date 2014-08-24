@@ -8,16 +8,15 @@ import org.quickstep.support.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class GridContainerCommand<T extends GridContainerCommand<T>> extends AbstractComponentCommand<T>
+public abstract class GridContainerCommand<C extends JComponent, T extends GridContainerCommand<C, T>> extends AbstractComponentCommand<T>
 {
-   private JComponent container;
-
    private final CommandListSupport<T> commandListSupport = new CommandListSupport<T>(self());
    private final ContentAnchorSupport<T> contentAnchorSupport = new ContentAnchorSupport<T>(self());
    private final DecorationSupport<T> decorationSupport = new DecorationSupport<T>(self());
    private final GridSpecSupport<T> gridSpecSupport = new GridSpecSupport<T>(self());
 
    private ComponentFactory componentFactory;
+   private C container;
 
    protected GridContainerCommand()
    {
@@ -93,10 +92,10 @@ public class GridContainerCommand<T extends GridContainerCommand<T>> extends Abs
    {
       ComponentFactory factory = componentFactory != null ? componentFactory : parentFactory;
 
-      JComponent gridContainer = container != null ? container : factory.createPanel();
+      C gridContainer = container != null ? container : createDefaultContainer(factory);
       gridContainer.setLayout(new GridBagLayout());
 
-      GridSpec gridSpec = factory.getDefaultGridSpec().overrideWith(gridSpecSupport.getGridSpec());
+      GridSpec gridSpec = factory.createDefaultGridSpec().overrideWith(gridSpecSupport.getGridSpec());
       JComponent component = contentAnchorSupport.applyContentAnchor(gridContainer, gridSpec);
       GridBagBuilder builder = new GridBagBuilder(gridContainer, gridSpec, factory.getChildFactory());
 
@@ -106,6 +105,8 @@ public class GridContainerCommand<T extends GridContainerCommand<T>> extends Abs
       }
       return decorationSupport.decorate(component, factory);
    }
+
+   protected abstract C createDefaultContainer(ComponentFactory factory);
 
    public T withGrid(GridSpec gridSpec)
    {
@@ -148,7 +149,7 @@ public class GridContainerCommand<T extends GridContainerCommand<T>> extends Abs
       return self();
    }
 
-   public final T on(JComponent container)
+   public final T on(C container)
    {
       this.container = container;
       return self();

@@ -49,7 +49,7 @@ public class ComponentFactory
       return result;
    }
 
-   public GridSpec getDefaultGridSpec()
+   public GridSpec createDefaultGridSpec()
    {
       return new GridSpec().
          withDefault(spec().withGap(5).withAnchorX(AX.LEFT)).
