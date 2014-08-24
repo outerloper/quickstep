@@ -30,7 +30,7 @@ public abstract class AbstractComponentCommand<T extends AbstractComponentComman
    }
 
    @Override
-   public void apply(GridBagBuilder builder)
+   public final void apply(GridBagBuilder builder)
    {
       Orientation orientation = builder.isHorizontal() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
       JComponent component = getComponent(orientation, builder.getComponentFactory());
