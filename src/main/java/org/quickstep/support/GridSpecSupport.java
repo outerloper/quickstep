@@ -4,12 +4,12 @@ import org.quickstep.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class GridSpecBuilder<T>
+public class GridSpecSupport<T>
 {
    private final T owner;
    private final GridSpec gridSpec = new GridSpec();
 
-   public GridSpecBuilder(T owner)
+   public GridSpecSupport(T owner)
    {
       this.owner = owner;
    }

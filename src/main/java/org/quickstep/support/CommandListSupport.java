@@ -7,12 +7,12 @@ import org.quickstep.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class CommandsBuilder<T> implements Iterable<GridBagCommand>
+public class CommandListSupport<T> implements Iterable<GridBagCommand>
 {
    private final T owner;
    private final List<GridBagCommand> commands = new LinkedList<GridBagCommand>();
 
-   public CommandsBuilder(T owner)
+   public CommandListSupport(T owner)
    {
       this.owner = owner;
    }

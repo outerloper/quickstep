@@ -5,12 +5,12 @@ import org.quickstep.LineSpec;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class LineSpecBuilder<T>
+public class LineSpecSupport<T>
 {
    private final T owner;
    private final LineSpec lineSpec = lineSpec();
 
-   public LineSpecBuilder(T owner)
+   public LineSpecSupport(T owner)
    {
       this.owner = owner;
    }
