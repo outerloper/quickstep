@@ -56,10 +56,10 @@ public class RichFormDemo2 extends JFrame
    {
       buildContent(this, panel().
          withOrientation(Orientation.VERTICAL).
-         specifyDefault(specWithFillX()).
+         withDefault(specWithFillX()).
          add(panel().
             withBorder("Conditions").
-            specifyGrid(getGridSpec()).
+            withGrid(getGridSpec()).
             addHeader("Section 1").
             add(line().
                add("Start Date:").add(startDateTextField).
@@ -86,8 +86,8 @@ public class RichFormDemo2 extends JFrame
             add(lineWithCombo().add("Other 3:").add(other3ComboBox).add(other3TextField))
          ).
          add(panel().
-            withSpec(specWithFillX()).
-            specifyDefault(spec().withAnchorY(AY.BOTH)).
+            with(specWithFillX()).
+            withDefault(spec().withAnchorY(AY.BOTH)).
             add(panel().
                withOrientation(Orientation.VERTICAL).
                withBorder("Direction").
@@ -99,17 +99,17 @@ public class RichFormDemo2 extends JFrame
                addAll(scopeRadios)
             ).
             add(panel().
+               with(specWithFill()).
                withBorder("Highlight").
-               withSpec(specWithFill()).
-               specifyColumn(0, spec().withAnchorX(AX.RIGHT)).
-               specifyColumn(1, spec().withWeightX(1.0)).
+               withColumn(0, spec().withAnchorX(AX.RIGHT)).
+               withColumn(1, spec().withWeightX(1.0)).
                add(line().add("Color:").add(colorPicker)).
                add(line().add("Thickness:").add(thicknessComboBox))
             )
          ).
          add(panel().
-            withSpec(spec().withAnchor(AX.RIGHT, AY.BOTTOM).withWeightY(1.0)).
-            specifyDefault(spec().withPreferredWidth(66)).
+            with(spec().withAnchor(AX.RIGHT, AY.BOTTOM).withWeightY(1.0)).
+            withDefault(spec().withPreferredWidth(66)).
             add(seq(clearButton, findAllButton, findNextButton, closeButton))
          )
       );
@@ -118,17 +118,17 @@ public class RichFormDemo2 extends JFrame
    private GridSpec getGridSpec()
    {
       return gridSpec().
-         specifyColumn(0, spec().withAnchorX(AX.RIGHT)).
-         specifyColumn(1, spec().withPreferredWidth(70)).
-         specifyColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
-         specifyColumn(3, spec().withPreferredWidth(70)).
-         specifyColumn(4, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
-         specifyColumn(5, spec().withPreferredWidth(60));
+         withColumn(0, spec().withAnchorX(AX.RIGHT)).
+         withColumn(1, spec().withPreferredWidth(70)).
+         withColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
+         withColumn(3, spec().withPreferredWidth(70)).
+         withColumn(4, spec().withAnchorX(AX.RIGHT).withWeightX(1.0).withInsetLeft(40)).
+         withColumn(5, spec().withPreferredWidth(60));
    }
 
    private static LineCommand lineWithCombo()
    {
-      return line().specifyCell(1, spec().withGridWidth(2).withAnchorX(AX.BOTH));
+      return line().withCell(1, spec().withGridWidth(2).withAnchorX(AX.BOTH));
    }
 
    private void buildComponents()
@@ -144,7 +144,7 @@ public class RichFormDemo2 extends JFrame
          colorPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
          colorPanels.add(colorPanel);
       }
-      colorPicker = panel().specifyDefault(spec().withInset(1)).addAll(colorPanels).getComponent();
+      colorPicker = panel().withDefault(spec().withInset(1)).addAll(colorPanels).getComponent();
    }
 
    public static void main(String[] args) throws Exception

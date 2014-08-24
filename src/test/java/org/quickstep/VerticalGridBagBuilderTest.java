@@ -21,7 +21,7 @@ public class VerticalGridBagBuilderTest
    {
       panel = createMock(JPanel.class);
       panel.setLayout((LayoutManager) anyObject());
-      panelCommand = panel().with(panel).withOrientation(Orientation.VERTICAL);
+      panelCommand = panel().on(panel).withOrientation(Orientation.VERTICAL);
    }
 
    @Test
@@ -113,7 +113,7 @@ public class VerticalGridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         specifyDefault(spec().withInset(10, 3)).
+         withDefault(spec().withInset(10, 3)).
          add(aComponent()).
          add(aComponent(), spec().withGridHeightRemainder()).
          add(aComponent()).
@@ -135,7 +135,7 @@ public class VerticalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyColumn(1, spec().withAnchorX(AX.RIGHT)).
+         withColumn(1, spec().withAnchorX(AX.RIGHT)).
          add(aComponent()).
          add(aComponent()).
          add(aComponent()).
@@ -157,7 +157,7 @@ public class VerticalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyRow(1, spec().withInsetTop(20)).
+         withRow(1, spec().withInsetTop(20)).
          add(aComponent()).
          add(aComponent()).
          add(aComponent()).
@@ -179,8 +179,8 @@ public class VerticalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyRow(1, spec().withInsetBottom(20)).
-         specifyColumn(1, spec().withInsetBottom(30)).
+         withRow(1, spec().withInsetBottom(20)).
+         withColumn(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
          add(aComponent()).
          getComponent();
@@ -200,8 +200,8 @@ public class VerticalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyColumn(1, spec().withInsetBottom(20)).
-         specifyRow(1, spec().withInsetBottom(30)).
+         withColumn(1, spec().withInsetBottom(20)).
+         withRow(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
          add(aComponent()).
          getComponent();
@@ -309,7 +309,7 @@ public class VerticalGridBagBuilderTest
 
       panelCommand.
          withLineLength(3).
-         specifyColumn(0, spec().withInsetLeft(30)).
+         withColumn(0, spec().withInsetLeft(30)).
          addAll(checkBoxes, spec().withInsetTop(20)).
          getComponent();
 
@@ -325,10 +325,10 @@ public class VerticalGridBagBuilderTest
 
       replay(panel);
 
-      PanelCommand builder = panel().with(auxPanel).
-         withSpec(specWithFill());
+      PanelCommand builder = panel().on(auxPanel).
+         with(specWithFill());
       panelCommand.
-         specifyCell(0, 0, spec().withInsetRight(50)).
+         withCell(0, 0, spec().withInsetRight(50)).
          add(builder).
          getComponent();
 

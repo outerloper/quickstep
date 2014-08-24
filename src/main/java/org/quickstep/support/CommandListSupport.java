@@ -39,7 +39,7 @@ public class CommandListSupport<T> implements Iterable<GridBagCommand>
 
    public T add(String text, CellSpec spec)
    {
-      return add(new LabelCommand(text).withSpec(spec));
+      return add(new LabelCommand(text).with(spec));
    }
 
    public final T add(JComponent component)
@@ -49,7 +49,7 @@ public class CommandListSupport<T> implements Iterable<GridBagCommand>
 
    public T add(JComponent component, CellSpec spec)
    {
-      return add(component(component).withSpec(spec));
+      return add(component(component).with(spec));
    }
 
    public final T addAll(Iterable<? extends JComponent> components)

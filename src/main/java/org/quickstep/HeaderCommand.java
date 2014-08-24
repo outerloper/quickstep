@@ -32,11 +32,11 @@ public class HeaderCommand implements GridBagCommand
 
          if (builder.isHorizontal())
          {
-            command = line().add(component(component).withSpec(spec.withGridWidthRemainder().overrideWith(cellSpec)));
+            command = line().add(component(component).with(spec.withGridWidthRemainder().overrideWith(cellSpec)));
          }
          else
          {
-            command = component(component).withSpec(spec.overrideWith(cellSpec));
+            command = component(component).with(spec.overrideWith(cellSpec));
          }
 
          command.apply(builder);

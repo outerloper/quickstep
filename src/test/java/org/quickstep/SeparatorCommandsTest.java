@@ -21,7 +21,7 @@ public class SeparatorCommandsTest
    public void setUp()
    {
       panel.setLayout((LayoutManager) anyObject());
-      panelCommand = panel().with(panel).withComponentFactory(new ComponentFactory()
+      panelCommand = panel().on(panel).withComponentFactory(new ComponentFactory()
       {
          @Override
          public JComponent createSeparator(Orientation orientation)
@@ -55,7 +55,7 @@ public class SeparatorCommandsTest
       replay(panel);
 
       panelCommand.
-         specifyDefault(specWithFill()).
+         withDefault(specWithFill()).
          addSeparator().
          getComponent();
 
@@ -87,7 +87,7 @@ public class SeparatorCommandsTest
 
       panelCommand.
          withOrientation(Orientation.VERTICAL).
-         specifyDefault(specWithFill()).
+         withDefault(specWithFill()).
          addSeparator().
          getComponent();
 
@@ -117,7 +117,7 @@ public class SeparatorCommandsTest
       replay(panel);
 
       panelCommand.
-         specifyDefault(specWithFill()).
+         withDefault(specWithFill()).
          addLineSeparator().
          getComponent();
 
@@ -149,7 +149,7 @@ public class SeparatorCommandsTest
 
       panelCommand.
          withOrientation(Orientation.VERTICAL).
-         specifyDefault(specWithFill()).
+         withDefault(specWithFill()).
          addLineSeparator().
          getComponent();
 

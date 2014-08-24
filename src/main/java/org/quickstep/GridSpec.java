@@ -44,13 +44,13 @@ public class GridSpec
       return lineLength;
    }
 
-   public final GridSpec specifyDefault(CellSpec spec)
+   public final GridSpec withDefault(CellSpec spec)
    {
       defaultSpec.overrideWith(spec);
       return this;
    }
 
-   public final GridSpec specifyColumn(int columnIndex, CellSpec spec)
+   public final GridSpec withColumn(int columnIndex, CellSpec spec)
    {
       for (Integer y : rowSpecsOverridingColumnSpecs.column(columnIndex).keySet())
       {
@@ -65,17 +65,17 @@ public class GridSpec
       return this;
    }
 
-   public final GridSpec specifyColumn(int columnIndex, LineSpec lineSpec)
+   public final GridSpec withColumn(int columnIndex, LineSpec lineSpec)
    {
-      specifyColumn(columnIndex, lineSpec.getDefaultSpec());
+      withColumn(columnIndex, lineSpec.getDefaultSpec());
       for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
       {
-         specifyCell(columnIndex, entry.getKey(), entry.getValue());
+         withCell(columnIndex, entry.getKey(), entry.getValue());
       }
       return this;
    }
 
-   public final GridSpec specifyRow(int rowIndex, CellSpec spec)
+   public final GridSpec withRow(int rowIndex, CellSpec spec)
    {
       for (Integer x : columnSpecs.keySet())
       {
@@ -90,17 +90,17 @@ public class GridSpec
       return this;
    }
 
-   public final GridSpec specifyRow(int rowIndex, LineSpec lineSpec)
+   public final GridSpec withRow(int rowIndex, LineSpec lineSpec)
    {
-      specifyRow(rowIndex, lineSpec.getDefaultSpec());
+      withRow(rowIndex, lineSpec.getDefaultSpec());
       for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
       {
-         specifyCell(entry.getKey(), rowIndex, entry.getValue());
+         withCell(entry.getKey(), rowIndex, entry.getValue());
       }
       return this;
    }
 
-   public final GridSpec specifyCell(int columnIndex, int rowIndex, CellSpec spec)
+   public final GridSpec withCell(int columnIndex, int rowIndex, CellSpec spec)
    {
       CellSpec cellSpec = cellSpecs.get(columnIndex, rowIndex);
       if (cellSpec == null)
@@ -136,18 +136,18 @@ public class GridSpec
       {
          orientation = that.orientation;
       }
-      specifyDefault(that.defaultSpec);
+      withDefault(that.defaultSpec);
       for (Map.Entry<Integer, CellSpec> entry : that.rowSpecs.entrySet())
       {
-         specifyRow(entry.getKey(), entry.getValue());
+         withRow(entry.getKey(), entry.getValue());
       }
       for (Map.Entry<Integer, CellSpec> entry : that.columnSpecs.entrySet())
       {
-         specifyColumn(entry.getKey(), entry.getValue());
+         withColumn(entry.getKey(), entry.getValue());
       }
       for (Table.Cell<Integer, Integer, CellSpec> cell : that.cellSpecs.cellSet())
       {
-         specifyCell(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
+         withCell(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
       }
       for (Table.Cell<Integer, Integer, CellSpec> cell : that.rowSpecsOverridingColumnSpecs.cellSet())
       {

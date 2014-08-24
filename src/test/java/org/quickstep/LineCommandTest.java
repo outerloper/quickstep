@@ -19,7 +19,7 @@ public class LineCommandTest
    public void setUp()
    {
       panel.setLayout((LayoutManager) anyObject());
-      panelCommand = panel().with(panel);
+      panelCommand = panel().on(panel);
    }
 
    @Test
@@ -110,9 +110,9 @@ public class LineCommandTest
       replay(panel);
 
       panelCommand.
-         specifyCell(1, 0, spec().withInset(10)).
+         withCell(1, 0, spec().withInset(10)).
          add(line().
-            specifyCell(1, spec().withInsetTop(20)).
+            withCell(1, spec().withInsetTop(20)).
             add(aComponent()).
             add(aComponent())
          ).
@@ -130,11 +130,11 @@ public class LineCommandTest
       replay(panel);
 
       panelCommand.
-         specifyCell(1, 0, spec().withInset(10)).
+         withCell(1, 0, spec().withInset(10)).
          add(line().
-            specifyCell(1, spec().withInsetTop(20)).
-            specifyCell(1, spec().withInsetTop(30)).
-            specifyCell(1, spec().withInsetBottom(30)).
+            withCell(1, spec().withInsetTop(20)).
+            withCell(1, spec().withInsetTop(30)).
+            withCell(1, spec().withInsetBottom(30)).
             add(aComponent()).
             add(aComponent())
          ).
@@ -152,9 +152,9 @@ public class LineCommandTest
       replay(panel);
 
       panelCommand.
-         specifyRow(0, spec().withInset(10)).
+         withRow(0, spec().withInset(10)).
          add(line().
-            specifyDefault(spec().withInsetTop(20)).
+            withDefault(spec().withInsetTop(20)).
             add(aComponent()).
             add(aComponent())
          ).
@@ -172,11 +172,11 @@ public class LineCommandTest
       replay(panel);
 
       panelCommand.
-         specifyRow(0, spec().withInset(10)).
+         withRow(0, spec().withInset(10)).
          add(line().
-            specifyDefault(spec().withInsetTop(20)).
-            specifyDefault(spec().withInsetTop(30)).
-            specifyDefault(spec().withInsetBottom(30)).
+            withDefault(spec().withInsetTop(20)).
+            withDefault(spec().withInsetTop(30)).
+            withDefault(spec().withInsetBottom(30)).
             add(aComponent()).
             add(aComponent())
          ).
@@ -195,8 +195,8 @@ public class LineCommandTest
 
       panelCommand.
          add(line().
-            specifyDefault(spec().withInsetTop(20)).
-            specifyCell(1, spec().withInsetTop(30)).
+            withDefault(spec().withInsetTop(20)).
+            withCell(1, spec().withInsetTop(30)).
             add(aComponent()).
             add(aComponent())
          ).
@@ -218,8 +218,8 @@ public class LineCommandTest
       panelCommand.
          add(aComponent()).
          add(line().
-            specifyDefault(spec().withInsetTop(30)).
-            specifyCell(1, spec().withInsetLeft(30)).
+            withDefault(spec().withInsetTop(30)).
+            withCell(1, spec().withInsetLeft(30)).
             add(aComponent()).
             add(aComponent())
          ).

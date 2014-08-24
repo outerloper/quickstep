@@ -18,7 +18,7 @@ public abstract class AbstractComponentCommand<T extends AbstractComponentComman
       return getComponent(Orientation.HORIZONTAL, getDefaultComponentFactory());
    }
 
-   public final T withSpec(CellSpec spec)
+   public final T with(CellSpec spec)
    {
       this.cellSpec.overrideWith(spec);
       return self();

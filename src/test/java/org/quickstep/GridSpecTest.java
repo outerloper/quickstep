@@ -20,9 +20,9 @@ public class GridSpecTest
    public void whenCellSpecifiedThenReturnItsSpec()
    {
       gridSpec
-         .specifyCell(1, 1, spec().withInsetTop(1))
-         .specifyColumn(2, spec().withInsetTop(2))
-         .specifyRow(2, spec().withInsetTop(3));
+         .withCell(1, 1, spec().withInsetTop(1))
+         .withColumn(2, spec().withInsetTop(2))
+         .withRow(2, spec().withInsetTop(3));
       assertEquals(spec().withInsetTop(1), gridSpec.getSpecAt(1, 1));
       assertEquals(spec().withInsetTop(2), gridSpec.getSpecAt(2, 1));
       assertEquals(spec().withInsetTop(3), gridSpec.getSpecAt(1, 2));
@@ -33,12 +33,12 @@ public class GridSpecTest
    public void specifyCellMoreThanOnceOverridesPreviousSpec()
    {
       gridSpec
-         .specifyCell(1, 1, spec().withInset(1))
-         .specifyCell(1, 1, spec().withInsetTop(10))
-         .specifyColumn(2, spec().withInset(2))
-         .specifyColumn(2, spec().withInsetTop(20))
-         .specifyRow(2, spec().withInset(3))
-         .specifyRow(2, spec().withInsetTop(30));
+         .withCell(1, 1, spec().withInset(1))
+         .withCell(1, 1, spec().withInsetTop(10))
+         .withColumn(2, spec().withInset(2))
+         .withColumn(2, spec().withInsetTop(20))
+         .withRow(2, spec().withInset(3))
+         .withRow(2, spec().withInsetTop(30));
       assertEquals(spec().withInset(1).withInsetTop(10), gridSpec.getSpecAt(1, 1));
       assertEquals(spec().withInset(2).withInsetTop(20), gridSpec.getSpecAt(2, 1));
       assertEquals(spec().withInset(3).withInsetTop(30), gridSpec.getSpecAt(1, 2));
@@ -48,7 +48,7 @@ public class GridSpecTest
    public void whenDefaultSpecifiedThenReturnDefaultSpecForNonSpecifiedCell()
    {
       gridSpec
-         .specifyDefault(spec().withGridSize(2, 3));
+         .withDefault(spec().withGridSize(2, 3));
       assertEquals(spec().withGridSize(2, 3), gridSpec.getSpecAt(2, 2));
    }
 
@@ -56,10 +56,10 @@ public class GridSpecTest
    public void whenDefaultSpecifiedAndParticularCellSpecifiedThenReturnOverriddenDefaultSpec()
    {
       gridSpec
-         .specifyDefault(spec().withInset(3))
-         .specifyCell(1, 1, spec().withInsetTop(1))
-         .specifyColumn(2, spec().withInsetTop(2))
-         .specifyRow(2, spec().withInsetTop(3));
+         .withDefault(spec().withInset(3))
+         .withCell(1, 1, spec().withInsetTop(1))
+         .withColumn(2, spec().withInsetTop(2))
+         .withRow(2, spec().withInsetTop(3));
       assertEquals(spec().withInset(3).withInsetTop(1), gridSpec.getSpecAt(1, 1));
       assertEquals(spec().withInset(3).withInsetTop(2), gridSpec.getSpecAt(2, 1));
       assertEquals(spec().withInset(3).withInsetTop(3), gridSpec.getSpecAt(1, 2));
@@ -69,8 +69,8 @@ public class GridSpecTest
    public void specifyDefaultMoreThanOnceOverridesPreviousDefault()
    {
       gridSpec
-         .specifyDefault(spec().withInset(3))
-         .specifyDefault(spec().withInsetTop(6));
+         .withDefault(spec().withInset(3))
+         .withDefault(spec().withInsetTop(6));
       assertEquals(spec().withInset(3).withInsetTop(6), gridSpec.getSpecAt(2, 2));
    }
 
@@ -78,8 +78,8 @@ public class GridSpecTest
    public void whenRowAndColumnSpecifiedThenCellForThisRowAndColumnInheritsSpecFromBoth()
    {
       gridSpec
-         .specifyColumn(1, spec().withInsetBottom(20))
-         .specifyRow(2, spec().withInsetTop(10));
+         .withColumn(1, spec().withInsetBottom(20))
+         .withRow(2, spec().withInsetTop(10));
       assertEquals(spec().withInsetTop(10).withInsetBottom(20), gridSpec.getSpecAt(1, 2));
    }
 
@@ -87,8 +87,8 @@ public class GridSpecTest
    public void whenColumnAndThenRowSpecifiedThenColumnOverridesRow()
    {
       gridSpec
-         .specifyColumn(1, spec().withInset(10))
-         .specifyRow(2, spec().withInsetBottom(20));
+         .withColumn(1, spec().withInset(10))
+         .withRow(2, spec().withInsetBottom(20));
       assertEquals(spec().withInset(10).withInsetBottom(20), gridSpec.getSpecAt(1, 2));
    }
 
@@ -96,8 +96,8 @@ public class GridSpecTest
    public void whenRowAndThenColumnSpecifiedThenColumnOverridesRow()
    {
       gridSpec
-         .specifyRow(2, spec().withInset(10))
-         .specifyColumn(1, spec().withInsetBottom(20));
+         .withRow(2, spec().withInset(10))
+         .withColumn(1, spec().withInsetBottom(20));
       assertEquals(spec().withInset(10).withInsetBottom(20), gridSpec.getSpecAt(1, 2));
    }
 
@@ -105,9 +105,9 @@ public class GridSpecTest
    public void whenRowSpecifiedWithLineSpecThenGridRowAndItsCellsAreOverriddenWithLineSpecs()
    {
       gridSpec
-         .specifyRow(1, lineSpec()
-            .specifyDefault(spec().withInset(10))
-            .specifyCell(1, spec().withInsetX(5))
+         .withRow(1, lineSpec()
+            .withDefault(spec().withInset(10))
+            .withCell(1, spec().withInsetX(5))
          );
       assertEquals(spec(), gridSpec.getSpecAt(0, 0));
       assertEquals(spec(), gridSpec.getSpecAt(1, 0));
@@ -119,9 +119,9 @@ public class GridSpecTest
    public void whenColumnSpecifiedWithLineSpecThenGridColumnAndItsCellsAreOverriddenWithLineSpecs()
    {
       gridSpec
-         .specifyColumn(1, lineSpec()
-            .specifyDefault(spec().withInset(10))
-            .specifyCell(1, spec().withInsetX(5))
+         .withColumn(1, lineSpec()
+            .withDefault(spec().withInset(10))
+            .withCell(1, spec().withInsetX(5))
          );
       assertEquals(spec(), gridSpec.getSpecAt(0, 0));
       assertEquals(spec(), gridSpec.getSpecAt(0, 1));
@@ -132,25 +132,25 @@ public class GridSpecTest
    @Test
    public void equals() {
       gridSpec
-         .specifyDefault(spec().withGap(5))
-         .specifyColumn(1, spec().withIPad(10))
-         .specifyRow(2, spec().withWeightX(0.6));
-      GridSpec expected = gridSpec().specifyDefault(spec().withGap(5))
-         .specifyColumn(1, spec().withIPad(10))
-         .specifyRow(2, spec().withWeightX(0.6));
+         .withDefault(spec().withGap(5))
+         .withColumn(1, spec().withIPad(10))
+         .withRow(2, spec().withWeightX(0.6));
+      GridSpec expected = gridSpec().withDefault(spec().withGap(5))
+         .withColumn(1, spec().withIPad(10))
+         .withRow(2, spec().withWeightX(0.6));
       assertEquals(expected, gridSpec);
    }
 
    @Test
    public void specsAreNotEqualWhenDefaultOrLinesOrCellsAreSpecifiedDifferentlyEvenWhenForEachCellSpecReturnsTheSameSpec() {
       gridSpec
-         .specifyDefault(spec().withGap(5))
-         .specifyColumn(1, spec().withIPad(10))
-         .specifyRow(2, spec().withWeightX(0.6));
-      GridSpec expected = gridSpec().specifyDefault(spec().withGap(5))
-         .specifyColumn(1, spec().withIPad(10))
-         .specifyRow(2, spec().withWeightX(0.6))
-         .specifyCell(1, 2, spec().withIPad(10));
+         .withDefault(spec().withGap(5))
+         .withColumn(1, spec().withIPad(10))
+         .withRow(2, spec().withWeightX(0.6));
+      GridSpec expected = gridSpec().withDefault(spec().withGap(5))
+         .withColumn(1, spec().withIPad(10))
+         .withRow(2, spec().withWeightX(0.6))
+         .withCell(1, 2, spec().withIPad(10));
       assertFalse(expected.equals(gridSpec));
    }
 
@@ -158,17 +158,17 @@ public class GridSpecTest
    public void whenOverridingLineSpecThenDefaultsAndLinesAndCellsAreOverridden()
    {
       gridSpec
-         .specifyDefault(spec().withIPadX(5))
-         .specifyCell(1, 3, specWithFillX());
+         .withDefault(spec().withIPadX(5))
+         .withCell(1, 3, specWithFillX());
       GridSpec overriding = gridSpec()
-         .specifyDefault(spec().withIPadY(5))
-         .specifyCell(1, 3, specWithFillY())
-         .specifyRow(2, specWithFillY());
+         .withDefault(spec().withIPadY(5))
+         .withCell(1, 3, specWithFillY())
+         .withRow(2, specWithFillY());
       gridSpec.overrideWith(overriding);
       GridSpec expected = gridSpec()
-         .specifyDefault(spec().withIPad(5))
-         .specifyCell(1, 3, specWithFill())
-         .specifyRow(2, specWithFillY());
+         .withDefault(spec().withIPad(5))
+         .withCell(1, 3, specWithFill())
+         .withRow(2, specWithFillY());
       assertEquals(expected, gridSpec.overrideWith(overriding));
    }
 
@@ -176,13 +176,13 @@ public class GridSpecTest
    public void whenOverridingGridSpecWithNullThenEqualSpecIsReturned()
    {
       gridSpec
-         .specifyDefault(spec().withIPadX(5))
-         .specifyCell(1, 3, specWithFillX())
-         .specifyRow(2, specWithFillY());
+         .withDefault(spec().withIPadX(5))
+         .withCell(1, 3, specWithFillX())
+         .withRow(2, specWithFillY());
       GridSpec expected = gridSpec()
-         .specifyDefault(spec().withIPadX(5))
-         .specifyCell(1, 3, specWithFillX())
-         .specifyRow(2, specWithFillY());
+         .withDefault(spec().withIPadX(5))
+         .withCell(1, 3, specWithFillX())
+         .withRow(2, specWithFillY());
       assertEquals(expected, gridSpec.overrideWith(null));
    }
 }

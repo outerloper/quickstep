@@ -15,9 +15,10 @@ public class VerticalOrientationDemo extends JFrame
          withOrientation(Orientation.VERTICAL).
          withLineLength(10).
          withScroll().
-         specifyDefault(specWithFill()).
+         withDefault(specWithFill()).
          addAll(generateOptions())
       );
+
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       setLocationRelativeTo(null);
       setAlwaysOnTop(true);

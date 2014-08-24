@@ -13,12 +13,12 @@ public class ComponentFactory
       return new JLabel(text);
    }
 
-   public JComponent createHeader(String title, boolean first)
+   public JComponent createHeader(String title, boolean placedInFirstRow)
    {
       GridContainerCommand result = panel().add(title).add(createSeparator(Orientation.HORIZONTAL), specWithFillX());
-      if (!first)
+      if (!placedInFirstRow)
       {
-         result.specifyRow(0, spec().withInsetTop(5));
+         result.withRow(0, spec().withInsetTop(5));
       }
       return result.getComponent();
    }
@@ -51,7 +51,10 @@ public class ComponentFactory
 
    public GridSpec getDefaultGridSpec()
    {
-      return new GridSpec();
+      return new GridSpec().
+         withDefault(spec().withGap(5).withAnchorX(AX.LEFT)).
+         withRow(0, spec().withInsetTop(0)).
+         withColumn(0, spec().withInsetLeft(0));
    }
 
    public ComponentFactory getChildFactory()

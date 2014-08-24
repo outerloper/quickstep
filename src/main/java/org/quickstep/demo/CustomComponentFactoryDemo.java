@@ -23,6 +23,7 @@ public class CustomComponentFactoryDemo extends JFrame
          ).
          add(new JButton("Proceed"), spec().withGridWidthRemainder().withAnchor(A.CENTER))
       );
+
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       setMinimumSize(getPreferredSize());
       setLocationRelativeTo(null);

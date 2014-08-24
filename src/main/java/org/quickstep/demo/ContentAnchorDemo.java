@@ -26,7 +26,7 @@ public class ContentAnchorDemo extends JFrame
          add(panel().add(components()).withBorder().withContentAnchor(AX.BOTH, AY.TOP)).
          add(panel().add(components()).withBorder().withContentAnchor(AX.LEFT, AY.TOP))
       );
-      pack();
+
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       setMinimumSize(getPreferredSize());
       setLocationRelativeTo(null);

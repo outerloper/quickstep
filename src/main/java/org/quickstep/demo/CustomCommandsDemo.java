@@ -45,7 +45,7 @@ public class CustomCommandsDemo extends JFrame
                )
             ).
             add(tab("Fourth").
-               with(explicitlyProvidedPanel).
+               on(explicitlyProvidedPanel).
                add("Fourth tab content")
             ).
             add(tab("Details").
@@ -60,7 +60,6 @@ public class CustomCommandsDemo extends JFrame
          )
       );
 
-      pack();
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       setMinimumSize(getPreferredSize());
       setLocationRelativeTo(null);
@@ -94,167 +93,166 @@ public class CustomCommandsDemo extends JFrame
       return new SplitCommand(orientation);
    }
 
+   static class ToolBarCommand extends GridContainerCommand<ToolBarCommand>
+   {
+      @Override
+      public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+      {
+         on(new JToolBar()).withContentAnchorX(AX.LEFT);
+         return super.getComponent(parentOrientation, parentFactory);
+      }
+
+      @Override
+      protected CellSpec getDefaultSpec(Orientation parentOrientation)
+      {
+         return spec().withWeightY(0.0);
+      }
+   }
+
+   static class TabsCommand extends AbstractComponentCommand<TabsCommand>
+   {
+      private final List<TabCommand> tabs = new LinkedList<TabCommand>();
+
+      @Override
+      public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+      {
+         JTabbedPane result = new JTabbedPane();
+         int i = 0;
+         for (TabCommand tab : tabs)
+         {
+            result.add(tab.getTitle(), panel().withContentAnchor(A.BOTH).add(tab).getComponent());
+            if (tab.getIcon() != null)
+            {
+               result.setIconAt(i, tab.getIcon());
+            }
+            i++;
+         }
+         return result;
+      }
+
+      public TabsCommand add(TabCommand tab)
+      {
+         tabs.add(tab);
+         return this;
+      }
+   }
+
+   static class TabCommand extends GridContainerCommand<TabCommand>
+   {
+      private String title;
+      private Icon icon;
+
+      public TabCommand(String title)
+      {
+         this.title = title;
+      }
+
+      String getTitle()
+      {
+         return title;
+      }
+
+      Icon getIcon()
+      {
+         return icon;
+      }
+
+      public TabCommand withIcon(Icon icon)
+      {
+         this.icon = icon;
+         return this;
+      }
+
+      @Override
+      protected CellSpec getDefaultSpec(Orientation parentOrientation)
+      {
+         return spec().withInset(5);
+      }
+   }
+
+   static class ButtonsCommand extends AbstractComponentCommand<ButtonsCommand>
+   {
+      List<JButton> buttons = new LinkedList<JButton>();
+
+      public ButtonsCommand add(JButton button)
+      {
+         buttons.add(button);
+         return this;
+      }
+
+      @Override
+      public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+      {
+         int maxWidth = 0;
+         for (JButton button : buttons)
+         {
+            int width = button.getPreferredSize().width;
+            if (width > maxWidth)
+            {
+               maxWidth = width;
+            }
+         }
+         return panel().withContentAnchorX(AX.RIGHT).addAll(buttons, spec().withPreferredWidth(maxWidth)).getComponent();
+      }
+
+      @Override
+      protected CellSpec getDefaultSpec(Orientation parentOrientation)
+      {
+         return spec().withWeightY(0.0);
+      }
+   }
+
+   static class SplitCommand extends AbstractComponentCommand<SplitCommand>
+   {
+      private PanelCommand first;
+      private PanelCommand second;
+
+      private Orientation orientation = Orientation.HORIZONTAL;
+      private double resizeWeight = 0.5;
+
+      SplitCommand(Orientation orientation)
+      {
+         this.orientation = orientation;
+      }
+
+      @Override
+      public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+      {
+         JSplitPane result = new JSplitPane(orientation.isHorizontal() ? JSplitPane.HORIZONTAL_SPLIT : JSplitPane.VERTICAL_SPLIT);
+         if (first != null)
+         {
+            result.setTopComponent(first.getComponent());
+         }
+         if (second != null)
+         {
+            result.setBottomComponent(second.getComponent());
+         }
+         result.setResizeWeight(resizeWeight);
+         return result;
+      }
+
+      public SplitCommand withResizeWeight(double resizeWeight)
+      {
+         this.resizeWeight = resizeWeight;
+         return this;
+      }
+
+      public SplitCommand withFirst(PanelCommand first)
+      {
+         this.first = first;
+         return this;
+      }
+
+      public SplitCommand withSecond(PanelCommand second)
+      {
+         this.second = second;
+         return this;
+      }
+   }
+
    public static void main(String[] args) throws Exception
    {
       setLookAndFeel(getSystemLookAndFeelClassName());
       new CustomCommandsDemo();
-   }
-}
-
-class ToolBarCommand extends GridContainerCommand<ToolBarCommand>
-{
-   @Override
-   public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
-   {
-      with(new JToolBar()).withContentAnchorX(AX.LEFT);
-      return super.getComponent(parentOrientation, parentFactory);
-   }
-
-   @Override
-   protected CellSpec getDefaultSpec(Orientation parentOrientation)
-   {
-      return spec().withWeightY(0.0);
-   }
-}
-
-
-class TabsCommand extends AbstractComponentCommand<TabsCommand>
-{
-   private final List<TabCommand> tabs = new LinkedList<TabCommand>();
-
-   @Override
-   public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
-   {
-      JTabbedPane result = new JTabbedPane();
-      int i = 0;
-      for (TabCommand tab : tabs)
-      {
-         result.add(tab.getTitle(), panel().withContentAnchor(A.BOTH).add(tab).getComponent());
-         if (tab.getIcon() != null)
-         {
-            result.setIconAt(i, tab.getIcon());
-         }
-         i++;
-      }
-      return result;
-   }
-
-   public TabsCommand add(TabCommand tab)
-   {
-      tabs.add(tab);
-      return this;
-   }
-}
-
-class TabCommand extends GridContainerCommand<TabCommand>
-{
-   private String title;
-   private Icon icon;
-
-   public TabCommand(String title)
-   {
-      this.title = title;
-   }
-
-   String getTitle()
-   {
-      return title;
-   }
-
-   Icon getIcon()
-   {
-      return icon;
-   }
-
-   public TabCommand withIcon(Icon icon)
-   {
-      this.icon = icon;
-      return this;
-   }
-
-   @Override
-   protected CellSpec getDefaultSpec(Orientation parentOrientation)
-   {
-      return spec().withInset(5);
-   }
-}
-
-class ButtonsCommand extends AbstractComponentCommand<ButtonsCommand>
-{
-   List<JButton> buttons = new LinkedList<JButton>();
-
-   public ButtonsCommand add(JButton button)
-   {
-      buttons.add(button);
-      return this;
-   }
-
-   @Override
-   public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
-   {
-      int maxWidth = 0;
-      for (JButton button : buttons)
-      {
-         int width = button.getPreferredSize().width;
-         if (width > maxWidth)
-         {
-            maxWidth = width;
-         }
-      }
-      return panel().withContentAnchorX(AX.RIGHT).addAll(buttons, spec().withPreferredWidth(maxWidth)).getComponent();
-   }
-
-   @Override
-   protected CellSpec getDefaultSpec(Orientation parentOrientation)
-   {
-      return spec().withWeightY(0.0);
-   }
-}
-
-class SplitCommand extends AbstractComponentCommand<SplitCommand>
-{
-   private PanelCommand first;
-   private PanelCommand second;
-
-   private Orientation orientation = Orientation.HORIZONTAL;
-   private double resizeWeight = 0.5;
-
-   SplitCommand(Orientation orientation)
-   {
-      this.orientation = orientation;
-   }
-
-   @Override
-   public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
-   {
-      JSplitPane result = new JSplitPane(orientation.isHorizontal() ? JSplitPane.HORIZONTAL_SPLIT : JSplitPane.VERTICAL_SPLIT);
-      if (first != null)
-      {
-         result.setTopComponent(first.getComponent());
-      }
-      if (second != null)
-      {
-         result.setBottomComponent(second.getComponent());
-      }
-      result.setResizeWeight(resizeWeight);
-      return result;
-   }
-
-   public SplitCommand withResizeWeight(double resizeWeight)
-   {
-      this.resizeWeight = resizeWeight;
-      return this;
-   }
-
-   public SplitCommand withFirst(PanelCommand first)
-   {
-      this.first = first;
-      return this;
-   }
-
-   public SplitCommand withSecond(PanelCommand second)
-   {
-      this.second = second;
-      return this;
    }
 }

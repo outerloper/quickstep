@@ -113,11 +113,11 @@ public class LineCommand implements GridBagCommand
    {
       if (builder.isHorizontal())
       {
-         builder.getGridSpec().specifyRow(lineIndex, lineSpecSupport.getLineSpec());
+         builder.getGridSpec().withRow(lineIndex, lineSpecSupport.getLineSpec());
       }
       else
       {
-         builder.getGridSpec().specifyColumn(lineIndex, lineSpecSupport.getLineSpec());
+         builder.getGridSpec().withColumn(lineIndex, lineSpecSupport.getLineSpec());
       }
    }
 
@@ -132,18 +132,18 @@ public class LineCommand implements GridBagCommand
       }
    }
 
-   public LineCommand specifyDefault(CellSpec spec)
+   public LineCommand withDefault(CellSpec spec)
    {
-      return lineSpecSupport.specifyDefault(spec);
+      return lineSpecSupport.withDefault(spec);
    }
 
-   public LineCommand specifyCell(int i, CellSpec spec)
+   public LineCommand withCell(int i, CellSpec spec)
    {
-      return lineSpecSupport.specifyCell(i, spec);
+      return lineSpecSupport.withCell(i, spec);
    }
 
-   public LineCommand specifyLine(LineSpec lineSpec)
+   public LineCommand withLine(LineSpec lineSpec)
    {
-      return lineSpecSupport.specifyLine(lineSpec);
+      return lineSpecSupport.withLine(lineSpec);
    }
 }

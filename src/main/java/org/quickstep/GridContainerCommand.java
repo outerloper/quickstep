@@ -21,9 +21,6 @@ public class GridContainerCommand<T extends GridContainerCommand<T>> extends Abs
 
    protected GridContainerCommand()
    {
-      specifyDefault(spec().withGap(5).withAnchorX(AX.LEFT));
-      specifyRow(0, spec().withInsetTop(0));
-      specifyColumn(0, spec().withInsetLeft(0));
    }
 
    public final T addLineBreak()
@@ -110,49 +107,48 @@ public class GridContainerCommand<T extends GridContainerCommand<T>> extends Abs
       return decorationSupport.decorate(component, factory);
    }
 
-   public T specifyGrid(GridSpec gridSpec)
+   public T withGrid(GridSpec gridSpec)
    {
-      return gridSpecSupport.overrideWith(gridSpec);
+      return gridSpecSupport.withGrid(gridSpec);
    }
 
-   public final T specifyDefault(CellSpec spec)
+   public final T withDefault(CellSpec spec)
    {
-      gridSpecSupport.specifyDefault(spec);
+      gridSpecSupport.withDefault(spec);
       return self();
    }
 
-   public final T specifyColumn(int columnIndex, CellSpec spec)
+   public final T withColumn(int columnIndex, CellSpec spec)
    {
-      gridSpecSupport.specifyColumn(columnIndex, spec);
+      gridSpecSupport.withColumn(columnIndex, spec);
       return self();
    }
 
-   public final T specifyColumn(int columnIndex, LineSpec lineSpec)
+   public final T withColumn(int columnIndex, LineSpec lineSpec)
    {
-      gridSpecSupport.specifyColumn(columnIndex, lineSpec);
+      gridSpecSupport.withColumn(columnIndex, lineSpec);
       return self();
    }
 
-   public final T specifyRow
-      (int rowIndex, CellSpec spec)
+   public final T withRow(int rowIndex, CellSpec spec)
    {
-      gridSpecSupport.specifyRow(rowIndex, spec);
+      gridSpecSupport.withRow(rowIndex, spec);
       return self();
    }
 
-   public final T specifyRow(int rowIndex, LineSpec lineSpec)
+   public final T withRow(int rowIndex, LineSpec lineSpec)
    {
-      gridSpecSupport.specifyRow(rowIndex, lineSpec);
+      gridSpecSupport.withRow(rowIndex, lineSpec);
       return self();
    }
 
-   public final T specifyCell(int columnIndex, int rowIndex, CellSpec spec)
+   public final T withCell(int columnIndex, int rowIndex, CellSpec spec)
    {
-      gridSpecSupport.specifyCell(columnIndex, rowIndex, spec);
+      gridSpecSupport.withCell(columnIndex, rowIndex, spec);
       return self();
    }
 
-   public final T with(JComponent container)
+   public final T on(JComponent container)
    {
       this.container = container;
       return self();

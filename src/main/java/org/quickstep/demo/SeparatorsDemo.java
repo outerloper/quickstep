@@ -10,16 +10,17 @@ public class SeparatorsDemo extends JFrame
    {
       buildContent(this, panel().
          withBorder().
-         specifyDefault(specWithFill().withGridWidthRemainder()).
+         withDefault(specWithFill().withGridWidthRemainder()).
          add(new JButton("Button")).
          addLineSeparator().
          add(new JButton("Button")).
          addBlank().
          add(new JButton("Button")).
-         add(panel().withSpec(specWithFill()).specifyDefault(specWithFill()).
+         add(panel().with(specWithFill()).withDefault(specWithFill()).
             add(new JButton("Button")).addSeparator().add(new JButton("Button"))
          )
       );
+
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       setMinimumSize(getPreferredSize());
       setLocationRelativeTo(null);

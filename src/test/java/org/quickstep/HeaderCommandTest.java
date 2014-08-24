@@ -25,14 +25,14 @@ public class HeaderCommandTest
    {
       panel.setLayout((LayoutManager) anyObject());
       panelCommand = panel().
-         with(panel).
+         on(panel).
          withComponentFactory(new ComponentFactory()
          {
             @Override
-            public JComponent createHeader(String title, boolean first)
+            public JComponent createHeader(String title, boolean placedInFirstRow)
             {
-               headerInFirstRowHandled = first;
-               return super.createHeader(title, first);
+               headerInFirstRowHandled = placedInFirstRow;
+               return super.createHeader(title, placedInFirstRow);
             }
          });
    }

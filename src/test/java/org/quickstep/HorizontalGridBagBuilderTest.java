@@ -21,7 +21,7 @@ public class HorizontalGridBagBuilderTest
    {
       panel = createMock(JPanel.class);
       panel.setLayout((LayoutManager) anyObject());
-      panelCommand = panel().with(panel);
+      panelCommand = panel().on(panel);
    }
 
    @Test
@@ -113,7 +113,7 @@ public class HorizontalGridBagBuilderTest
       replay(panel);
 
       panelCommand.
-         specifyDefault(spec().withInset(10, 3)).
+         withDefault(spec().withInset(10, 3)).
          add(aComponent()).
          add(aComponent(), spec().withGridWidthRemainder()).
          add(aComponent()).
@@ -135,7 +135,7 @@ public class HorizontalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyColumn(1, spec().withAnchorX(AX.RIGHT)).
+         withColumn(1, spec().withAnchorX(AX.RIGHT)).
          add(aComponent()).
          add(aComponent()).
          add(aComponent()).
@@ -157,7 +157,7 @@ public class HorizontalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyRow(1, spec().withInsetTop(20)).
+         withRow(1, spec().withInsetTop(20)).
          add(aComponent()).
          add(aComponent()).
          add(aComponent()).
@@ -176,7 +176,7 @@ public class HorizontalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyCell(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
+         withCell(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
          add(aComponent()).
          getComponent();
 
@@ -195,8 +195,8 @@ public class HorizontalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyRow(1, spec().withInsetBottom(20)).
-         specifyColumn(1, spec().withInsetBottom(30)).
+         withRow(1, spec().withInsetBottom(20)).
+         withColumn(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
          add(aComponent()).
          getComponent();
@@ -216,8 +216,8 @@ public class HorizontalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyColumn(1, spec().withInsetBottom(20)).
-         specifyRow(1, spec().withInsetBottom(30)).
+         withColumn(1, spec().withInsetBottom(20)).
+         withRow(1, spec().withInsetBottom(30)).
          addBlank().addBlank().addBlank().
          add(aComponent()).
          getComponent();
@@ -234,7 +234,7 @@ public class HorizontalGridBagBuilderTest
 
       panelCommand.
          withLineLength(2).
-         specifyCell(0, 0, spec().withAnchor(AX.RIGHT, AY.BOTTOM)).
+         withCell(0, 0, spec().withAnchor(AX.RIGHT, AY.BOTTOM)).
          add(aComponent(), spec().withAnchor(AX.LEFT, AY.TOP)).
          getComponent();
 
@@ -341,7 +341,7 @@ public class HorizontalGridBagBuilderTest
 
       panelCommand.
          withLineLength(3).
-         specifyColumn(0, spec().withInsetLeft(30)).
+         withColumn(0, spec().withInsetLeft(30)).
          addAll(checkBoxes, spec().withInsetTop(20)).
          getComponent();
 
@@ -357,10 +357,10 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      PanelCommand builder = panel().with(auxPanel).
-         withSpec(specWithFill());
+      PanelCommand builder = panel().on(auxPanel).
+         with(specWithFill());
       panelCommand.
-         specifyCell(0, 0, spec().withInsetRight(50)).
+         withCell(0, 0, spec().withInsetRight(50)).
          add(builder).
          getComponent();
 

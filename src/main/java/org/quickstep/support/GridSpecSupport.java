@@ -14,39 +14,39 @@ public class GridSpecSupport<T>
       this.owner = owner;
    }
 
-   public T specifyDefault(CellSpec spec)
+   public T withDefault(CellSpec spec)
    {
-      gridSpec.specifyDefault(spec);
+      gridSpec.withDefault(spec);
       return owner;
    }
 
-   public T specifyColumn(int columnIndex, CellSpec spec)
+   public T withColumn(int columnIndex, CellSpec spec)
    {
-      gridSpec.specifyColumn(columnIndex, spec);
+      gridSpec.withColumn(columnIndex, spec);
       return owner;
    }
 
-   public T specifyColumn(int columnIndex, LineSpec spec)
+   public T withColumn(int columnIndex, LineSpec spec)
    {
-      gridSpec.specifyColumn(columnIndex, spec);
+      gridSpec.withColumn(columnIndex, spec);
       return owner;
    }
 
-   public T specifyRow(int rowIndex, CellSpec spec)
+   public T withRow(int rowIndex, CellSpec spec)
    {
-      gridSpec.specifyRow(rowIndex, spec);
+      gridSpec.withRow(rowIndex, spec);
       return owner;
    }
 
-   public T specifyRow(int rowIndex, LineSpec spec)
+   public T withRow(int rowIndex, LineSpec spec)
    {
-      gridSpec.specifyRow(rowIndex, spec);
+      gridSpec.withRow(rowIndex, spec);
       return owner;
    }
 
-   public T specifyCell(int columnIndex, int rowIndex, CellSpec spec)
+   public T withCell(int columnIndex, int rowIndex, CellSpec spec)
    {
-      gridSpec.specifyCell(columnIndex, rowIndex, spec);
+      gridSpec.withCell(columnIndex, rowIndex, spec);
       return owner;
    }
 
@@ -62,7 +62,7 @@ public class GridSpecSupport<T>
       return owner;
    }
 
-   public T overrideWith(GridSpec spec)
+   public T withGrid(GridSpec spec)
    {
       gridSpec.overrideWith(spec);
       return owner;

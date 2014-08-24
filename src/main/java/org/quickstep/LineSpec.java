@@ -13,13 +13,13 @@ public class LineSpec
    {
    }
 
-   public LineSpec specifyDefault(CellSpec spec)
+   public LineSpec withDefault(CellSpec spec)
    {
       defaultSpec.overrideWith(spec);
       return this;
    }
 
-   public LineSpec specifyCell(int i, CellSpec spec)
+   public LineSpec withCell(int i, CellSpec spec)
    {
       CellSpec cellSpec = cellsSpecs.get(i);
       if (cellSpec == null)
@@ -51,10 +51,10 @@ public class LineSpec
       {
          return this;
       }
-      specifyDefault(that.defaultSpec);
+      withDefault(that.defaultSpec);
       for (Map.Entry<Integer, CellSpec> entry : that.cellsSpecs.entrySet())
       {
-         specifyCell(entry.getKey(), entry.getValue());
+         withCell(entry.getKey(), entry.getValue());
       }
       return this;
    }

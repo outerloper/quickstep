@@ -65,7 +65,7 @@ public class ContentAnchorSupport<T>
             contentX = 1;
             break;
          case BOTH:
-            gridSpec.specifyDefault(spec().withWeightX(1.0).withAnchorX(AX.BOTH));
+            gridSpec.withDefault(spec().withWeightX(1.0).withAnchorX(AX.BOTH));
             break;
       }
       Integer contentY = null;
@@ -82,7 +82,7 @@ public class ContentAnchorSupport<T>
             contentY = 1;
             break;
          case BOTH:
-            gridSpec.specifyDefault(spec().withWeightY(1.0).withAnchorY(AY.BOTH));
+            gridSpec.withDefault(spec().withWeightY(1.0).withAnchorY(AY.BOTH));
             break;
       }
       if (contentX != null || contentY != null)

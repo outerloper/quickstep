@@ -15,19 +15,19 @@ public class LineSpecSupport<T>
       this.owner = owner;
    }
 
-   public T specifyDefault(CellSpec spec)
+   public T withDefault(CellSpec spec)
    {
-      lineSpec.specifyDefault(spec);
+      lineSpec.withDefault(spec);
       return owner;
    }
 
-   public T specifyCell(int i, CellSpec spec)
+   public T withCell(int i, CellSpec spec)
    {
-      lineSpec.specifyCell(i, spec);
+      lineSpec.withCell(i, spec);
       return owner;
    }
 
-   public T specifyLine(LineSpec spec)
+   public T withLine(LineSpec spec)
    {
       lineSpec.overrideWith(spec);
       return owner;
