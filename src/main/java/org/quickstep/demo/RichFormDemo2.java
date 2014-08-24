@@ -54,8 +54,7 @@ public class RichFormDemo2 extends JFrame
 
    private void arrangeComponents()
    {
-      buildContent(this, panel().
-         withOrientation(Orientation.VERTICAL).
+      buildContent(this, vpanel().
          withDefault(specWithFillX()).
          add(panel().
             withBorder("Conditions").
@@ -88,13 +87,11 @@ public class RichFormDemo2 extends JFrame
          add(panel().
             with(specWithFillX()).
             withDefault(spec().withAnchorY(AY.BOTH)).
-            add(panel().
-               withOrientation(Orientation.VERTICAL).
+            add(vpanel().
                withBorder("Direction").
                addAll(directionRadios)
             ).
-            add(panel().
-               withOrientation(Orientation.VERTICAL).
+            add(vpanel().
                withBorder("Scope").
                addAll(scopeRadios)
             ).
