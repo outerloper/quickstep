@@ -20,12 +20,12 @@ public class DecorationSupport<T>
       this.owner = owner;
    }
 
-   public final T withBorder()
+   public T withBorder()
    {
       return withBorderDecoration(new DefaultBorderDecoration(null));
    }
 
-   public final T withBorder(String title)
+   public T withBorder(String title)
    {
       return withBorderDecoration(new DefaultBorderDecoration(title));
    }
@@ -36,7 +36,7 @@ public class DecorationSupport<T>
       return owner;
    }
 
-   public final T withBorder(Border innerBorder, Border... outerBorders)
+   public T withBorder(Border innerBorder, Border... outerBorders)
    {
       Border border = innerBorder;
       for (Border outerBorder : outerBorders)
@@ -47,12 +47,12 @@ public class DecorationSupport<T>
       return owner;
    }
 
-   public final T withScroll()
+   public T withScroll()
    {
       return withScrollDecoration(new DefaultScrollDecoration());
    }
 
-   public final T withScroll(JScrollPane scroll)
+   public T withScroll(JScrollPane scroll)
    {
       return withScrollDecoration(new CustomScrollDecoration(scroll));
    }

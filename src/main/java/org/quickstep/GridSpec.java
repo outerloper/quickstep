@@ -22,7 +22,7 @@ public class GridSpec
    {
    }
 
-   public final GridSpec withOrientation(Orientation value)
+   public GridSpec withOrientation(Orientation value)
    {
       orientation = value;
       return this;
@@ -33,7 +33,7 @@ public class GridSpec
       return orientation;
    }
 
-   public final GridSpec withLineLength(Integer lineLength)
+   public GridSpec withLineLength(Integer lineLength)
    {
       this.lineLength = lineLength;
       return this;
@@ -44,13 +44,13 @@ public class GridSpec
       return lineLength;
    }
 
-   public final GridSpec withDefault(CellSpec spec)
+   public GridSpec withDefault(CellSpec spec)
    {
       defaultSpec.overrideWith(spec);
       return this;
    }
 
-   public final GridSpec withColumn(int columnIndex, CellSpec spec)
+   public GridSpec withColumn(int columnIndex, CellSpec spec)
    {
       for (Integer y : rowSpecsOverridingColumnSpecs.column(columnIndex).keySet())
       {
@@ -65,7 +65,7 @@ public class GridSpec
       return this;
    }
 
-   public final GridSpec withColumn(int columnIndex, LineSpec lineSpec)
+   public GridSpec withColumn(int columnIndex, LineSpec lineSpec)
    {
       withColumn(columnIndex, lineSpec.getDefaultSpec());
       for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
@@ -75,7 +75,7 @@ public class GridSpec
       return this;
    }
 
-   public final GridSpec withRow(int rowIndex, CellSpec spec)
+   public GridSpec withRow(int rowIndex, CellSpec spec)
    {
       for (Integer x : columnSpecs.keySet())
       {
@@ -90,7 +90,7 @@ public class GridSpec
       return this;
    }
 
-   public final GridSpec withRow(int rowIndex, LineSpec lineSpec)
+   public GridSpec withRow(int rowIndex, LineSpec lineSpec)
    {
       withRow(rowIndex, lineSpec.getDefaultSpec());
       for (Map.Entry<Integer, CellSpec> entry : lineSpec.getSpecifiedCells().entrySet())
@@ -100,7 +100,7 @@ public class GridSpec
       return this;
    }
 
-   public final GridSpec withCell(int columnIndex, int rowIndex, CellSpec spec)
+   public GridSpec withCell(int columnIndex, int rowIndex, CellSpec spec)
    {
       CellSpec cellSpec = cellSpecs.get(columnIndex, rowIndex);
       if (cellSpec == null)

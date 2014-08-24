@@ -12,12 +12,12 @@ public class SeqCommand implements GridBagCommand
    {
    }
 
-   public final SeqCommand addLineBreak()
+   public SeqCommand addLineBreak()
    {
       return commandListSupport.addLineBreak();
    }
 
-   public final SeqCommand addBlank()
+   public SeqCommand addBlank()
    {
       return commandListSupport.addBlank();
    }
@@ -27,7 +27,7 @@ public class SeqCommand implements GridBagCommand
       return commandListSupport.addBlank(spec);
    }
 
-   public final SeqCommand add(String text)
+   public SeqCommand add(String text)
    {
       return commandListSupport.add(text);
    }
@@ -37,7 +37,7 @@ public class SeqCommand implements GridBagCommand
       return commandListSupport.add(text, spec);
    }
 
-   public final SeqCommand add(JComponent component)
+   public SeqCommand add(JComponent component)
    {
       return commandListSupport.add(component);
    }
@@ -47,12 +47,12 @@ public class SeqCommand implements GridBagCommand
       return commandListSupport.add(component, spec);
    }
 
-   public final SeqCommand addAll(Iterable<? extends JComponent> components)
+   public SeqCommand addAll(Iterable<? extends JComponent> components)
    {
       return commandListSupport.addAll(components);
    }
 
-   public final SeqCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
+   public SeqCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
       return commandListSupport.addAll(components, spec);
    }

@@ -17,12 +17,12 @@ public class CommandListSupport<T> implements Iterable<GridBagCommand>
       this.owner = owner;
    }
 
-   public final T addLineBreak()
+   public T addLineBreak()
    {
       return add(new LineBreakCommand());
    }
 
-   public final T addBlank()
+   public T addBlank()
    {
       return addBlank(spec());
    }
@@ -32,7 +32,7 @@ public class CommandListSupport<T> implements Iterable<GridBagCommand>
       return add((String) null, spec);
    }
 
-   public final T add(String text)
+   public T add(String text)
    {
       return add(text, spec());
    }
@@ -42,7 +42,7 @@ public class CommandListSupport<T> implements Iterable<GridBagCommand>
       return add(new LabelCommand(text).with(spec));
    }
 
-   public final T add(JComponent component)
+   public T add(JComponent component)
    {
       return add(component, spec());
    }
@@ -52,12 +52,12 @@ public class CommandListSupport<T> implements Iterable<GridBagCommand>
       return add(component(component).with(spec));
    }
 
-   public final T addAll(Iterable<? extends JComponent> components)
+   public T addAll(Iterable<? extends JComponent> components)
    {
       return addAll(components, spec());
    }
 
-   public final T addAll(Iterable<? extends JComponent> components, CellSpec spec)
+   public T addAll(Iterable<? extends JComponent> components, CellSpec spec)
    {
       for (JComponent component : components)
       {
