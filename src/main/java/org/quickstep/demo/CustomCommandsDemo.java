@@ -101,7 +101,6 @@ public class CustomCommandsDemo extends JFrame
    }
 }
 
-// TODO think about renaming CellCommand to AbstractComponentBuilder, then GridBagBuilder -> GridBuilderSupport?
 class ToolBarCommand extends GridContainerCommand<ToolBarCommand>
 {
    @Override
