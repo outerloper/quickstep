@@ -136,9 +136,9 @@ public final class GridBagToolKit
       return result;
    }
 
-   public static JPanel buildContent(JPanel panel, CellCommand command)
+   public static JComponent buildContent(JComponent component, CellCommand command)
    {
-      return genericBuildContent(panel, command);
+      return genericBuildContent(component, command);
    }
 
    public static JPanel buildContent(ComponentCommand command)
