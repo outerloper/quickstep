@@ -57,7 +57,7 @@ public class ComponentFactory
          withColumn(0, spec().withInsetLeft(0));
    }
 
-   public ComponentFactory getChildFactory()
+   public ComponentFactory getContentFactory()
    {
       return this;
    }

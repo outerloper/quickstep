@@ -37,7 +37,7 @@ public class CustomComponentFactoryDemo extends JFrame
       return new ComponentFactory()
       {
          @Override
-         public ComponentFactory getChildFactory()
+         public ComponentFactory getContentFactory()
          {
             return new ComponentFactory()
             {

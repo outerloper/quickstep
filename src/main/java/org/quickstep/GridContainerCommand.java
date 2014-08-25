@@ -97,7 +97,7 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
 
       GridSpec gridSpec = factory.createDefaultGridSpec().overrideWith(gridSpecSupport.getGridSpec());
       JComponent component = contentAnchorSupport.applyContentAnchor(gridContainer, gridSpec);
-      GridBagBuilder builder = new GridBagBuilder(gridContainer, gridSpec, factory.getChildFactory());
+      GridBagBuilder builder = new GridBagBuilder(gridContainer, gridSpec, factory.getContentFactory());
 
       for (GridBagCommand command : commandListSupport)
       {
@@ -115,38 +115,32 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
 
    public T withDefault(CellSpec spec)
    {
-      gridSpecSupport.withDefault(spec);
-      return self();
+      return gridSpecSupport.withDefault(spec);
    }
 
    public T withColumn(int columnIndex, CellSpec spec)
    {
-      gridSpecSupport.withColumn(columnIndex, spec);
-      return self();
+      return gridSpecSupport.withColumn(columnIndex, spec);
    }
 
    public T withColumn(int columnIndex, LineSpec lineSpec)
    {
-      gridSpecSupport.withColumn(columnIndex, lineSpec);
-      return self();
+      return gridSpecSupport.withColumn(columnIndex, lineSpec);
    }
 
    public T withRow(int rowIndex, CellSpec spec)
    {
-      gridSpecSupport.withRow(rowIndex, spec);
-      return self();
+      return gridSpecSupport.withRow(rowIndex, spec);
    }
 
    public T withRow(int rowIndex, LineSpec lineSpec)
    {
-      gridSpecSupport.withRow(rowIndex, lineSpec);
-      return self();
+      return gridSpecSupport.withRow(rowIndex, lineSpec);
    }
 
    public T withCell(int columnIndex, int rowIndex, CellSpec spec)
    {
-      gridSpecSupport.withCell(columnIndex, rowIndex, spec);
-      return self();
+      return gridSpecSupport.withCell(columnIndex, rowIndex, spec);
    }
 
    public T on(C container)
@@ -177,14 +171,12 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
 
    public T withOrientation(Orientation orientation)
    {
-      gridSpecSupport.withOrientation(orientation);
-      return self();
+      return gridSpecSupport.withOrientation(orientation);
    }
 
    public T withLineLength(Integer lineLength)
    {
-      gridSpecSupport.withLineLength(lineLength);
-      return self();
+      return gridSpecSupport.withLineLength(lineLength);
    }
 
    public T withBorder()
