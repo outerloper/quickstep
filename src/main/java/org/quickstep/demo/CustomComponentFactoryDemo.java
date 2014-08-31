@@ -11,10 +11,9 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class CustomComponentFactoryDemo extends JFrame
 {
-   public CustomComponentFactoryDemo() throws HeadlessException
+   public CustomComponentFactoryDemo()
    {
-      buildContent(this, panel().
-         withComponentFactory(createComponentFactory()).
+      createComponentFactory().buildContent(this, panel().
          withOrientation(Orientation.VERTICAL).
          add(panel().
             add(line().add("User").add(new JTextField(), spec().withPreferredWidth(100))).
@@ -44,7 +43,7 @@ public class CustomComponentFactoryDemo extends JFrame
                @Override
                public Border createBorder(String title)
                {
-                  return createCompoundBorder(createTitledBorder(createLineBorder(Color.ORANGE, 10), title), createEmptyBorder(9, 9, 9, 9));
+                  return createCompoundBorder(createTitledBorder(createLineBorder(Color.GRAY, 2), title), createEmptyBorder(12, 12, 12, 12));
                }
 
                @Override
@@ -53,6 +52,12 @@ public class CustomComponentFactoryDemo extends JFrame
                   JPanel panel = super.createPanel();
                   panel.setBackground(Color.LIGHT_GRAY);
                   return panel;
+               }
+
+               @Override
+               public GridSpec createDefaultGridSpec()
+               {
+                  return super.createDefaultGridSpec().withDefault(spec().withGap(10));
                }
             };
          }
@@ -63,6 +68,18 @@ public class CustomComponentFactoryDemo extends JFrame
             JPanel panel = super.createPanel();
             panel.setBackground(Color.GRAY);
             return panel;
+         }
+
+         @Override
+         public AX getContentAnchorX()
+         {
+            return AX.BOTH;
+         }
+
+         @Override
+         public AY getContentAnchorY()
+         {
+            return AY.BOTH;
          }
       };
    }

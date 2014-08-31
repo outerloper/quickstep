@@ -344,15 +344,15 @@ public final class CellSpec
       return this;
    }
 
-   public CellSpec withInsetBottom(Integer value)
+   public CellSpec withInsetBottom(Integer bottom)
    {
-      insetBottom = value;
+      insetBottom = bottom;
       return this;
    }
 
-   public CellSpec withInsetRight(Integer value)
+   public CellSpec withInsetRight(Integer right)
    {
-      insetRight = value;
+      insetRight = right;
       return this;
    }
 

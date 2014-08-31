@@ -122,33 +122,19 @@ public final class GridBagToolKit
    }
 
 
-   private static <C extends Container> C genericBuildContent(C container, AbstractComponentCommand command)
-   {
-      container.setLayout(new GridBagLayout());
-      JComponent component = command.getComponent();
-      GridBagConstraints constraints = specWithFill().withInset(5).overrideWith(command.getDefaultSpec(Orientation.HORIZONTAL)).toConstraints(0, 0);
-
-      container.add(component, constraints);
-      DebugSupport.attachDebugInfo(component, container, constraints);
-      DebugSupport.colorize(container, container.getComponents());
-      return container;
-   }
-
    public static Window buildContent(Window window, AbstractComponentCommand command)
    {
-      Window result = genericBuildContent(window, command);
-      window.pack();
-      return result;
+      return getDefaultComponentFactory().buildContent(window, command);
    }
 
    public static JComponent buildContent(JComponent component, AbstractComponentCommand command)
    {
-      return genericBuildContent(component, command);
+      return getDefaultComponentFactory().buildContent(component, command);
    }
 
-   public static JPanel buildContent(ComponentCommand command)
+   public static JPanel build(ComponentCommand command)
    {
-      return genericBuildContent(new JPanel(), command);
+      return getDefaultComponentFactory().build(command);
    }
 
 

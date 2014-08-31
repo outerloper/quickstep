@@ -96,7 +96,7 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
       gridContainer.setLayout(new GridBagLayout());
 
       GridSpec gridSpec = factory.createDefaultGridSpec().overrideWith(gridSpecSupport.getGridSpec());
-      JComponent component = contentAnchorSupport.applyContentAnchor(gridContainer, gridSpec);
+      JComponent component = createContentAnchorSupport(factory).applyContentAnchor(gridContainer, gridSpec);
       GridBagBuilder builder = new GridBagBuilder(gridContainer, gridSpec, factory.getContentFactory());
 
       for (GridBagCommand command : commandListSupport)
@@ -104,6 +104,15 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
          command.apply(builder);
       }
       return decorationSupport.decorate(component, factory);
+   }
+
+   private ContentAnchorSupport<ContentAnchorSupport> createContentAnchorSupport(ComponentFactory factory)
+   {
+      ContentAnchorSupport<ContentAnchorSupport> result = ContentAnchorSupport.createDefault();
+      result.
+         withContentAnchor(factory.getContentAnchorX(), factory.getContentAnchorY()).
+         withContentAnchor(contentAnchorSupport.getContentAnchorX(), contentAnchorSupport.getContentAnchorY());
+      return result;
    }
 
    protected abstract C createDefaultContainer(ComponentFactory factory);

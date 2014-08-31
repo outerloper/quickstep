@@ -1,7 +1,10 @@
 package org.quickstep;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import org.quickstep.support.DebugSupport;
 
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
@@ -57,8 +60,48 @@ public class ComponentFactory
          withColumn(0, spec().withInsetLeft(0));
    }
 
+   public AX getContentAnchorX()
+   {
+      return AX.CENTER;
+   }
+
+   public AY getContentAnchorY()
+   {
+      return AY.CENTER;
+   }
+
    public ComponentFactory getContentFactory()
    {
       return this;
+   }
+
+
+   private <C extends Container> C genericBuildContent(C container, AbstractComponentCommand command)
+   {
+      container.setLayout(new GridBagLayout());
+      JComponent component = command.getComponent(Orientation.HORIZONTAL, this);
+      GridBagConstraints constraints = specWithFill().withInset(5).overrideWith(command.getDefaultSpec(Orientation.HORIZONTAL)).toConstraints(0, 0);
+
+      container.add(component, constraints);
+      DebugSupport.attachDebugInfo(component, container, constraints);
+      DebugSupport.colorize(container, container.getComponents());
+      return container;
+   }
+
+   public Window buildContent(Window window, AbstractComponentCommand command)
+   {
+      Window result = genericBuildContent(window, command);
+      window.pack();
+      return result;
+   }
+
+   public JComponent buildContent(JComponent component, AbstractComponentCommand command)
+   {
+      return genericBuildContent(component, command);
+   }
+
+   public JPanel build(ComponentCommand command)
+   {
+      return genericBuildContent(createPanel(), command);
    }
 }

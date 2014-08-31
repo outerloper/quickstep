@@ -11,12 +11,25 @@ public class ContentAnchorSupport<T>
 {
    private final T owner;
 
-   private AX anchorX;
-   private AY anchorY;
+   private AX contentAnchorX;
+   private AY contentAnchorY;
+
+   public static ContentAnchorSupport<ContentAnchorSupport> createDefault()
+   {
+      return new ContentAnchorSupport<ContentAnchorSupport>(null);
+   }
 
    public ContentAnchorSupport(T owner)
    {
-      this.owner = owner;
+      try
+      {
+         //noinspection unchecked
+         this.owner = owner != null ? owner : (T) this;
+      }
+      catch (ClassCastException e)
+      {
+         throw new RuntimeException("null owner is only allowed for ContentAnchorSupport<ContentAnchorSupport>.");
+      }
    }
 
    public T withContentAnchor(AX anchorX, AY anchorY)
@@ -37,14 +50,30 @@ public class ContentAnchorSupport<T>
 
    public T withContentAnchorX(AX anchorX)
    {
-      this.anchorX = anchorX;
+      if (anchorX != null)
+      {
+         this.contentAnchorX = anchorX;
+      }
       return owner;
    }
 
    public T withContentAnchorY(AY anchorY)
    {
-      this.anchorY = anchorY;
+      if (anchorY != null)
+      {
+         this.contentAnchorY = anchorY;
+      }
       return owner;
+   }
+
+   public AX getContentAnchorX()
+   {
+      return contentAnchorX;
+   }
+
+   public AY getContentAnchorY()
+   {
+      return contentAnchorY;
    }
 
    public JComponent applyContentAnchor(JComponent container, GridSpec gridSpec)
@@ -52,11 +81,11 @@ public class ContentAnchorSupport<T>
       JComponent result = container;
 
       Integer contentX = null;
-      if (anchorX == null)
+      if (contentAnchorX == null)
       {
-         anchorX = AX.CENTER;
+         contentAnchorX = AX.CENTER;
       }
-      switch (anchorX)
+      switch (contentAnchorX)
       {
          case LEFT:
             contentX = 0;
@@ -69,11 +98,11 @@ public class ContentAnchorSupport<T>
             break;
       }
       Integer contentY = null;
-      if (anchorY == null)
+      if (contentAnchorY == null)
       {
-         anchorY = AY.CENTER;
+         contentAnchorY = AY.CENTER;
       }
-      switch (anchorY)
+      switch (contentAnchorY)
       {
          case TOP:
             contentY = 0;
@@ -110,11 +139,11 @@ public class ContentAnchorSupport<T>
          }
          result = new JPanel(new GridBagLayout());
          CellSpec contentSpec = spec();
-         if (anchorX == AX.BOTH)
+         if (contentAnchorX == AX.BOTH)
          {
             contentSpec.withWeightX(1.0).withAnchorX(AX.BOTH);
          }
-         if (anchorY == AY.BOTH)
+         if (contentAnchorY == AY.BOTH)
          {
             contentSpec.withWeightY(1.0).withAnchorY(AY.BOTH);
          }

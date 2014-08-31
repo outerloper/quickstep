@@ -60,25 +60,14 @@ public class RichFormDemo2 extends JFrame
             withBorder("Conditions").
             withGrid(getGridSpec()).
             addHeader("Section 1").
-            add(line().
-               add("Start Date:").add(startDateTextField).
-               add("End Date:").add(endDateTextField).add("Freq:").add(freqTextField)
-            ).
+            add(line().add("Start Date:").add(startDateTextField).add("End Date:").add(endDateTextField).add("Freq:").add(freqTextField)).
             addHeader("Section 2").
-            add(line().
-               add("Criterion 1:").add(criterion1TextField).
-               add("Criterion 2:").add(criterion2TextField)
-            ).
+            add(line().add("Criterion 1:").add(criterion1TextField).add("Criterion 2:").add(criterion2TextField)).
             addHeader("Section 3").
-            add(line().
-               add("Additional Criterion 1:").add(additionalCriterion1TextField).
-               add("Additional Criterion 2:").add(additionalCriterion2TextField)
-            ).
+            add(line().add("Additional Criterion 1:").add(additionalCriterion1TextField).add("Additional Criterion 2:").add(additionalCriterion2TextField)).
             addHeader("Section 4").
             add(lineWithCombo().add("Criterion 3 Level:").add(criterion3ComboBox).add(criterion3TextField)).
-            add(lineWithCombo().add("Criterion 4 Level:").add(criterion4ComboBox).add(criterion4TextField).
-               add(roundTripCheckBox, spec().withInsetLeft(5).withAnchorX(AX.LEFT).withGridWidthRemainder())
-            ).
+            add(lineWithCombo().add("Criterion 4 Level:").add(criterion4ComboBox).add(criterion4TextField).add(roundTripCheckBox, getRoundTripSpec())).
             addHeader("Additional Conditions").
             add(lineWithCombo().add("Other 1:").add(other1ComboBox).add(other1TextField).add("ABC:").add(abcTextField)).
             add(lineWithCombo().add("Other 2:").add(other2ComboBox).add(other2TextField)).
@@ -87,14 +76,8 @@ public class RichFormDemo2 extends JFrame
          add(panel().
             with(specWithFillX()).
             withDefault(spec().withAnchorY(AY.BOTH)).
-            add(vpanel().
-               withBorder("Direction").
-               addAll(directionRadios)
-            ).
-            add(vpanel().
-               withBorder("Scope").
-               addAll(scopeRadios)
-            ).
+            add(vpanel().withBorder("Direction").addAll(directionRadios)).
+            add(vpanel().withBorder("Scope").addAll(scopeRadios)).
             add(panel().
                with(specWithFill()).
                withBorder("Highlight").
@@ -112,7 +95,12 @@ public class RichFormDemo2 extends JFrame
       );
    }
 
-   private GridSpec getGridSpec()
+   private static CellSpec getRoundTripSpec()
+   {
+      return spec().withInsetLeft(5).withAnchorX(AX.LEFT).withGridWidthRemainder();
+   }
+
+   private static GridSpec getGridSpec()
    {
       return gridSpec().
          withColumn(0, spec().withAnchorX(AX.RIGHT)).
@@ -130,24 +118,19 @@ public class RichFormDemo2 extends JFrame
 
    private void buildComponents()
    {
-      int n = 5;
       List<JPanel> colorPanels = new LinkedList<JPanel>();
-      Color[] colors = new Color[]{Color.GREEN, Color.BLUE, Color.ORANGE, Color.MAGENTA, Color.CYAN};
-      for (int i = 0; i < n; i++)
+      for (Color color : new Color[]{Color.GREEN, Color.BLUE, Color.ORANGE, Color.MAGENTA, Color.CYAN})
       {
          JPanel colorPanel = new JPanel();
-         colorPanel.setPreferredSize(new Dimension(18, 18));
-         colorPanel.setBackground(colors[i]);
+         colorPanel.setBackground(color);
          colorPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
          colorPanels.add(colorPanel);
       }
-      colorPicker = panel().withDefault(spec().withInset(1)).addAll(colorPanels).getComponent();
+      colorPicker = panel().addAll(colorPanels, spec().withInset(1).withPreferredSize(18, 18)).getComponent();
    }
 
    public static void main(String[] args) throws Exception
    {
-//      debug();
-//      UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       new RichFormDemo2();
    }
