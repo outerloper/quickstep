@@ -21,11 +21,11 @@ public class RichFormDemo extends JFrame
    JTextField postalCodeTextField = new JTextField();
    JTextField countryTextField = new JTextField();
 
-   JButton newButton = new JButton("New");
-   JButton deleteButton = new JButton("Delete");
-   JButton editButton = new JButton("Edit");
-   JButton saveButton = new JButton("Save");
-   JButton cancelButton = new JButton("Cancel");
+   JButton newButton = new JButton("&New");
+   JButton deleteButton = new JButton("&Delete");
+   JButton editButton = new JButton("&Edit");
+   JButton saveButton = new JButton("&Save");
+   JButton cancelButton = new JButton("&Cancel");
 
    public RichFormDemo()
    {
@@ -49,23 +49,23 @@ public class RichFormDemo extends JFrame
             withColumn(1, specWithFillX()).
             withColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(0.2)).
             withColumn(3, specWithFillX()).
-            add("Last name").
+            add("&Last name").
             add(lastNameTextField).
-            add("First name").
+            add("&First name").
             add(firstNameTextField).
-            add("Phone").
+            add("P&hone").
             add(phoneTextField).
-            add("Email").
+            add("&Email").
             add(emailTextField).
-            add("Address 1").
+            add("Address &1").
             add(address1TextField, specWithFillX().withGridWidthRemainder()).
-            add("Address 2").
+            add("Address &2").
             add(address2TextField, specWithFillX().withGridWidthRemainder()).
-            add("City").
+            add("C&ity").
             add(cityTextField).
-            add("Postal Code", spec().withGridHeight(2)).
+            add("&Postal Code", spec().withGridHeight(2)).
             add(postalCodeTextField, spec().withGridHeight(2)).
-            add("Country").
+            add("C&ountry").
             add(countryTextField)
          ).
          addLineBreak().

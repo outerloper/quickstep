@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import com.google.common.collect.*;
 import org.quickstep.support.DebugSupport;
+import org.quickstep.support.MnemonicSupport;
 
 import static org.quickstep.GridBagToolKit.*;
 
@@ -21,6 +22,8 @@ public class GridBagBuilder
    private int previousCursorY = 0;
    private int previousCursorX = 0;
    private boolean previousEndOfLine = false;
+
+   private JLabel labelWithMnemonic = null;
 
    private final Table<Integer, Integer, Boolean> usedCells = TreeBasedTable.create();
    private final Map<Integer, Integer> gridHeightRemainders = new TreeMap<Integer, Integer>();
@@ -180,6 +183,8 @@ public class GridBagBuilder
 
       DebugSupport.attachDebugInfo(component, gridContainer, constraints);
       gridContainer.add(getComponentToAdd(component, calculatedSpec), constraints);
+      handleMnemonic(component); // TODO - move to factory? then factory stateful so new instance required in getChild
+      // TODO also think about renaming ComponentFactory as it starts to do everything...
 
       if (isHorizontal() && calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER ||
          !isHorizontal() && calculatedSpec.getGridHeight() == GridBagConstraints.REMAINDER)
@@ -188,6 +193,27 @@ public class GridBagBuilder
       }
 
       markAreaAsUsed(cursorX, cursorY, calculatedSpec);
+   }
+
+   private void handleMnemonic(JComponent component)
+   {
+      if (component instanceof JLabel)
+      {
+         JLabel label = (JLabel) component;
+         Component labelFor = label.getLabelFor();
+         boolean hasMnemonic = MnemonicSupport.setUp(label, labelFor);
+         labelWithMnemonic = labelFor == null && hasMnemonic ? label : null;
+      }
+      else if (component instanceof JButton)
+      {
+         MnemonicSupport.setUp((JButton) component);
+         labelWithMnemonic = null;
+      }
+      else if (labelWithMnemonic != null)
+      {
+         labelWithMnemonic.setLabelFor(component);
+         labelWithMnemonic = null;
+      }
    }
 
    private JComponent getComponentToAdd(JComponent component, CellSpec calculatedSpec)

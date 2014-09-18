@@ -1,0 +1,2 @@
+TODO components grouping for sizes adjustment, possibly column/row/cell styling - think about fluent interface for creating groups
+TODO more builders having .on() method

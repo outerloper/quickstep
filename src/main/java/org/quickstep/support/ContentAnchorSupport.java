@@ -28,7 +28,7 @@ public class ContentAnchorSupport<T>
       }
       catch (ClassCastException e)
       {
-         throw new RuntimeException("null owner is only allowed for ContentAnchorSupport<ContentAnchorSupport>.");
+         throw new RuntimeException("null owner is only allowed for ContentAnchorSupport<? extends ContentAnchorSupport>.");
       }
    }
 

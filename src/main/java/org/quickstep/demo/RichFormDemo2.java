@@ -36,9 +36,9 @@ public class RichFormDemo2 extends JFrame
    JComponent colorPicker;
    JComboBox thicknessComboBox = new JComboBox<String>(new String[]{"1", "2", "3", "4", "5"});
    JButton clearButton = new JButton("Clear");
-   JButton findAllButton = new JButton("Find All");
-   JButton findNextButton = new JButton("Find Next");
-   JButton closeButton = new JButton("Close");
+   JButton findAllButton = new JButton("Find &All");
+   JButton findNextButton = new JButton("Find &Next");
+   JButton closeButton = new JButton("&Close");
 
    public RichFormDemo2() throws HeadlessException
    {
@@ -89,7 +89,7 @@ public class RichFormDemo2 extends JFrame
          ).
          add(panel().
             with(spec().withAnchor(AX.RIGHT, AY.BOTTOM).withWeightY(1.0)).
-            withDefault(spec().withPreferredWidth(66)).
+            withDefault(spec().withPreferredWidth(80)).
             add(seq(clearButton, findAllButton, findNextButton, closeButton))
          )
       );

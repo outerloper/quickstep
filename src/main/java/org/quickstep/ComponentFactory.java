@@ -11,7 +11,7 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class ComponentFactory
 {
-   public JComponent createLabel(String text)
+   public JLabel createLabel(String text)
    {
       return new JLabel(text);
    }
