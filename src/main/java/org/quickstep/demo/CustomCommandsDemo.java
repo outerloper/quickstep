@@ -17,47 +17,48 @@ public class CustomCommandsDemo extends JFrame
       JPanel explicitlyProvidedPanel = new JPanel();
       explicitlyProvidedPanel.setBackground(Color.GREEN);
 
-      buildContent(this, panel().
-         withContentAnchor(A.BOTH).
-         withOrientation(Orientation.VERTICAL).
-         add(toolbar().
-            add(new JButton(getIcon("FileChooser.newFolderIcon"))).
-            add(new JButton(getIcon("FileChooser.upFolderIcon"))).
-            addSeparator().
-            add(new JButton(getIcon("FileChooser.detailsViewIcon"))).
-            add(new JButton("Details..."))
-         ).
-         add(tabs().
-            add(tab("First").add("First tab content")).
-            add(tab("Second").
-               withContentAnchor(A.BOTH).
-               add(split(Orientation.VERTICAL).
-                  withResizeWeight(0.67).
-                  withFirst(panel().add("Third tab top content")).
-                  withSecond(panel().add("Third tab bottom content"))
-               )
-            ).
-            add(tab("Third").
-               withContentAnchor(A.BOTH).
-               add(split(Orientation.HORIZONTAL).
-                  withFirst(panel().add("Third tab left content")).
-                  withSecond(panel().add("Third tab right content"))
-               )
-            ).
-            add(tab("Fourth").
-               on(explicitlyProvidedPanel).
-               add("Fourth tab content")
-            ).
-            add(tab("Details").
-               withIcon(getIcon("FileChooser.detailsViewIcon")).
-               add("<html><i>Details</i> tab content</html>")
+      buildContent(
+         this, panel()
+            .withContentAnchor(A.BOTH)
+            .withOrientation(Orientation.VERTICAL)
+            .add(toolbar()
+                    .add(new JButton(getIcon("FileChooser.newFolderIcon")))
+                    .add(new JButton(getIcon("FileChooser.upFolderIcon")))
+                    .addSeparator()
+                    .add(new JButton(getIcon("FileChooser.detailsViewIcon")))
+                    .add(new JButton("Details..."))
             )
-         ).
-         add(buttons().
-            add(new JButton("OK")).
-            add(new JButton("Cancel")).
-            add(new JButton("Help"))
-         )
+            .add(tabs()
+                    .add(tab("First").add("First tab content"))
+                    .add(tab("Second")
+                            .withContentAnchor(A.BOTH)
+                            .add(split(Orientation.VERTICAL)
+                                    .withResizeWeight(0.67)
+                                    .withFirst(panel().add("Third tab top content"))
+                                    .withSecond(panel().add("Third tab bottom content"))
+                            )
+                    )
+                    .add(tab("Third")
+                            .withContentAnchor(A.BOTH)
+                            .add(split(Orientation.HORIZONTAL)
+                                    .withFirst(panel().add("Third tab left content"))
+                                    .withSecond(panel().add("Third tab right content"))
+                            )
+                    )
+                    .add(tab("Fourth")
+                            .on(explicitlyProvidedPanel)
+                            .add("Fourth tab content")
+                    )
+                    .add(tab("Details")
+                            .withIcon(getIcon("FileChooser.detailsViewIcon"))
+                            .add("<html><i>Details</i> tab content</html>")
+                    )
+            )
+            .add(buttons()
+                    .add(new JButton("OK"))
+                    .add(new JButton("Cancel"))
+                    .add(new JButton("Help"))
+            )
       );
 
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -262,9 +263,9 @@ public class CustomCommandsDemo extends JFrame
       }
    }
 
-   public static void main(String[] args) throws Exception
+   public static void main(String[] args)
    {
-      setLookAndFeel(getSystemLookAndFeelClassName());
+      DemoUtils.setSystemLookAndFeel();
       new CustomCommandsDemo();
    }
 }

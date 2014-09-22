@@ -3,7 +3,6 @@ package org.quickstep.demo;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import static org.quickstep.GridBagToolKit.*;
 
@@ -11,12 +10,13 @@ public class VerticalOrientationDemo extends JFrame
 {
    public VerticalOrientationDemo()
    {
-      buildContent(this, panel().
-         withOrientation(Orientation.VERTICAL).
-         withLineLength(10).
-         withScroll().
-         withDefault(specWithFill()).
-         addAll(generateOptions())
+      buildContent(
+         this, panel()
+            .withOrientation(Orientation.VERTICAL)
+            .withLineLength(10)
+            .withScroll()
+            .withDefault(specWithFill())
+            .addAll(generateOptions())
       );
 
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -36,9 +36,9 @@ public class VerticalOrientationDemo extends JFrame
       return buttons;
    }
 
-   public static void main(String[] args) throws Exception
+   public static void main(String[] args)
    {
-      UIManager.setLookAndFeel(NimbusLookAndFeel.class.getName());
+      DemoUtils.setSystemLookAndFeel();
       new VerticalOrientationDemo();
    }
 }

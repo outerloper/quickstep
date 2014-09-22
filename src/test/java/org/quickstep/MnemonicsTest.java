@@ -135,7 +135,8 @@ public class MnemonicsTest
    }
 
    @Test
-   public void whenAddingEmptyLabelThenItIsNotAssignedToAComponent() {
+   public void whenAddingEmptyLabelThenItIsNotAssignedToAComponent()
+   {
       JLabel label = new JLabel();
       panelCommand.add(label).add(component).getComponent();
 
@@ -146,7 +147,8 @@ public class MnemonicsTest
    }
 
    @Test
-   public void whenAddingTwoLabelsThen1stLabelIsNotAssignedToThe2ndButHasMnemonicSpecified() {
+   public void whenAddingTwoLabelsThen1stLabelIsNotAssignedToThe2ndButHasMnemonicSpecified()
+   {
       JLabel labelA = new JLabel("&A");
       JLabel labelB = new JLabel("&B");
       panelCommand.add(labelA).add(labelB).getComponent();
@@ -158,7 +160,8 @@ public class MnemonicsTest
    }
 
    @Test
-   public void whenAddingTwoLabelsAndAComponentThenOnly2ndLabelIsAssignedToThisComponent() {
+   public void whenAddingTwoLabelsAndAComponentThenOnly2ndLabelIsAssignedToThisComponent()
+   {
       JLabel labelA = new JLabel("&A");
       JLabel labelB = new JLabel("&B");
       panelCommand.add(labelA).add(labelB).add(component).getComponent();
@@ -175,7 +178,8 @@ public class MnemonicsTest
    }
 
    @Test
-   public void whenAddingLabelAssignedToAComponentThenThisComponentIsNotOverwritten() {
+   public void whenAddingLabelAssignedToAComponentThenThisComponentIsNotOverwritten()
+   {
       JLabel label = new JLabel("&A");
       JTextField component2 = new JTextField();
       label.setLabelFor(component2);
@@ -186,7 +190,8 @@ public class MnemonicsTest
    }
 
    @Test
-   public void addButtonWithMnemonic() {
+   public void addButtonWithMnemonic()
+   {
       JButton button = new JButton("&Save");
 
       panelCommand.add(button).getComponent();
@@ -197,7 +202,8 @@ public class MnemonicsTest
    }
 
    @Test
-   public void addButtonWithoutMnemonic() {
+   public void addButtonWithoutMnemonic()
+   {
       JButton button = new JButton("Save");
 
       panelCommand.add(button).getComponent();

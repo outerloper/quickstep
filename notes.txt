@@ -1,2 +1,5 @@
 TODO components grouping for sizes adjustment, possibly column/row/cell styling - think about fluent interface for creating groups
 TODO more builders having .on() method
+TODO .with() -> .withSpec()
+TODO refactor the code to use newest features, maybe get rid of specWIthFillX at all
+TODO alignment to baseline - first try how it actually works

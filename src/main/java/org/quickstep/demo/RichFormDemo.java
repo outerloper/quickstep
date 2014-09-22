@@ -29,7 +29,9 @@ public class RichFormDemo extends JFrame
 
    public RichFormDemo()
    {
-      arrangeComponents();
+      arrangeComponentsUsingLineWraps();
+//      arrangeComponentsUsingExplicitLines();
+//      arrangeComponentsPlayWithItYourself();
 
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       setMinimumSize(getPreferredSize());
@@ -38,110 +40,90 @@ public class RichFormDemo extends JFrame
       setVisible(true);
    }
 
-   private void arrangeComponents()
+   private void arrangeComponentsUsingLineWraps()
    {
-      buildContent(this, panel().
-         add(peopleList, specWithFill().withGridHeightRemainder()).
-         add(panel().
-            with(specWithFillX().withAnchorY(AY.TOP)).
-            withLineLength(4).
-            withColumn(0, spec().withAnchorX(AX.RIGHT).withWeightX(0.2)).
-            withColumn(1, specWithFillX()).
-            withColumn(2, spec().withAnchorX(AX.RIGHT).withWeightX(0.2)).
-            withColumn(3, specWithFillX()).
-            add("&Last name").
-            add(lastNameTextField).
-            add("&First name").
-            add(firstNameTextField).
-            add("P&hone").
-            add(phoneTextField).
-            add("&Email").
-            add(emailTextField).
-            add("Address &1").
-            add(address1TextField, specWithFillX().withGridWidthRemainder()).
-            add("Address &2").
-            add(address2TextField, specWithFillX().withGridWidthRemainder()).
-            add("C&ity").
-            add(cityTextField).
-            add("&Postal Code", spec().withGridHeight(2)).
-            add(postalCodeTextField, spec().withGridHeight(2)).
-            add("C&ountry").
-            add(countryTextField)
-         ).
-         addLineBreak().
-         add(panel().
-            with(specWithFillX().withAnchorY(AY.BOTTOM).withGridWidthRemainder()).
-            withDefault(spec().withPreferredWidth(66)).
-            add(newButton).
-            add(deleteButton).
-            add(editButton).
-            add(saveButton).
-            add(cancelButton)
-         )
+      buildContent(
+         this, panel()
+            .withContentAnchor(A.BOTH)
+            .add(peopleList, spec().withGridHeightRemainder())
+            .add(panel()
+                    .withLineLength(4)
+                    .withContentAnchor(AX.BOTH, AY.TOP)
+                    .withColumn(0, spec().withWeight(0.2).withAnchorX(AX.RIGHT))
+                    .withColumn(2, spec().withWeight(0.2).withAnchorX(AX.RIGHT))
+                    .add("Last name").add(lastNameTextField)
+                    .add("First name").add(firstNameTextField)
+                    .add("Phone").add(phoneTextField)
+                    .add("Email").add(emailTextField)
+                    .add("Address 1").add(address1TextField)
+                    .add("Address 2").add(address2TextField)
+                    .add("City").add(cityTextField)
+                    .add("Postal Code", spec().withGridHeight(2)).add(postalCodeTextField, spec().withGridHeight(2))
+                    .add("Country").add(countryTextField)
+            )
+            .addLineBreak()
+            .add(panel()
+                    .withContentAnchorY(AY.BOTTOM)
+                    .withDefault(spec().withPreferredWidth(66))
+                    .add(seq(newButton, deleteButton, editButton, saveButton, cancelButton))
+            )
       );
    }
 
-   private void arrangeComponents_2()
+   private void arrangeComponentsUsingExplicitLines()
    {
-      buildContent(this, panel().
-         withContentAnchor(A.BOTH).
-         add(peopleList, spec().withGridHeightRemainder()).
-         add(panel().
-            withContentAnchor(AX.BOTH, AY.TOP).
-            withColumn(0, spec().withWeight(0.2).withAnchorX(AX.RIGHT)).
-            withColumn(2, spec().withWeight(0.2).withAnchorX(AX.RIGHT)).
-            add(line().add("Last name").add(lastNameTextField).add("First name").add(firstNameTextField)).
-            add(line().add("Phone").add(phoneTextField).add("Email").add(emailTextField)).
-            add(line().add("Address 1").add(address1TextField, spec().withGridWidthRemainder())).
-            add(line().add("Address 2").add(address2TextField, spec().withGridWidthRemainder())).
-            add(line().add("City").add(cityTextField).
-               add("Postal Code", spec().withGridHeight(2)).
-               add(postalCodeTextField, spec().withGridHeight(2))).
-            add(line().add("Country").add(countryTextField))
-         ).
-         addLineBreak().
-         add(panel().
-            withContentAnchorY(AY.BOTTOM).
-            withDefault(spec().withPreferredWidth(66)).
-            add(seq(newButton, deleteButton, editButton, saveButton, cancelButton))
-         )
+      buildContent(
+         this, panel()
+            .withContentAnchor(A.BOTH)
+            .add(peopleList, spec().withGridHeightRemainder())
+            .add(panel()
+                    .withContentAnchor(AX.BOTH, AY.TOP)
+                    .withColumn(0, spec().withWeight(0.2).withAnchorX(AX.RIGHT))
+                    .withColumn(2, spec().withWeight(0.2).withAnchorX(AX.RIGHT))
+                    .add(line().add("Last name").add(lastNameTextField).add("First name").add(firstNameTextField))
+                    .add(line().add("Phone").add(phoneTextField).add("Email").add(emailTextField))
+                    .add(line().add("Address 1").add(address1TextField, spec().withGridWidthRemainder()))
+                    .add(line().add("Address 2").add(address2TextField, spec().withGridWidthRemainder()))
+                    .add(line().add("City").add(cityTextField)
+                            .add("Postal Code", spec().withGridHeight(2))
+                            .add(postalCodeTextField, spec().withGridHeight(2)))
+                    .add(line().add("Country").add(countryTextField))
+            )
+            .addLineBreak()
+            .add(panel()
+                    .withContentAnchorY(AY.BOTTOM)
+                    .withDefault(spec().withPreferredWidth(66))
+                    .add(seq(newButton, deleteButton, editButton, saveButton, cancelButton))
+            )
       );
    }
 
-   private void arrangeComponents_playItYourself()
+   private void arrangeComponentsPlayWithItYourself()
    {
-      buildContent(this, panel().
-         add(peopleList).
-         add("Last name").
-         add(lastNameTextField).
-         add("First name").
-         add(firstNameTextField).
-         add("Phone").
-         add(phoneTextField).
-         add("Email").
-         add(emailTextField).
-         add("Address 1").
-         add(address1TextField).
-         add("Address 2").
-         add(address2TextField).
-         add("City").
-         add(cityTextField).
-         add("Postal Code").
-         add(postalCodeTextField).
-         add("Country").
-         add(countryTextField).
-         add(newButton).
-         add(deleteButton).
-         add(editButton).
-         add(saveButton).
-         add(cancelButton)
+      buildContent(
+         this, panel()
+            .add(peopleList)
+            .add("Last name").add(lastNameTextField)
+            .add("First name").add(firstNameTextField)
+            .add("Phone").add(phoneTextField)
+            .add("Email").add(emailTextField)
+            .add("Address 1").add(address1TextField)
+            .add("Address 2").add(address2TextField)
+            .add("City").add(cityTextField)
+            .add("Postal Code").add(postalCodeTextField)
+            .add("Country").add(countryTextField)
+            .add(newButton)
+            .add(deleteButton)
+            .add(editButton)
+            .add(saveButton)
+            .add(cancelButton)
       );
    }
 
-   public static void main(String[] args) throws Exception
+   public static void main(String[] args)
    {
 //      debug();
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      DemoUtils.setSystemLookAndFeel();
       new RichFormDemo();
    }
 }

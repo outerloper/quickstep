@@ -112,9 +112,9 @@ public class LineCommandTest
       panelCommand.
          withCell(1, 0, spec().withInset(10)).
          add(line().
-            withCell(1, spec().withInsetTop(20)).
-            add(aComponent()).
-            add(aComponent())
+                withCell(1, spec().withInsetTop(20)).
+                add(aComponent()).
+                add(aComponent())
          ).
          getComponent();
 
@@ -132,11 +132,11 @@ public class LineCommandTest
       panelCommand.
          withCell(1, 0, spec().withInset(10)).
          add(line().
-            withCell(1, spec().withInsetTop(20)).
-            withCell(1, spec().withInsetTop(30)).
-            withCell(1, spec().withInsetBottom(30)).
-            add(aComponent()).
-            add(aComponent())
+                withCell(1, spec().withInsetTop(20)).
+                withCell(1, spec().withInsetTop(30)).
+                withCell(1, spec().withInsetBottom(30)).
+                add(aComponent()).
+                add(aComponent())
          ).
          getComponent();
 
@@ -154,9 +154,9 @@ public class LineCommandTest
       panelCommand.
          withRow(0, spec().withInset(10)).
          add(line().
-            withDefault(spec().withInsetTop(20)).
-            add(aComponent()).
-            add(aComponent())
+                withDefault(spec().withInsetTop(20)).
+                add(aComponent()).
+                add(aComponent())
          ).
          getComponent();
 
@@ -174,11 +174,11 @@ public class LineCommandTest
       panelCommand.
          withRow(0, spec().withInset(10)).
          add(line().
-            withDefault(spec().withInsetTop(20)).
-            withDefault(spec().withInsetTop(30)).
-            withDefault(spec().withInsetBottom(30)).
-            add(aComponent()).
-            add(aComponent())
+                withDefault(spec().withInsetTop(20)).
+                withDefault(spec().withInsetTop(30)).
+                withDefault(spec().withInsetBottom(30)).
+                add(aComponent()).
+                add(aComponent())
          ).
          getComponent();
 
@@ -195,10 +195,10 @@ public class LineCommandTest
 
       panelCommand.
          add(line().
-            withDefault(spec().withInsetTop(20)).
-            withCell(1, spec().withInsetTop(30)).
-            add(aComponent()).
-            add(aComponent())
+                withDefault(spec().withInsetTop(20)).
+                withCell(1, spec().withInsetTop(30)).
+                add(aComponent()).
+                add(aComponent())
          ).
          getComponent();
 
@@ -218,10 +218,10 @@ public class LineCommandTest
       panelCommand.
          add(aComponent()).
          add(line().
-            withDefault(spec().withInsetTop(30)).
-            withCell(1, spec().withInsetLeft(30)).
-            add(aComponent()).
-            add(aComponent())
+                withDefault(spec().withInsetTop(30)).
+                withCell(1, spec().withInsetLeft(30)).
+                add(aComponent()).
+                add(aComponent())
          ).
          add(aComponent()).
          getComponent();
@@ -271,8 +271,8 @@ public class LineCommandTest
 
       panelCommand.
          add(line().
-            add(aComponent(), spec().withGridWidthRemainder()).
-            add(aComponent())
+                add(aComponent(), spec().withGridWidthRemainder()).
+                add(aComponent())
          ).
          getComponent();
 
@@ -289,9 +289,9 @@ public class LineCommandTest
       panelCommand.
          withLineLength(1).
          add(line().
-            add(aComponent(), spec().withIPad(1)).
-            add(aComponent(), spec().withIPad(2)).
-            add(aComponent(), spec().withIPad(3))
+                add(aComponent(), spec().withIPad(1)).
+                add(aComponent(), spec().withIPad(2)).
+                add(aComponent(), spec().withIPad(3))
          ).
          getComponent();
 

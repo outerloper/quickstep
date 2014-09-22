@@ -8,17 +8,18 @@ public class SeparatorsDemo extends JFrame
 {
    public SeparatorsDemo()
    {
-      buildContent(this, panel().
-         withBorder().
-         withDefault(specWithFill().withGridWidthRemainder()).
-         add(new JButton("Button")).
-         addLineSeparator().
-         add(new JButton("Button")).
-         addBlank().
-         add(new JButton("Button")).
-         add(panel().with(specWithFill()).withDefault(specWithFill()).
-            add(new JButton("Button")).addSeparator().add(new JButton("Button"))
-         )
+      buildContent(
+         this, panel()
+            .withBorder()
+            .withDefault(specWithFill().withGridWidthRemainder())
+            .add(new JButton("Button"))
+            .addLineSeparator()
+            .add(new JButton("Button"))
+            .addBlank()
+            .add(new JButton("Button"))
+            .add(panel().with(specWithFill()).withDefault(specWithFill())
+                    .add(new JButton("Button")).addSeparator().add(new JButton("Button"))
+            )
       );
 
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -29,9 +30,9 @@ public class SeparatorsDemo extends JFrame
       setVisible(true);
    }
 
-   public static void main(String[] args) throws Exception
+   public static void main(String[] args)
    {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      DemoUtils.setSystemLookAndFeel();
       new SeparatorsDemo();
    }
 }

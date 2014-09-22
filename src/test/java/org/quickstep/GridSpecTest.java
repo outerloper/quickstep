@@ -106,8 +106,8 @@ public class GridSpecTest
    {
       gridSpec
          .withRow(1, lineSpec()
-            .withDefault(spec().withInset(10))
-            .withCell(1, spec().withInsetX(5))
+                     .withDefault(spec().withInset(10))
+                     .withCell(1, spec().withInsetX(5))
          );
       assertEquals(spec(), gridSpec.getSpecAt(0, 0));
       assertEquals(spec(), gridSpec.getSpecAt(1, 0));
@@ -120,8 +120,8 @@ public class GridSpecTest
    {
       gridSpec
          .withColumn(1, lineSpec()
-            .withDefault(spec().withInset(10))
-            .withCell(1, spec().withInsetX(5))
+                        .withDefault(spec().withInset(10))
+                        .withCell(1, spec().withInsetX(5))
          );
       assertEquals(spec(), gridSpec.getSpecAt(0, 0));
       assertEquals(spec(), gridSpec.getSpecAt(0, 1));
@@ -130,7 +130,8 @@ public class GridSpecTest
    }
 
    @Test
-   public void equals() {
+   public void equals()
+   {
       gridSpec
          .withDefault(spec().withGap(5))
          .withColumn(1, spec().withIPad(10))
@@ -142,7 +143,8 @@ public class GridSpecTest
    }
 
    @Test
-   public void specsAreNotEqualWhenDefaultOrLinesOrCellsAreSpecifiedDifferentlyEvenWhenForEachCellSpecReturnsTheSameSpec() {
+   public void specsAreNotEqualWhenDefaultOrLinesOrCellsAreSpecifiedDifferentlyEvenWhenForEachCellSpecReturnsTheSameSpec()
+   {
       gridSpec
          .withDefault(spec().withGap(5))
          .withColumn(1, spec().withIPad(10))

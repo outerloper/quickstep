@@ -13,14 +13,15 @@ public class CustomComponentFactoryDemo extends JFrame
 {
    public CustomComponentFactoryDemo()
    {
-      createComponentFactory().buildContent(this, panel().
-         withOrientation(Orientation.VERTICAL).
-         add(panel().
-            add(line().add("User").add(new JTextField(), spec().withPreferredWidth(100))).
-            add(line().add("Password").add(new JTextField(), spec().withPreferredWidth(100))).
-            withBorder("Custom Panel")
-         ).
-         add(new JButton("Proceed"), spec().withGridWidthRemainder().withAnchor(A.CENTER))
+      createComponentFactory().buildContent(
+         this, panel()
+            .withOrientation(Orientation.VERTICAL)
+            .add(panel()
+                    .withBorder("Custom Panel")
+                    .add(line().add("User").add(new JTextField(), spec().withPreferredWidth(100)))
+                    .add(line().add("Password").add(new JTextField(), spec().withPreferredWidth(100)))
+            )
+            .add(new JButton("Proceed"), spec().withGridWidthRemainder().withAnchor(A.CENTER))
       );
 
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -84,9 +85,9 @@ public class CustomComponentFactoryDemo extends JFrame
       };
    }
 
-   public static void main(String[] args) throws Exception
+   public static void main(String[] args)
    {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      DemoUtils.setSystemLookAndFeel();
       new CustomComponentFactoryDemo();
    }
 }

@@ -36,39 +36,31 @@ public class SpannedCellsDemo extends JFrame
 
    private void arrangeComponents()
    {
-      buildContent(this, panel().
-         withLineLength(1).
-         add(panel().
-            with(specWithFill()).
-            withLineLength(4).
-            withDefault(specWithFill()).
-            withCell(1, 2, spec().withGridSize(2, 3)).
-            withCell(0, 5, spec().withGridSize(2, 2)).
-            withCell(2, 7, spec().withGridSize(1, 2)).
-            withCell(3, 3, spec().withGridHeightRemainder()).
-            addAll(buttons)
-         ).
-         add(panel().
-            with(spec().withGridWidthRemainder().withAnchor(A.CENTER)).
-            withDefault(spec().withPreferredWidth(66)).
-            add(okButton).
-            add(cancelButton).
-            add(helpButton)
-         )
+      buildContent(
+         this, vpanel()
+            .add(panel()
+                    .with(specWithFill())
+                    .withLineLength(4)
+                    .withDefault(specWithFill())
+                    .withCell(1, 2, spec().withGridSize(2, 3))
+                    .withCell(0, 5, spec().withGridSize(2, 2))
+                    .withCell(2, 7, spec().withGridSize(1, 2))
+                    .withCell(3, 3, spec().withGridHeightRemainder())
+                    .addAll(buttons)
+            )
+            .add(panel()
+                    .with(spec().withGridWidthRemainder().withAnchor(A.CENTER))
+                    .withDefault(spec().withPreferredWidth(66))
+                    .add(okButton)
+                    .add(cancelButton)
+                    .add(helpButton)
+            )
       );
    }
 
    public static void main(String[] args)
    {
-//      GridBagBuilder.debug();
-      try
-      {
-         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      }
-      catch (Exception e)
-      {
-         e.printStackTrace();
-      }
+      DemoUtils.setSystemLookAndFeel();
       new SpannedCellsDemo();
    }
 }
