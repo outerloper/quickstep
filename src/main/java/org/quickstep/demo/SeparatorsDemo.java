@@ -17,7 +17,7 @@ public class SeparatorsDemo extends JFrame
             .add(new JButton("Button"))
             .addBlank()
             .add(new JButton("Button"))
-            .add(panel().with(specWithFill()).withDefault(specWithFill())
+            .add(panel().withSpec(specWithFill()).withDefault(specWithFill())
                     .add(new JButton("Button")).addSeparator().add(new JButton("Button"))
             )
       );

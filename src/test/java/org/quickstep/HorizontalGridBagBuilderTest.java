@@ -358,7 +358,7 @@ public class HorizontalGridBagBuilderTest
       replay(panel);
 
       PanelCommand builder = panel().on(auxPanel).
-         with(specWithFill());
+         withSpec(specWithFill());
       panelCommand.
          withCell(0, 0, spec().withInsetRight(50)).
          add(builder).

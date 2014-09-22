@@ -39,7 +39,7 @@ public class SpannedCellsDemo extends JFrame
       buildContent(
          this, vpanel()
             .add(panel()
-                    .with(specWithFill())
+                    .withSpec(specWithFill())
                     .withLineLength(4)
                     .withDefault(specWithFill())
                     .withCell(1, 2, spec().withGridSize(2, 3))
@@ -49,7 +49,7 @@ public class SpannedCellsDemo extends JFrame
                     .addAll(buttons)
             )
             .add(panel()
-                    .with(spec().withGridWidthRemainder().withAnchor(A.CENTER))
+                    .withSpec(spec().withGridWidthRemainder().withAnchor(A.CENTER))
                     .withDefault(spec().withPreferredWidth(66))
                     .add(okButton)
                     .add(cancelButton)
