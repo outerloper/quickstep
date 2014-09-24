@@ -76,7 +76,7 @@ public final class GridBagToolKit
 
    public static CellSpec completeSpec()
    {
-      return new CellSpec(null, null, 1, 1, 0.0, 0.0, AX.CENTER, AY.CENTER, 0, 0, 0, 0, 0, 0);
+      return new CellSpec(null, null, 1, 1, 0.0, 0.0, AX.CENTER, AY.CENTER, false, 0, 0, 0, 0, 0, 0);
    }
 
 
@@ -132,7 +132,7 @@ public final class GridBagToolKit
       return getDefaultComponentFactory().buildContent(component, command);
    }
 
-   public static JPanel build(ComponentCommand command)
+   public static JPanel buildContent(ComponentCommand command)
    {
       return getDefaultComponentFactory().build(command);
    }
@@ -151,15 +151,28 @@ public final class GridBagToolKit
 
    public static class ResizablePanel extends JPanel
    {
-      public ResizablePanel()
+      public ResizablePanel(JComponent component)
       {
          super(new BorderLayout());
+         add(component);
       }
 
       @Override
       public Dimension getMinimumSize()
       {
          return getPreferredSize();
+      }
+
+      @Override
+      public int getBaseline(int width, int height)
+      {
+         return getComponent(0).getBaseline(width, height);
+      }
+
+      @Override
+      public BaselineResizeBehavior getBaselineResizeBehavior()
+      {
+         return getComponent(0).getBaselineResizeBehavior();
       }
    }
 }

@@ -1,4 +1,16 @@
 TODO components grouping for sizes adjustment, possibly column/row/cell styling - think about fluent interface for creating groups
-TODO more builders having .on() method
-TODO refactor the code to use newest features, maybe get rid of specWIthFillX at all
-TODO alignment to baseline - first try how it actually works
+ NOTE ignore row, col spans at first
+ NOTE withGroup(int) withGroupX/Y(int) treeHashMap to store groups - prioritized
+ NOTE withGroupUnassigned() withGroupX/YUnassigned() for removing from group
+ NOTE withGroup(n) = withGroupX(n).withGroupY(n)
+DONE alignment to baseline - first try how it actually works
+ OK LEFT-RIGHT names OK (insets also respect orientation)
+ OK respect Swing's componentOrientation -> replace absolute positioning with relative/baseline
+ NOTE rename GBT Orientation to direction
+ OK baseline on demand as withBaseline(boolean) with default = false - baseline switch applies relative or baseline positioning respectively
+ DONE test recursive component orientation -> Swing's componentOrientation is not transitive
+ TODO unittests
+TODO refactor the code to use newest features, maybe get rid of specWithFillX at all
+FIXME VerticalOrientationFormDemo - scroll not working
+
+TODO test that decoration with scroll shows scroll after shrinking

@@ -84,7 +84,7 @@ public class RichFormDemo2 extends JFrame
                             .withBorder("Highlight")
                             .withColumn(0, spec().withAnchorX(AX.RIGHT))
                             .withColumn(1, spec().withWeightX(1.0))
-                            .add(line().add("Color:").add(colorPicker))
+                            .add(line().add("Color:").add(colorPicker, spec().withBaseline(false)))
                             .add(line().add("Thickness:").add(thicknessComboBox))
                     )
             )

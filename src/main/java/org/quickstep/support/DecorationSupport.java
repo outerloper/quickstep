@@ -69,8 +69,7 @@ public class DecorationSupport<T>
       {
          JScrollPane scroll = scrollDecoration.getDecoration(componentFactory);
          scroll.setViewportView(component);
-         component = new GridBagToolKit.ResizablePanel();
-         component.add(scroll);
+         component = new GridBagToolKit.ResizablePanel(scroll);
       }
       if (borderDecoration != null)
       {

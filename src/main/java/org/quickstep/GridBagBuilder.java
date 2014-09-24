@@ -230,9 +230,7 @@ public class GridBagBuilder
       }
       if (width != null || height != null)
       {
-         JPanel wrappingPanel = new ResizablePanel();
-         wrappingPanel.add(component);
-         return wrappingPanel;
+         return new ResizablePanel(component);
       }
       return component;
    }

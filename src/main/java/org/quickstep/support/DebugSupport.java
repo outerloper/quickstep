@@ -120,8 +120,42 @@ public class DebugSupport
    {
       switch (anchorConstant)
       {
+         case GridBagConstraints.BASELINE:
+            return "BASELINE";
+         case GridBagConstraints.ABOVE_BASELINE:
+            return "ABOVE_BASELINE";
+         case GridBagConstraints.ABOVE_BASELINE_LEADING:
+            return "ABOVE_BASELINE_LEADING";
+         case GridBagConstraints.BASELINE_LEADING:
+            return "BASELINE_LEADING";
+         case GridBagConstraints.BELOW_BASELINE_LEADING:
+            return "BELOW_BASELINE_LEADING";
+         case GridBagConstraints.BELOW_BASELINE:
+            return "BELOW_BASELINE";
+         case GridBagConstraints.BELOW_BASELINE_TRAILING:
+            return "BELOW_BASELINE_TRAILING";
+         case GridBagConstraints.BASELINE_TRAILING:
+            return "BASELINE_TRAILING";
+         case GridBagConstraints.ABOVE_BASELINE_TRAILING:
+            return "ABOVE_BASELINE_TRAILING";
          case GridBagConstraints.CENTER:
             return "CENTER";
+         case GridBagConstraints.PAGE_START:
+            return "PAGE_START";
+         case GridBagConstraints.FIRST_LINE_START:
+            return "FIRST_LINE_START";
+         case GridBagConstraints.LINE_START:
+            return "LINE_START";
+         case GridBagConstraints.LAST_LINE_START:
+            return "LAST_LINE_START";
+         case GridBagConstraints.PAGE_END:
+            return "PAGE_END";
+         case GridBagConstraints.LAST_LINE_END:
+            return "LAST_LINE_END";
+         case GridBagConstraints.LINE_END:
+            return "LINE_END";
+         case GridBagConstraints.FIRST_LINE_END:
+            return "FIRST_LINE_END";
          case GridBagConstraints.NORTH:
             return "NORTH";
          case GridBagConstraints.NORTHWEST:

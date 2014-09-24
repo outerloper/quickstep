@@ -17,6 +17,7 @@ public final class CellSpec
    private Double weightY;
    private AX anchorX;
    private AY anchorY;
+   private Boolean baseline;
    private Integer insetTop;
    private Integer insetLeft;
    private Integer insetBottom;
@@ -38,6 +39,7 @@ public final class CellSpec
            that.weightY,
            that.anchorX,
            that.anchorY,
+           that.baseline,
            that.insetTop,
            that.insetLeft,
            that.insetBottom,
@@ -53,8 +55,9 @@ public final class CellSpec
                    Integer gridHeight,
                    Double weightX,
                    Double weightY,
-                   AX AnchorX,
-                   AY AnchorY,
+                   AX anchorX,
+                   AY anchorY,
+                   Boolean baseline,
                    Integer insetTop,
                    Integer insetLeft,
                    Integer insetBottom,
@@ -68,8 +71,9 @@ public final class CellSpec
       this.gridHeight = gridHeight;
       this.weightX = weightX;
       this.weightY = weightY;
-      this.anchorX = AnchorX;
-      this.anchorY = AnchorY;
+      this.anchorX = anchorX;
+      this.anchorY = anchorY;
+      this.baseline = baseline;
       this.insetTop = insetTop;
       this.insetLeft = insetLeft;
       this.insetBottom = insetBottom;
@@ -88,6 +92,7 @@ public final class CellSpec
       weightY = that.weightY;
       anchorX = that.anchorX;
       anchorY = that.anchorY;
+      baseline = that.baseline;
       insetTop = that.insetTop;
       insetLeft = that.insetLeft;
       insetBottom = that.insetBottom;
@@ -140,6 +145,10 @@ public final class CellSpec
       if (that.anchorY != null)
       {
          anchorY = that.anchorY;
+      }
+      if (that.baseline != null)
+      {
+         baseline = that.baseline;
       }
       if (that.insetTop != null)
       {
@@ -207,6 +216,11 @@ public final class CellSpec
    public AY getAnchorY()
    {
       return anchorY;
+   }
+
+   public Boolean getBaseline()
+   {
+      return baseline;
    }
 
    public Integer getInsetTop()
@@ -332,6 +346,12 @@ public final class CellSpec
       return withAnchor(AX.BOTH, AY.BOTH);
    }
 
+   public CellSpec withBaseline(Boolean baseline)
+   {
+      this.baseline = baseline;
+      return this;
+   }
+
    public CellSpec withInsetTop(Integer top)
    {
       insetTop = top;
@@ -440,27 +460,38 @@ public final class CellSpec
             switch (x)
             {
                case LEFT:
-                  return GridBagConstraints.NORTHWEST;
+                  return GridBagConstraints.FIRST_LINE_START;
                case RIGHT:
-                  return GridBagConstraints.NORTHEAST;
+                  return GridBagConstraints.FIRST_LINE_END;
             }
-            return GridBagConstraints.NORTH;
+            return GridBagConstraints.PAGE_START;
          case BOTTOM:
             switch (x)
             {
                case LEFT:
-                  return GridBagConstraints.SOUTHWEST;
+                  return GridBagConstraints.LAST_LINE_START;
                case RIGHT:
-                  return GridBagConstraints.SOUTHEAST;
+                  return GridBagConstraints.LAST_LINE_END;
             }
-            return GridBagConstraints.SOUTH;
+            return GridBagConstraints.PAGE_END;
+      }
+      if (baseline)
+      {
+         switch (x)
+         {
+            case LEFT:
+               return GridBagConstraints.BASELINE_LEADING;
+            case RIGHT:
+               return GridBagConstraints.BASELINE_TRAILING;
+         }
+         return GridBagConstraints.BASELINE;
       }
       switch (x)
       {
          case LEFT:
-            return GridBagConstraints.WEST;
+            return GridBagConstraints.LINE_START;
          case RIGHT:
-            return GridBagConstraints.EAST;
+            return GridBagConstraints.LINE_END;
       }
       return GridBagConstraints.CENTER;
    }
@@ -504,6 +535,10 @@ public final class CellSpec
          return false;
       }
       if (anchorY != that.anchorY)
+      {
+         return false;
+      }
+      if (baseline != that.baseline)
       {
          return false;
       }
@@ -571,6 +606,7 @@ public final class CellSpec
       result = 31 * result + (weightY != null ? weightY.hashCode() : 0);
       result = 31 * result + (anchorX != null ? anchorX.hashCode() : 0);
       result = 31 * result + (anchorY != null ? anchorY.hashCode() : 0);
+      result = 31 * result + (baseline != null ? baseline.hashCode() : 0);
       result = 31 * result + (insetTop != null ? insetTop.hashCode() : 0);
       result = 31 * result + (insetLeft != null ? insetLeft.hashCode() : 0);
       result = 31 * result + (insetBottom != null ? insetBottom.hashCode() : 0);
@@ -583,7 +619,7 @@ public final class CellSpec
    @Override
    public String toString()
    {
-      return String.format("CellSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s " +
+      return String.format("CellSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s baseline=%b" +
                               "insets(top=%s left=%s bottom=%s right=%s) pad=%s,%s}",
                            preferredWidth == null ? WILDCARD : preferredWidth,
                            preferredHeight == null ? WILDCARD : preferredHeight,
@@ -593,6 +629,7 @@ public final class CellSpec
                            weightY == null ? WILDCARD : weightY,
                            anchorX == null ? WILDCARD : anchorX,
                            anchorY == null ? WILDCARD : anchorY,
+                           baseline == null ? WILDCARD : baseline,
                            insetTop == null ? WILDCARD : insetTop,
                            insetLeft == null ? WILDCARD : insetLeft,
                            insetBottom == null ? WILDCARD : insetBottom,
