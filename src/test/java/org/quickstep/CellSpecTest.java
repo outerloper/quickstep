@@ -26,7 +26,7 @@ public class CellSpecTest
    @Test
    public void testCopyConstructor()
    {
-      spec = spec().withAnchor(AX.BOTH, AY.TOP).withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
+      spec = spec().withSizeGroup(0).withAnchor(AX.BOTH, AY.TOP).withBaseline().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
       CellSpec copy = new CellSpec(spec);
       assertEquals(spec, copy);
    }
@@ -34,7 +34,7 @@ public class CellSpecTest
    @Test
    public void deriveMethodCopiesSpec()
    {
-      spec = spec().withAnchor(AX.BOTH, AY.TOP).withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
+      spec = spec().withSizeGroup(0).withAnchor(AX.BOTH, AY.TOP).withBaseline().withInset(10).withGridSize(2, 1).withPreferredSize(100, 30).withIPad(2);
       CellSpec copy = spec.derive();
       assertEquals(spec, copy);
       assertNotSame(spec, copy);
@@ -43,11 +43,13 @@ public class CellSpecTest
    @Test
    public void overrideMethodOverwritesAllNotNullFields()
    {
-      CellSpec spec1 = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchor(AX.LEFT, AY.BOTTOM).withInsetY(5);
-      CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(2);
+      CellSpec spec1 = spec().withSizeGroup(0).withPreferredSize(200, 60).withGridWidth(3).withAnchor(AX.LEFT, AY.BOTTOM).withBaseline(false).withInsetY(5);
+      CellSpec spec2 = spec().withSizeGroup(1).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline().withInset(10).withIPad(2);
       CellSpec spec3 = spec();
 
       spec2.overrideWith(spec1);
+      assertEquals(0, (int) spec2.getSizeGroupX());
+      assertEquals(0, (int) spec2.getSizeGroupY());
       assertEquals(200, (int) spec2.getPreferredWidth());
       assertEquals(60, (int) spec2.getPreferredHeight());
       assertEquals(3, (int) spec2.getGridWidth());
@@ -56,6 +58,7 @@ public class CellSpecTest
       assertEquals(null, spec2.getWeightY());
       assertEquals(AX.LEFT, spec2.getAnchorX());
       assertEquals(AY.BOTTOM, spec2.getAnchorY());
+      assertEquals(false, (boolean) spec2.getBaseline());
       assertEquals(5, (int) spec2.getInsetTop());
       assertEquals(10, (int) spec2.getInsetLeft());
       assertEquals(5, (int) spec2.getInsetBottom());
@@ -71,8 +74,8 @@ public class CellSpecTest
    @Test
    public void overwriteMethodOverwritesAllFieldsEvenNull()
    {
-      CellSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(2);
-      CellSpec spec2 = spec().withPreferredSize(200, 60).withGridSize(3, 4).withAnchorY(AY.BOTTOM).withInset(5).withIPad(3);
+      CellSpec spec1 = spec().withSizeGroup(1).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline(false).withInset(10).withIPad(2);
+      CellSpec spec2 = spec().withSizeGroup(2).withPreferredSize(200, 60).withGridSize(3, 4).withAnchorY(AY.BOTTOM).withBaseline(true).withInset(5).withIPad(3);
       CellSpec spec3 = spec();
 
       spec2.overwriteWith(spec1);
@@ -83,13 +86,19 @@ public class CellSpecTest
    }
 
    @Test
+   public void testSpecEqualsWithNull()
+   {
+      CellSpec spec = spec().withSizeGroup(1).withBaseline(false);
+      //noinspection ObjectEqualsNull
+      assertFalse(spec.equals(null));
+   }
+
+   @Test
    public void testSpecEquals()
    {
-      CellSpec spec1 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(2);
-      CellSpec spec2 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(2);
-      CellSpec spec3 = spec().withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(88);
-      Object nullReference = null;
-      assertFalse(spec1.equals(nullReference));
+      CellSpec spec1 = spec().withSizeGroup(1).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline(false).withInset(10).withIPad(2);
+      CellSpec spec2 = spec().withSizeGroup(1).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline(false).withInset(10).withIPad(2);
+      CellSpec spec3 = spec().withSizeGroup(2).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline(true).withInset(10).withIPad(88);
       assertTrue(spec1.equals(spec1));
       assertTrue(spec1.equals(spec2));
       assertFalse(spec1.equals(spec3));
@@ -98,8 +107,8 @@ public class CellSpecTest
    @Test
    public void testGBCEqualForNullConstraints()
    {
-      GridBagConstraints constraints = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(2).toConstraints(1, 2);
+      GridBagConstraints constraints = spec()
+         .withSizeGroup(2).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline(true).withInset(10).withIPad(2).toConstraints(1, 2);
       assertTrue(gbcEquals(null, null));
       assertFalse(gbcEquals(constraints, null));
       assertFalse(gbcEquals(null, constraints));
@@ -108,12 +117,12 @@ public class CellSpecTest
    @Test
    public void testGBCEqualForNotNullConstraints()
    {
-      GridBagConstraints constraints1 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(2).toConstraints(1, 2);
-      GridBagConstraints constraints2 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(2).toConstraints(1, 2);
-      GridBagConstraints constraints3 = spec().
-         withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withInset(10).withIPad(2).toConstraints(1, 3);
+      GridBagConstraints constraints1 = spec()
+         .withSizeGroup(2).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline(true).withInset(10).withIPad(2).toConstraints(1, 2);
+      GridBagConstraints constraints2 = spec()
+         .withSizeGroup(2).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline(true).withInset(10).withIPad(2).toConstraints(1, 2);
+      GridBagConstraints constraints3 = spec()
+         .withSizeGroup(2).withPreferredSize(100, 30).withGridSize(2, 1).withAnchorY(AY.TOP).withBaseline(true).withInset(10).withIPad(2).toConstraints(1, 3);
       assertTrue(gbcEquals(constraints1, constraints1));
       assertTrue(gbcEquals(constraints1, constraints2));
       assertFalse(gbcEquals(constraints1, constraints3));
@@ -197,6 +206,48 @@ public class CellSpecTest
    }
 
    @Test
+   public void sizeGroupAccessors()
+   {
+      spec = spec().withSizeGroupX(100);
+      assertSizeGroup(100, true, spec.getSizeGroupX());
+      assertSizeGroup(null, false, spec.getSizeGroupY());
+
+      spec = spec().withSizeGroupY(200);
+      assertSizeGroup(null, false, spec.getSizeGroupX());
+      assertSizeGroup(200, true, spec.getSizeGroupY());
+
+      spec = spec().withSizeGroup(100);
+      assertSizeGroup(100, true, spec.getSizeGroupX());
+      assertSizeGroup(100, true, spec.getSizeGroupY());
+
+      spec = spec().withSizeGroup(100).withSizeGroupX(null).withSizeGroupY(null);
+      assertSizeGroup(null, false, spec.getSizeGroupX());
+      assertSizeGroup(null, false, spec.getSizeGroupY());
+
+      spec = spec().withSizeGroup(100).withSizeGroup(null);
+      assertSizeGroup(null, false, spec.getSizeGroupX());
+      assertSizeGroup(null, false, spec.getSizeGroupY());
+
+      spec = spec().withSizeGroup(100).withSizeGroupXUnassigned().withSizeGroupYUnassigned();
+      assertNotNull(spec.getSizeGroupX());
+      assertFalse(CellSpec.isSizeGroup(spec.getSizeGroupX()));
+      assertNotNull(spec.getSizeGroupY());
+      assertFalse(CellSpec.isSizeGroup(spec.getSizeGroupY()));
+
+      spec = spec().withSizeGroup(100).withSizeGroupUnassigned();
+      assertNotNull(spec.getSizeGroupX());
+      assertFalse(CellSpec.isSizeGroup(spec.getSizeGroupX()));
+      assertNotNull(spec.getSizeGroupY());
+      assertFalse(CellSpec.isSizeGroup(spec.getSizeGroupY()));
+   }
+
+   private static void assertSizeGroup(Integer expectedId, boolean expectedIsSizeGroup, Integer actualId)
+   {
+      assertEquals(expectedId, actualId);
+      assertEquals(expectedIsSizeGroup, CellSpec.isSizeGroup(actualId));
+   }
+
+   @Test
    public void preferredSizeAccessors()
    {
       spec = spec().withPreferredWidth(100);
@@ -211,8 +262,7 @@ public class CellSpecTest
       assertEquals(100, (int) spec.getPreferredWidth());
       assertEquals(200, (int) spec.getPreferredHeight());
 
-      spec = spec().withPreferredWidth(null);
-      spec = spec().withPreferredHeight(null);
+      spec = spec().withPreferredHeight(200).withPreferredWidth(null).withPreferredHeight(null);
       assertNull(spec.getPreferredWidth());
       assertNull(spec.getPreferredHeight());
    }
@@ -232,8 +282,7 @@ public class CellSpecTest
       assertEquals(2, (int) spec.getGridWidth());
       assertEquals(3, (int) spec.getGridHeight());
 
-      spec = spec().withGridWidth(null);
-      spec = spec().withGridHeight(null);
+      spec = spec().withGridSize(2, 3).withGridWidth(null).withGridHeight(null);
       assertNull(spec.getGridWidth());
       assertNull(spec.getGridHeight());
 
@@ -259,8 +308,7 @@ public class CellSpecTest
       assertEquals(0.5, spec.getWeightX(), DELTA);
       assertEquals(1.5, spec.getWeightY(), DELTA);
 
-      spec = spec().withWeightX(null);
-      spec = spec().withWeightY(null);
+      spec = spec().withWeightY(1.5).withWeightX(null).withWeightY(null);
       assertNull(spec.getWeightX());
       assertNull(spec.getWeightY());
    }
@@ -268,11 +316,42 @@ public class CellSpecTest
    @Test
    public void anchorAccessors()
    {
+      spec = spec().withAnchorX(AX.LEFT);
+      assertEquals(AX.LEFT, spec.getAnchorX());
+
       spec = spec().withAnchorY(AY.BOTTOM);
       assertEquals(AY.BOTTOM, spec.getAnchorY());
 
-      spec = spec().withAnchorX(null);
+      spec = spec().withAnchor(A.BOTH);
+      assertEquals(AX.BOTH, spec.getAnchorX());
+      assertEquals(AY.BOTH, spec.getAnchorY());
+
+      spec = spec().withAnchor(A.BOTH).withAnchorX(AX.LEFT);
+      assertEquals(AX.LEFT, spec.getAnchorX());
+      assertEquals(AY.BOTH, spec.getAnchorY());
+
+      spec = spec().withAnchor(A.BOTH).withAnchorY(AY.BOTTOM);
+      assertEquals(AX.BOTH, spec.getAnchorX());
+      assertEquals(AY.BOTTOM, spec.getAnchorY());
+
+      spec = spec().withAnchor(A.BOTH).withAnchorX(null).withAnchorY(null);
+      assertNull(spec.getAnchorX());
       assertNull(spec.getAnchorY());
+   }
+
+   @Test
+   public void baselineAccessors() {
+      spec = spec().withBaseline();
+      assertTrue(spec.getBaseline());
+
+      spec = spec().withBaseline(true);
+      assertTrue(spec.getBaseline());
+
+      spec = spec().withBaseline(false);
+      assertFalse(spec.getBaseline());
+
+      spec.withBaseline(null);
+      assertNull(spec.getBaseline());
    }
 
    @Test
@@ -342,8 +421,7 @@ public class CellSpecTest
       assertEquals(10, (int) spec.getIPadX());
       assertEquals(20, (int) spec.getIPadY());
 
-      spec = spec().withIPadX(null);
-      spec = spec().withIPadY(null);
+      spec = spec().withIPadY(20).withIPadX(null).withIPadY(null);
       assertNull(spec.getIPadX());
       assertNull(spec.getIPadY());
    }
