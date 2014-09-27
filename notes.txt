@@ -9,8 +9,10 @@ DONE alignment to baseline - first try how it actually works
  NOTE rename GBT Orientation to direction
  OK baseline on demand as withBaseline(boolean) with default = false - baseline switch applies relative or baseline positioning respectively
  DONE test recursive component orientation -> Swing's componentOrientation is not transitive
- TODO unittests
- OK refactor the code to use newest features, maybe get rid of specWithFillX at all -> spec with Fill stays
+ OK unittests for baseline and sizeGroups in spec()
+TODO unittests for SizeGroupSupport
+TODO unittests for anchor & baseline to constraints - fill and anchor
+OK refactor the code to use newest features, maybe get rid of specWithFillX at all -> spec with Fill stays
 FIXME VerticalOrientationFormDemo - scroll not working
 TODO think about text align in label, beware of vertical
 OK withBaseline(false) by default and withBaseline() with default true param
