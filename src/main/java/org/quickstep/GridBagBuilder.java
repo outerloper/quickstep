@@ -233,7 +233,7 @@ public class GridBagBuilder
       }
       if (width != null || height != null)
       {
-         return new ResizablePanel(component);
+         return ResizablePanel.wrap(component);
       }
       return component;
    }

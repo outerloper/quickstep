@@ -151,10 +151,15 @@ public final class GridBagToolKit
 
    public static class ResizablePanel extends JPanel
    {
-      public ResizablePanel(JComponent component)
+      public static ResizablePanel wrap(JComponent component)
       {
-         super(new BorderLayout());
-         add(component);
+         ResizablePanel panel = new ResizablePanel();
+         panel.add(component);
+         return panel;
+      }
+
+      public ResizablePanel()
+      {
       }
 
       @Override
@@ -166,7 +171,27 @@ public final class GridBagToolKit
       @Override
       public int getBaseline(int width, int height)
       {
-         return getComponent(0).getBaseline(width, height);
+         if (getComponentCount() > 0)
+         {
+            int result;
+            Component firstComponent = getComponent(0);
+            Dimension size = firstComponent.getPreferredSize();
+            result = firstComponent.getLocation().y + firstComponent.getBaseline(size.width, size.height);
+
+            if (getLayout() instanceof GridBagLayout)
+            {
+               GridBagLayout layout = (GridBagLayout) getLayout();
+               GridBagConstraints constraints = layout.getConstraints(firstComponent);
+               if (!isValid())
+               {
+                  result += constraints.insets.top;
+               }
+               result += constraints.ipady / 2;
+            }
+
+            return result;
+         }
+         return -1;
       }
 
       @Override

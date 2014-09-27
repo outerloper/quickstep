@@ -6,18 +6,18 @@ OK components grouping for sizes adjustment, possibly column/row/cell styling - 
 DONE alignment to baseline - first try how it actually works
  OK LEFT-RIGHT names OK (insets also respect orientation)
  OK respect Swing's componentOrientation -> replace absolute positioning with relative/baseline
- NOTE rename GBT Orientation to direction
+ OK rename GBT Orientation to direction
  OK baseline on demand as withBaseline(boolean) with default = false - baseline switch applies relative or baseline positioning respectively
  DONE test recursive component orientation -> Swing's componentOrientation is not transitive
  OK unittests for baseline and sizeGroups in spec()
-TODO unittests for SizeGroupSupport
-TODO unittests for anchor & baseline to constraints - fill and anchor
+OK unittests for SizeGroupSupport
+OK unittests for anchor & baseline to constraints - fill and anchor
 OK refactor the code to use newest features, maybe get rid of specWithFillX at all -> spec with Fill stays
-FIXME VerticalOrientationFormDemo - scroll not working
+OK VerticalOrientationFormDemo - scroll not working
 TODO think about text align in label, beware of vertical
 OK withBaseline(false) by default and withBaseline() with default true param
-TODO all anchors respecting baseline (?)
+OK all anchors respecting baseline (?) -> NO
 OK test that decoration with scroll shows scroll after shrinking
 TODO .add(label, field[, spec]/componentCommand) can have additional ":"
-TODO test baselines of panels with text fields, also when baseline component is not first
-TODO try many examples... e.g. labeled chkb group no wrapped with panel
+OK test baselines of panels with text fields, also when baseline component is not first -> we don't care when first component has no baseline
+OK try many examples... e.g. labeled chkb group no wrapped with panel -> mnemonics work fine, baseline done

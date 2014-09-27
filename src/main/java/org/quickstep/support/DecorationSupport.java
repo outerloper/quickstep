@@ -4,9 +4,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import org.quickstep.ComponentFactory;
-import org.quickstep.GridBagToolKit;
 
 import static javax.swing.BorderFactory.createCompoundBorder;
+import static org.quickstep.GridBagToolKit.*;
 
 public class DecorationSupport<T>
 {
@@ -69,7 +69,7 @@ public class DecorationSupport<T>
       {
          JScrollPane scroll = scrollDecoration.getDecoration(componentFactory);
          scroll.setViewportView(component);
-         component = new GridBagToolKit.ResizablePanel(scroll);
+         component = ResizablePanel.wrap(scroll);
       }
       if (borderDecoration != null)
       {

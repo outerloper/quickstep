@@ -33,7 +33,7 @@ public class ComponentFactory
 
    public JPanel createPanel()
    {
-      return new JPanel();
+      return new ResizablePanel();
    }
 
    public Border createBorder(String title)

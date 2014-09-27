@@ -159,6 +159,106 @@ public class CellSpecTest
    }
 
    @Test
+   public void testConstraintsFillFromSpecWithAnchor()
+   {
+      assertFill(spec().withAnchor(AX.LEFT, AY.TOP), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.LEFT, AY.CENTER), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.LEFT, AY.BOTTOM), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.CENTER, AY.BOTTOM), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.RIGHT, AY.BOTTOM), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.RIGHT, AY.CENTER), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.RIGHT, AY.TOP), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.CENTER, AY.TOP), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.NONE);
+
+      assertFill(spec().withAnchor(AX.BOTH, AY.TOP), GridBagConstraints.HORIZONTAL);
+      assertFill(spec().withAnchor(AX.BOTH, AY.CENTER), GridBagConstraints.HORIZONTAL);
+      assertFill(spec().withAnchor(AX.BOTH, AY.BOTTOM), GridBagConstraints.HORIZONTAL);
+      assertFill(spec().withAnchor(AX.LEFT, AY.BOTH), GridBagConstraints.VERTICAL);
+      assertFill(spec().withAnchor(AX.CENTER, AY.BOTH), GridBagConstraints.VERTICAL);
+      assertFill(spec().withAnchor(AX.RIGHT, AY.BOTH), GridBagConstraints.VERTICAL);
+      assertFill(spec().withAnchor(AX.BOTH, AY.BOTH), GridBagConstraints.BOTH);
+
+      assertFill(spec().withAnchor(AX.CENTER, AY.TOP), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.CENTER, AY.BOTTOM), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.LEFT, AY.CENTER), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.RIGHT, AY.CENTER), GridBagConstraints.NONE);
+      assertFill(spec().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.NONE);
+   }
+
+   private static void assertFill(CellSpec spec, int expectedFill)
+   {
+      GridBagConstraints constraints = spec.toConstraints(0, 0);
+      assertEquals(expectedFill, constraints.fill);
+   }
+
+   @Test
+   public void testConstraintsAnchorWeightFromSpecWithAnchor()
+   {
+      assertAnchor(spec().withAnchor(AX.LEFT, AY.TOP), GridBagConstraints.FIRST_LINE_START);
+      assertAnchor(spec().withAnchor(AX.LEFT, AY.CENTER), GridBagConstraints.LINE_START);
+      assertAnchor(spec().withAnchor(AX.LEFT, AY.BOTTOM), GridBagConstraints.LAST_LINE_START);
+      assertAnchor(spec().withAnchor(AX.CENTER, AY.BOTTOM), GridBagConstraints.PAGE_END);
+      assertAnchor(spec().withAnchor(AX.RIGHT, AY.BOTTOM), GridBagConstraints.LAST_LINE_END);
+      assertAnchor(spec().withAnchor(AX.RIGHT, AY.CENTER), GridBagConstraints.LINE_END);
+      assertAnchor(spec().withAnchor(AX.RIGHT, AY.TOP), GridBagConstraints.FIRST_LINE_END);
+      assertAnchor(spec().withAnchor(AX.CENTER, AY.TOP), GridBagConstraints.PAGE_START);
+
+      assertAnchor(spec().withAnchor(AX.BOTH, AY.TOP), GridBagConstraints.PAGE_START);
+      assertAnchor(spec().withAnchor(AX.BOTH, AY.CENTER), GridBagConstraints.CENTER);
+      assertAnchor(spec().withAnchor(AX.BOTH, AY.BOTTOM), GridBagConstraints.PAGE_END);
+      assertAnchor(spec().withAnchor(AX.LEFT, AY.BOTH), GridBagConstraints.LINE_START);
+      assertAnchor(spec().withAnchor(AX.CENTER, AY.BOTH), GridBagConstraints.CENTER);
+      assertAnchor(spec().withAnchor(AX.RIGHT, AY.BOTH), GridBagConstraints.LINE_END);
+      assertAnchor(spec().withAnchor(AX.BOTH, AY.BOTH), GridBagConstraints.CENTER);
+
+      assertAnchor(spec().withAnchor(AX.CENTER, AY.TOP), GridBagConstraints.PAGE_START);
+      assertAnchor(spec().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.CENTER);
+      assertAnchor(spec().withAnchor(AX.CENTER, AY.BOTTOM), GridBagConstraints.PAGE_END);
+      assertAnchor(spec().withAnchor(AX.LEFT, AY.CENTER), GridBagConstraints.LINE_START);
+      assertAnchor(spec().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.CENTER);
+      assertAnchor(spec().withAnchor(AX.RIGHT, AY.CENTER), GridBagConstraints.LINE_END);
+      assertAnchor(spec().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.CENTER);
+   }
+
+   @Test
+   public void testConstraintsAnchorFromSpecWithAnchorAndBaseline()
+   {
+      assertAnchor(spec().withBaseline().withAnchor(AX.LEFT, AY.TOP), GridBagConstraints.FIRST_LINE_START);
+      assertAnchor(spec().withBaseline().withAnchor(AX.LEFT, AY.CENTER), GridBagConstraints.BASELINE_LEADING);
+      assertAnchor(spec().withBaseline().withAnchor(AX.LEFT, AY.BOTTOM), GridBagConstraints.LAST_LINE_START);
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.BOTTOM), GridBagConstraints.PAGE_END);
+      assertAnchor(spec().withBaseline().withAnchor(AX.RIGHT, AY.BOTTOM), GridBagConstraints.LAST_LINE_END);
+      assertAnchor(spec().withBaseline().withAnchor(AX.RIGHT, AY.CENTER), GridBagConstraints.BASELINE_TRAILING);
+      assertAnchor(spec().withBaseline().withAnchor(AX.RIGHT, AY.TOP), GridBagConstraints.FIRST_LINE_END);
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.TOP), GridBagConstraints.PAGE_START);
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.BASELINE);
+
+      assertAnchor(spec().withBaseline().withAnchor(AX.BOTH, AY.TOP), GridBagConstraints.PAGE_START);
+      assertAnchor(spec().withBaseline().withAnchor(AX.BOTH, AY.CENTER), GridBagConstraints.BASELINE);
+      assertAnchor(spec().withBaseline().withAnchor(AX.BOTH, AY.BOTTOM), GridBagConstraints.PAGE_END);
+      assertAnchor(spec().withBaseline().withAnchor(AX.LEFT, AY.BOTH), GridBagConstraints.BASELINE_LEADING);
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.BOTH), GridBagConstraints.BASELINE);
+      assertAnchor(spec().withBaseline().withAnchor(AX.RIGHT, AY.BOTH), GridBagConstraints.BASELINE_TRAILING);
+      assertAnchor(spec().withBaseline().withAnchor(AX.BOTH, AY.BOTH), GridBagConstraints.BASELINE);
+
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.TOP), GridBagConstraints.PAGE_START);
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.BASELINE);
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.BOTTOM), GridBagConstraints.PAGE_END);
+      assertAnchor(spec().withBaseline().withAnchor(AX.LEFT, AY.CENTER), GridBagConstraints.BASELINE_LEADING);
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.BASELINE);
+      assertAnchor(spec().withBaseline().withAnchor(AX.RIGHT, AY.CENTER), GridBagConstraints.BASELINE_TRAILING);
+      assertAnchor(spec().withBaseline().withAnchor(AX.CENTER, AY.CENTER), GridBagConstraints.BASELINE);
+   }
+
+   private static void assertAnchor(CellSpec spec, int expectedAnchor)
+   {
+      assertEquals(expectedAnchor, spec.toConstraints(0, 0).anchor);
+   }
+
+   @Test
    public void defaultGridBagSpecHasAllFieldsOtherThanPreferredSizeOrSizeGroupNotNull() throws IllegalAccessException
    {
       spec = completeSpec();
@@ -340,7 +440,8 @@ public class CellSpecTest
    }
 
    @Test
-   public void baselineAccessors() {
+   public void baselineAccessors()
+   {
       spec = spec().withBaseline();
       assertTrue(spec.getBaseline());
 
