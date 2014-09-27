@@ -76,7 +76,7 @@ public final class GridBagToolKit
 
    public static CellSpec completeSpec()
    {
-      return new CellSpec(null, null, 1, 1, 0.0, 0.0, AX.CENTER, AY.CENTER, false, 0, 0, 0, 0, 0, 0);
+      return new CellSpec(null, null, null, null, 1, 1, 0.0, 0.0, AX.CENTER, AY.CENTER, false, 0, 0, 0, 0, 0, 0);
    }
 
 

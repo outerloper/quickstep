@@ -8,7 +8,15 @@ import static org.quickstep.support.DebugSupport.*;
 public final class CellSpec
 {
    private static final String WILDCARD = "*";
+   private static final int NO_SIZE_GROUP = -1;
 
+   public static boolean isSizeGroup(Integer sizeGroup)
+   {
+      return sizeGroup != null && sizeGroup >= 0;
+   }
+
+   private Integer sizeGroupX;
+   private Integer sizeGroupY;
    private Integer preferredWidth;
    private Integer preferredHeight;
    private Integer gridWidth;
@@ -31,7 +39,9 @@ public final class CellSpec
 
    CellSpec(CellSpec that)
    {
-      this(that.preferredWidth,
+      this(that.sizeGroupX,
+           that.sizeGroupY,
+           that.preferredWidth,
            that.preferredHeight,
            that.gridWidth,
            that.gridHeight,
@@ -49,7 +59,9 @@ public final class CellSpec
       );
    }
 
-   public CellSpec(Integer preferredWidth,
+   public CellSpec(Integer sizeGroupX,
+                   Integer sizeGroupY,
+                   Integer preferredWidth,
                    Integer preferredHeight,
                    Integer gridWidth,
                    Integer gridHeight,
@@ -65,6 +77,8 @@ public final class CellSpec
                    Integer iPadX,
                    Integer iPadY)
    {
+      this.sizeGroupX = sizeGroupX;
+      this.sizeGroupY = sizeGroupY;
       this.preferredWidth = preferredWidth;
       this.preferredHeight = preferredHeight;
       this.gridWidth = gridWidth;
@@ -84,6 +98,8 @@ public final class CellSpec
 
    public CellSpec overwriteWith(CellSpec that)
    {
+      sizeGroupX = that.sizeGroupX;
+      sizeGroupY = that.sizeGroupY;
       preferredWidth = that.preferredWidth;
       preferredHeight = that.preferredHeight;
       gridWidth = that.gridWidth;
@@ -113,6 +129,14 @@ public final class CellSpec
       if (that == null)
       {
          return this;
+      }
+      if (that.sizeGroupX != null)
+      {
+         sizeGroupX = that.sizeGroupX;
+      }
+      if (that.sizeGroupY != null)
+      {
+         sizeGroupY = that.sizeGroupY;
       }
       if (that.preferredWidth != null)
       {
@@ -177,6 +201,15 @@ public final class CellSpec
       return this;
    }
 
+   public Integer getSizeGroupX()
+   {
+      return sizeGroupX;
+   }
+
+   public Integer getSizeGroupY()
+   {
+      return sizeGroupY;
+   }
 
    public Integer getPreferredWidth()
    {
@@ -253,6 +286,40 @@ public final class CellSpec
       return iPadY;
    }
 
+
+   public CellSpec withSizeGroupX(Integer sizeGroupId)
+   {
+      sizeGroupX = sizeGroupId;
+      return this;
+   }
+
+   public CellSpec withSizeGroupXUnassigned()
+   {
+      sizeGroupX = NO_SIZE_GROUP;
+      return this;
+   }
+
+   public CellSpec withSizeGroupY(Integer value)
+   {
+      sizeGroupY = value;
+      return this;
+   }
+
+   public CellSpec withSizeGroupYUnassigned()
+   {
+      sizeGroupY = NO_SIZE_GROUP;
+      return this;
+   }
+
+   public CellSpec withSizeGroup(Integer sizeGroupXAndY)
+   {
+      return withSizeGroupX(sizeGroupXAndY).withSizeGroupY(sizeGroupXAndY);
+   }
+
+   public CellSpec withSizeGroupUnassigned()
+   {
+      return withSizeGroupXUnassigned().withSizeGroupYUnassigned();
+   }
 
    public CellSpec withPreferredWidth(Integer value)
    {
@@ -574,6 +641,14 @@ public final class CellSpec
       {
          return false;
       }
+      if (sizeGroupX != null ? !sizeGroupX.equals(that.sizeGroupX) : that.sizeGroupX != null)
+      {
+         return false;
+      }
+      if (sizeGroupY != null ? !sizeGroupY.equals(that.sizeGroupY) : that.sizeGroupY != null)
+      {
+         return false;
+      }
       if (preferredHeight != null ? !preferredHeight.equals(that.preferredHeight) : that.preferredHeight != null)
       {
          return false;
@@ -598,7 +673,9 @@ public final class CellSpec
    @SuppressWarnings("ConstantConditions")
    public int hashCode()
    {
-      int result = preferredWidth != null ? preferredWidth.hashCode() : 0;
+      int result = sizeGroupX != null ? sizeGroupX.hashCode() : 0;
+      result = 31 * result + (sizeGroupY != null ? sizeGroupY.hashCode() : 0);
+      result = 31 * result + (preferredWidth != null ? preferredWidth.hashCode() : 0);
       result = 31 * result + (preferredHeight != null ? preferredHeight.hashCode() : 0);
       result = 31 * result + (gridWidth != null ? gridWidth.hashCode() : 0);
       result = 31 * result + (gridHeight != null ? gridHeight.hashCode() : 0);
@@ -619,8 +696,10 @@ public final class CellSpec
    @Override
    public String toString()
    {
-      return String.format("CellSpec{preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s baseline=%b" +
+      return String.format("CellSpec{sizeGroup=%s,%s preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s baseline=%b" +
                               "insets(top=%s left=%s bottom=%s right=%s) pad=%s,%s}",
+                           sizeGroupX == null ? WILDCARD : (isSizeGroup(sizeGroupX) ? sizeGroupX : "-"),
+                           sizeGroupY == null ? WILDCARD : (isSizeGroup(sizeGroupY) ? sizeGroupY : "-"),
                            preferredWidth == null ? WILDCARD : preferredWidth,
                            preferredHeight == null ? WILDCARD : preferredHeight,
                            gridWidth == null ? WILDCARD : gridSizeToString(gridWidth),

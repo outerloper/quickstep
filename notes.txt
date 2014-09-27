@@ -1,8 +1,8 @@
 TODO components grouping for sizes adjustment, possibly column/row/cell styling - think about fluent interface for creating groups
- NOTE ignore row, col spans at first
- NOTE withGroup(int) withGroupX/Y(int) treeHashMap to store groups - prioritized
- NOTE withGroupUnassigned() withGroupX/YUnassigned() for removing from group
- NOTE withGroup(n) = withGroupX(n).withGroupY(n)
+ OK ignore row, col spans at first
+ OK withGroup(int) withGroupX/Y(int) treeHashMap to store groups - prioritized
+ OK withGroupUnassigned() withGroupX/YUnassigned() for removing from group
+ OK withGroup(n) = withGroupX(n).withGroupY(n)
 DONE alignment to baseline - first try how it actually works
  OK LEFT-RIGHT names OK (insets also respect orientation)
  OK respect Swing's componentOrientation -> replace absolute positioning with relative/baseline
@@ -12,5 +12,9 @@ DONE alignment to baseline - first try how it actually works
  TODO unittests
 TODO refactor the code to use newest features, maybe get rid of specWithFillX at all
 FIXME VerticalOrientationFormDemo - scroll not working
-
-TODO test that decoration with scroll shows scroll after shrinking
+TODO think about text align in label, beware of vertical
+TODO withBaseline(false) by default and all anchors respecting baseline (?) withBaseline() with default true param
+OK test that decoration with scroll shows scroll after shrinking
+TODO .add(label, field[, spec]/componentCommand) can have additional ":"
+TODO test baselines of panels with text fields, also when baseline component is not first
+TODO try many examples... e.g. labeled chkb group no wrapped with panel

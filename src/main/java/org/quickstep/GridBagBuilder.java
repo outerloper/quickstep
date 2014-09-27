@@ -6,8 +6,7 @@ import java.util.logging.Level;
 import javax.swing.*;
 
 import com.google.common.collect.*;
-import org.quickstep.support.DebugSupport;
-import org.quickstep.support.MnemonicSupport;
+import org.quickstep.support.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
@@ -33,12 +32,14 @@ public class GridBagBuilder
    private boolean empty = true;
 
    private final ComponentFactory componentFactory;
+   private SizeGroupsSupport groupsSupport;
 
-   protected GridBagBuilder(JComponent gridContainer, GridSpec gridSpec, ComponentFactory componentFactory)
+   protected GridBagBuilder(JComponent gridContainer, GridSpec gridSpec, ComponentFactory componentFactory, SizeGroupsSupport groupsSupport)
    {
       this.gridContainer = gridContainer;
       this.gridSpec = gridSpec;
       this.componentFactory = componentFactory;
+      this.groupsSupport = groupsSupport;
    }
 
    public GridSpec getGridSpec()
@@ -182,7 +183,9 @@ public class GridBagBuilder
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
       DebugSupport.attachDebugInfo(component, gridContainer, constraints);
-      gridContainer.add(getComponentToAdd(component, calculatedSpec), constraints);
+      JComponent componentToAdd = getComponentToAdd(component, calculatedSpec);
+      gridContainer.add(componentToAdd, constraints);
+      groupsSupport.add(componentToAdd, calculatedSpec);
       handleMnemonic(component); // TODO - move to factory? then factory stateful so new instance required in getChild
       // TODO also think about renaming ComponentFactory as it starts to do everything...
 

@@ -55,7 +55,7 @@ public class ComponentFactory
    public GridSpec createDefaultGridSpec()
    {
       return new GridSpec()
-         .withDefault(spec().withGap(5).withAnchorX(AX.LEFT).withBaseline(true))
+         .withDefault(spec().withGap(5).withAnchorX(AX.LEFT))
          .withRow(0, spec().withInsetTop(0))
          .withColumn(0, spec().withInsetLeft(0));
    }
