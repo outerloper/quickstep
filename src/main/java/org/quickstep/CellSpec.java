@@ -419,6 +419,11 @@ public final class CellSpec
       return this;
    }
 
+   public CellSpec withBaseline()
+   {
+      return withBaseline(true);
+   }
+
    public CellSpec withInsetTop(Integer top)
    {
       insetTop = top;

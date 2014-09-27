@@ -70,7 +70,7 @@ public final class GridBagToolKit
 
    public static CellSpec specWithFill()
    {
-      return spec().withAnchor(AX.BOTH, AY.BOTH).withWeight(1.0, 1.0);
+      return spec().withAnchor(A.BOTH).withWeight(1.0);
    }
 
 

@@ -1,4 +1,4 @@
-TODO components grouping for sizes adjustment, possibly column/row/cell styling - think about fluent interface for creating groups
+OK components grouping for sizes adjustment, possibly column/row/cell styling - think about fluent interface for creating groups
  OK ignore row, col spans at first
  OK withGroup(int) withGroupX/Y(int) treeHashMap to store groups - prioritized
  OK withGroupUnassigned() withGroupX/YUnassigned() for removing from group
@@ -10,10 +10,11 @@ DONE alignment to baseline - first try how it actually works
  OK baseline on demand as withBaseline(boolean) with default = false - baseline switch applies relative or baseline positioning respectively
  DONE test recursive component orientation -> Swing's componentOrientation is not transitive
  TODO unittests
-TODO refactor the code to use newest features, maybe get rid of specWithFillX at all
+ OK refactor the code to use newest features, maybe get rid of specWithFillX at all -> spec with Fill stays
 FIXME VerticalOrientationFormDemo - scroll not working
 TODO think about text align in label, beware of vertical
-TODO withBaseline(false) by default and all anchors respecting baseline (?) withBaseline() with default true param
+OK withBaseline(false) by default and withBaseline() with default true param
+TODO all anchors respecting baseline (?)
 OK test that decoration with scroll shows scroll after shrinking
 TODO .add(label, field[, spec]/componentCommand) can have additional ":"
 TODO test baselines of panels with text fields, also when baseline component is not first

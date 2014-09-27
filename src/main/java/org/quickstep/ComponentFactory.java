@@ -18,7 +18,7 @@ public class ComponentFactory
 
    public JComponent createHeader(String title, boolean placedInFirstRow)
    {
-      GridContainerCommand result = panel().add(title).add(createSeparator(Orientation.HORIZONTAL), specWithFillX());
+      GridContainerCommand result = panel().add(title).add(createSeparator(Orientation.HORIZONTAL), spec().withAnchorX(AX.BOTH).withWeightX(1.0));
       if (!placedInFirstRow)
       {
          result.withRow(0, spec().withInsetTop(5));

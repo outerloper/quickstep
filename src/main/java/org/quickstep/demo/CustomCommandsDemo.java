@@ -196,16 +196,7 @@ public class CustomCommandsDemo extends JFrame
       @Override
       public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
       {
-         int maxWidth = 0;
-         for (JButton button : buttons)
-         {
-            int width = button.getPreferredSize().width;
-            if (width > maxWidth)
-            {
-               maxWidth = width;
-            }
-         }
-         return panel().withContentAnchorX(AX.RIGHT).addAll(buttons, spec().withPreferredWidth(maxWidth)).getComponent();
+         return panel().withContentAnchorX(AX.RIGHT).addAll(buttons, spec().withSizeGroup(0)).getComponent();
       }
 
       @Override
