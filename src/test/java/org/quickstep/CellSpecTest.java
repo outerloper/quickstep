@@ -150,12 +150,12 @@ public class CellSpecTest
    }
 
    @Test
-   public void defaultGridBagSpecHasAllFieldsOtherThanSizeNotNull() throws IllegalAccessException
+   public void defaultGridBagSpecHasAllFieldsOtherThanPreferredSizeOrSizeGroupNotNull() throws IllegalAccessException
    {
       spec = completeSpec();
       for (Field field : CellSpec.class.getDeclaredFields())
       {
-         if (isInstanceFieldAndNotPreferredSize(field))
+         if (isInstanceFieldAndNotPreferredSizeOrSizeGroup(field))
          {
             field.setAccessible(true);
             assertNotNull(field.getName(), field.get(spec));
@@ -175,8 +175,8 @@ public class CellSpecTest
    public void testSpecToString()
    {
       spec = spec().withPreferredSize(200, 60).withGridWidth(3).withAnchorY(AY.BOTTOM).withInsetY(5);
-      assertEquals("CellSpec{preferredSize=200,60 gridSize=3,* weight=*,* anchorX=* anchorY=BOTTOM " +
-                      "insets(top=5 left=* bottom=5 right=*) pad=*,*}", spec.toString());
+      assertEquals("CellSpec{sizeGroup=*,* preferredSize=200,60 gridSize=3,* weight=*,* anchorX=* anchorY=BOTTOM " +
+                      "baseline=* insets(top=5 left=* bottom=5 right=*) pad=*,*}", spec.toString());
    }
 
    @Test
@@ -189,9 +189,11 @@ public class CellSpecTest
                    gbcToString(constraints));
    }
 
-   private boolean isInstanceFieldAndNotPreferredSize(Field field)
+   private boolean isInstanceFieldAndNotPreferredSizeOrSizeGroup(Field field)
    {
-      return !"preferredWidth".equals(field.getName()) && !"preferredHeight".equals(field.getName()) && !Modifier.isStatic(field.getModifiers());
+      return !"preferredWidth".equals(field.getName()) && !"preferredHeight".equals(field.getName())
+         && !"sizeGroupX".equals(field.getName()) && !"sizeGroupY".equals(field.getName())
+         && !Modifier.isStatic(field.getModifiers());
    }
 
    @Test

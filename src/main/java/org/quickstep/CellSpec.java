@@ -701,7 +701,7 @@ public final class CellSpec
    @Override
    public String toString()
    {
-      return String.format("CellSpec{sizeGroup=%s,%s preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s baseline=%b" +
+      return String.format("CellSpec{sizeGroup=%s,%s preferredSize=%s,%s gridSize=%s,%s weight=%s,%s anchorX=%s anchorY=%s baseline=%s " +
                               "insets(top=%s left=%s bottom=%s right=%s) pad=%s,%s}",
                            sizeGroupX == null ? WILDCARD : (isSizeGroup(sizeGroupX) ? sizeGroupX : "-"),
                            sizeGroupY == null ? WILDCARD : (isSizeGroup(sizeGroupY) ? sizeGroupY : "-"),
