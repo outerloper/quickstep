@@ -18,10 +18,10 @@ public class CustomComponentFactoryDemo extends JFrame
             .withDirection(Direction.TOP_TO_BOTTOM)
             .add(panel()
                     .withBorder("Custom Panel")
-                    .add(line().add("User").add(new JTextField(), spec().withPreferredWidth(100)))
-                    .add(line().add("Password").add(new JTextField(), spec().withPreferredWidth(100)))
+                    .add(line().add("User", new JTextField(), spec().withPreferredWidth(100)))
+                    .add(line().add("Password", new JTextField(), spec().withPreferredWidth(100)))
             )
-            .add(new JButton("Proceed"), spec().withGridWidthRemainder().withAnchor(A.CENTER))
+            .add(new JButton("Proceed"), spec().withGridWidthRemainder().withAnchor(A.CENTER).withInset(5))
       );
 
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

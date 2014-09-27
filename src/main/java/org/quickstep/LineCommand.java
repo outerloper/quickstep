@@ -28,14 +28,29 @@ public class LineCommand implements GridBagCommand
       return commandListSupport.addBlank(spec);
    }
 
-   public LineCommand add(String text)
+   public LineCommand add(String label)
    {
-      return commandListSupport.add(text);
+      return commandListSupport.add(label);
    }
 
-   public LineCommand add(String text, CellSpec spec)
+   public LineCommand add(String label, CellSpec spec)
    {
-      return commandListSupport.add(text, spec);
+      return commandListSupport.add(label, spec);
+   }
+
+   public LineCommand add(String label, JComponent component)
+   {
+      return commandListSupport.add(label, component);
+   }
+
+   public LineCommand add(String label, JComponent component, CellSpec spec)
+   {
+      return commandListSupport.add(label, component, spec);
+   }
+
+   public LineCommand add(String label, GridBagCommand command)
+   {
+      return commandListSupport.add(label, command);
    }
 
    public LineCommand add(JComponent component)
@@ -48,14 +63,14 @@ public class LineCommand implements GridBagCommand
       return commandListSupport.add(component, spec);
    }
 
-   public LineCommand addAll(Iterable<? extends JComponent> components)
+   public LineCommand add(Iterable<? extends JComponent> components)
    {
-      return commandListSupport.addAll(components);
+      return commandListSupport.add(components);
    }
 
-   public LineCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
+   public LineCommand add(Iterable<? extends JComponent> components, CellSpec spec)
    {
-      return commandListSupport.addAll(components, spec);
+      return commandListSupport.add(components, spec);
    }
 
    public LineCommand addSeparator()

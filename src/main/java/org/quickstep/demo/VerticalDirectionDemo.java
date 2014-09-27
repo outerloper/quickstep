@@ -14,12 +14,12 @@ public class VerticalDirectionDemo extends JFrame
          this, panel()
             .withDirection(Direction.TOP_TO_BOTTOM)
             .withLineLength(10)
-            .withScroll()
-            .withDefault(specWithFill())
-            .addAll(generateOptions())
+            .withContentAnchor(A.BOTH)
+            .add(generateOptions())
       );
 
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      setMinimumSize(getPreferredSize());
       setLocationRelativeTo(null);
       setAlwaysOnTop(true);
       setResizable(true);

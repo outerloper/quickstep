@@ -1,23 +1,5 @@
-OK components grouping for sizes adjustment, possibly column/row/cell styling - think about fluent interface for creating groups
- OK ignore row, col spans at first
- OK withGroup(int) withGroupX/Y(int) treeHashMap to store groups - prioritized
- OK withGroupUnassigned() withGroupX/YUnassigned() for removing from group
- OK withGroup(n) = withGroupX(n).withGroupY(n)
-DONE alignment to baseline - first try how it actually works
- OK LEFT-RIGHT names OK (insets also respect orientation)
- OK respect Swing's componentOrientation -> replace absolute positioning with relative/baseline
- OK rename GBT Orientation to direction
- OK baseline on demand as withBaseline(boolean) with default = false - baseline switch applies relative or baseline positioning respectively
- DONE test recursive component orientation -> Swing's componentOrientation is not transitive
- OK unittests for baseline and sizeGroups in spec()
-OK unittests for SizeGroupSupport
-OK unittests for anchor & baseline to constraints - fill and anchor
-OK refactor the code to use newest features, maybe get rid of specWithFillX at all -> spec with Fill stays
-OK VerticalOrientationFormDemo - scroll not working
-TODO think about text align in label, beware of vertical
-OK withBaseline(false) by default and withBaseline() with default true param
-OK all anchors respecting baseline (?) -> NO
-OK test that decoration with scroll shows scroll after shrinking
-TODO .add(label, field[, spec]/componentCommand) can have additional ":"
-OK test baselines of panels with text fields, also when baseline component is not first -> we don't care when first component has no baseline
-OK try many examples... e.g. labeled chkb group no wrapped with panel -> mnemonics work fine, baseline done
+OK think about text align in label, beware of vertical -> NO, if you want to have your labels right-aligned, specify it in ComponentFactory
+OK .add(label, field[, spec]/componentCommand) can have additional ":"
+TODO move handling mnemonics to factory
+TODO factory starts to be golden hammer, think about splitting it
+OK resizable panel without components - test getting resizable behavior

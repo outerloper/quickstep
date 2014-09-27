@@ -186,8 +186,7 @@ public class GridBagBuilder
       JComponent componentToAdd = getComponentToAdd(component, calculatedSpec);
       gridContainer.add(componentToAdd, constraints);
       groupsSupport.add(componentToAdd, calculatedSpec);
-      handleMnemonic(component); // TODO - move to factory? then factory stateful so new instance required in getChild
-      // TODO also think about renaming ComponentFactory as it starts to do everything...
+      handleMnemonic(component);
 
       if (isHorizontal() && calculatedSpec.getGridWidth() == GridBagConstraints.REMAINDER ||
          !isHorizontal() && calculatedSpec.getGridHeight() == GridBagConstraints.REMAINDER)

@@ -37,14 +37,29 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
       return commandListSupport.addBlank(spec);
    }
 
-   public T add(String text)
+   public T add(String label)
    {
-      return commandListSupport.add(text);
+      return commandListSupport.add(label);
    }
 
-   public T add(String text, CellSpec spec)
+   public T add(String label, CellSpec spec)
    {
-      return commandListSupport.add(text, spec);
+      return commandListSupport.add(label, spec);
+   }
+
+   public T add(String label, JComponent component)
+   {
+      return commandListSupport.add(label, component);
+   }
+
+   public T add(String label, JComponent component, CellSpec spec)
+   {
+      return commandListSupport.add(label, component, spec);
+   }
+
+   public T add(String label, GridBagCommand command)
+   {
+      return commandListSupport.add(label, command);
    }
 
    public T add(JComponent component)
@@ -57,14 +72,14 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
       return commandListSupport.add(component, spec);
    }
 
-   public T addAll(Iterable<? extends JComponent> components)
+   public T add(Iterable<? extends JComponent> components)
    {
-      return commandListSupport.addAll(components);
+      return commandListSupport.add(components);
    }
 
-   public T addAll(Iterable<? extends JComponent> components, CellSpec spec)
+   public T add(Iterable<? extends JComponent> components, CellSpec spec)
    {
-      return commandListSupport.addAll(components, spec);
+      return commandListSupport.add(components, spec);
    }
 
    public T addHeader(String title)

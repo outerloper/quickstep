@@ -27,14 +27,29 @@ public class SeqCommand implements GridBagCommand
       return commandListSupport.addBlank(spec);
    }
 
-   public SeqCommand add(String text)
+   public SeqCommand add(String label)
    {
-      return commandListSupport.add(text);
+      return commandListSupport.add(label);
    }
 
-   public SeqCommand add(String text, CellSpec spec)
+   public SeqCommand add(String label, CellSpec spec)
    {
-      return commandListSupport.add(text, spec);
+      return commandListSupport.add(label, spec);
+   }
+
+   public SeqCommand add(String label, JComponent component)
+   {
+      return commandListSupport.add(label, component);
+   }
+
+   public SeqCommand add(String label, JComponent component, CellSpec spec)
+   {
+      return commandListSupport.add(label, component, spec);
+   }
+
+   public SeqCommand add(String label, GridBagCommand command)
+   {
+      return commandListSupport.add(label, command);
    }
 
    public SeqCommand add(JComponent component)
@@ -47,14 +62,14 @@ public class SeqCommand implements GridBagCommand
       return commandListSupport.add(component, spec);
    }
 
-   public SeqCommand addAll(Iterable<? extends JComponent> components)
+   public SeqCommand add(Iterable<? extends JComponent> components)
    {
-      return commandListSupport.addAll(components);
+      return commandListSupport.add(components);
    }
 
-   public SeqCommand addAll(Iterable<? extends JComponent> components, CellSpec spec)
+   public SeqCommand add(Iterable<? extends JComponent> components, CellSpec spec)
    {
-      return commandListSupport.addAll(components, spec);
+      return commandListSupport.add(components, spec);
    }
 
    public SeqCommand addHeader(String title)

@@ -21,10 +21,11 @@ public class ResizablePanelTest
    }
 
    @Test
-   public void calculatingBaselineOfEmptyResizablePanelCausesNoError()
+   public void whenEmptyResizablePanelThenItsBaselineUnspecifiedAndBehaviorOther()
    {
       ResizablePanel panel = new ResizablePanel();
       assertEquals(-1, panel.getBaseline(20, 30));
+      assertEquals(Component.BaselineResizeBehavior.OTHER, panel.getBaselineResizeBehavior());
    }
 
    @Test

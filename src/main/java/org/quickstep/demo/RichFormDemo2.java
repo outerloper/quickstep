@@ -12,17 +12,17 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class RichFormDemo2 extends JFrame
 {
-   JTextField startDateTextField = new JTextField();
-   JTextField endDateTextField = new JTextField();
-   JTextField freqTextField = new JTextField();
    JTextField criterion1TextField = new JTextField();
    JTextField criterion2TextField = new JTextField();
    JTextField criterion3TextField = new JTextField();
    JTextField criterion4TextField = new JTextField();
-   JComboBox criterion5ComboBox = new JComboBox();
    JTextField criterion5TextField = new JTextField();
-   JComboBox criterion6ComboBox = new JComboBox();
    JTextField criterion6TextField = new JTextField();
+   JTextField criterion7TextField = new JTextField();
+   JComboBox criterion8ComboBox = new JComboBox();
+   JTextField criterion8TextField = new JTextField();
+   JComboBox criterion9ComboBox = new JComboBox();
+   JTextField criterion9TextField = new JTextField();
    JTextField abcTextField = new JTextField();
    JCheckBox roundTripCheckBox = new JCheckBox("Checkbox option");
    JComboBox other1ComboBox = new JComboBox();
@@ -45,7 +45,6 @@ public class RichFormDemo2 extends JFrame
       buildComponents();
       arrangeComponents();
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setMinimumSize(getPreferredSize());
       setLocationRelativeTo(null);
       setAlwaysOnTop(true);
       setResizable(true);
@@ -57,37 +56,38 @@ public class RichFormDemo2 extends JFrame
       buildContent(
          this, vpanel()
             .withContentAnchorX(AX.BOTH)
+            .withScroll()
             .add(panel()
                     .withBorder("Conditions")
                     .withGrid(getGridSpec())
                     .addHeader("Section 1")
-                    .add(line().add("Start Date:").add(startDateTextField).add("End Date:").add(endDateTextField).add("Freq:").add(freqTextField))
+                    .add(line().add("Criterion &1:", criterion1TextField).add("Criterion &2:", criterion2TextField).add("Crit. &3:", criterion3TextField))
                     .addHeader("Section 2")
-                    .add(line().add("Criterion &1:").add(criterion1TextField).add("Criterion &2:").add(criterion2TextField))
+                    .add(line().add("Criterion &4:", criterion4TextField).add("Criterion &5:", criterion5TextField))
                     .addHeader("Section 3")
-                    .add(line().add("Criterion &3:").add(criterion3TextField).add("Criterion &4:").add(criterion4TextField))
+                    .add(line().add("Criterion &6:", criterion6TextField).add("Criterion &7:", criterion7TextField))
                     .addHeader("Section 4")
-                    .add(lineWithCombo().add("Criterion &5 Level:").add(criterion5ComboBox).add(criterion5TextField))
-                    .add(lineWithCombo().add("Criterion &6 Level:").add(criterion6ComboBox).add(criterion6TextField).add(roundTripCheckBox, getRoundTripSpec()))
+                    .add(lineWithCombo().add("Criterion &8 Level:", criterion8ComboBox).add(criterion8TextField))
+                    .add(lineWithCombo().add("Criterion &9 Level:", criterion9ComboBox).add(criterion9TextField).add(roundTripCheckBox, getRoundTripSpec()))
                     .addHeader("Section 5")
-                    .add(lineWithCombo().add("Other 1:").add(other1ComboBox).add(other1TextField).add("ABC:").add(abcTextField))
-                    .add(lineWithCombo().add("Other 2:").add(other2ComboBox).add(other2TextField))
-                    .add(lineWithCombo().add("Other 3:").add(other3ComboBox).add(other3TextField))
+                    .add(lineWithCombo().add("Other 1:", other1ComboBox).add(other1TextField).add("ABC:", abcTextField))
+                    .add(lineWithCombo().add("Other 2:", other2ComboBox).add(other2TextField))
+                    .add(lineWithCombo().add("Other 3:", other3ComboBox).add(other3TextField))
             )
             .add(panel()
                     .withContentAnchor(A.BOTH)
-                    .add(vpanel().withContentAnchorX(AX.LEFT).withBorder("Direction").addAll(directionRadios))
-                    .add(vpanel().withContentAnchorX(AX.LEFT).withBorder("Scope").addAll(scopeRadios))
+                    .add(vpanel().withContentAnchorX(AX.LEFT).withBorder("Direction").add(directionRadios))
+                    .add(vpanel().withContentAnchorX(AX.LEFT).withBorder("Scope").add(scopeRadios))
                     .add(panel().withContentAnchorX(AX.LEFT).withBorder("Highlight")
                             .withColumn(0, spec().withAnchorX(AX.RIGHT))
-                            .add(line().add("Color:").add(colorPicker))
-                            .add(line().add("Thickness:").add(thicknessComboBox))
+                            .add(line().add("Color:", colorPicker))
+                            .add(line().add("Thickness:", thicknessComboBox))
                     )
             )
             .add(panel()
                     .withSpec(spec().withAnchor(AX.RIGHT, AY.BOTTOM).withWeightY(1.0))
                     .withDefault(spec().withSizeGroupX(0))
-                    .add(seq(clearButton, findAllButton, findNextButton, closeButton))
+                    .add(Arrays.asList(clearButton, findAllButton, findNextButton, closeButton))
             )
       );
    }
@@ -123,7 +123,7 @@ public class RichFormDemo2 extends JFrame
          colorPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
          colorPanels.add(colorPanel);
       }
-      colorPicker = panel().addAll(colorPanels, spec().withInset(1).withPreferredSize(18, 18)).getComponent();
+      colorPicker = panel().add(colorPanels, spec().withInset(1).withPreferredSize(18, 18)).getComponent();
    }
 
    public static void main(String[] args)

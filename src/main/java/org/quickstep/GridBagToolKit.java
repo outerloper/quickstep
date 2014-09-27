@@ -111,11 +111,6 @@ public final class GridBagToolKit
       return new SeqCommand();
    }
 
-   public static SeqCommand seq(JComponent... components)
-   {
-      return seq().addAll(Arrays.asList(components));
-   }
-
    public static ComponentCommand component(JComponent component)
    {
       return new ComponentCommand(component);
@@ -160,6 +155,7 @@ public final class GridBagToolKit
 
       public ResizablePanel()
       {
+         super(new BorderLayout());
       }
 
       @Override
@@ -197,7 +193,11 @@ public final class GridBagToolKit
       @Override
       public BaselineResizeBehavior getBaselineResizeBehavior()
       {
-         return getComponent(0).getBaselineResizeBehavior();
+         if (getComponentCount() > 0)
+         {
+            return getComponent(0).getBaselineResizeBehavior();
+         }
+         return BaselineResizeBehavior.OTHER;
       }
    }
 }

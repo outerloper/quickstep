@@ -310,7 +310,7 @@ public class VerticalGridBagBuilderTest
       panelCommand.
          withLineLength(3).
          withColumn(0, spec().withInsetLeft(30)).
-         addAll(checkBoxes, spec().withInsetTop(20)).
+         add(checkBoxes, spec().withInsetTop(20)).
          getComponent();
 
       verify(panel);

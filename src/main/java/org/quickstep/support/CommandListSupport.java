@@ -42,6 +42,24 @@ public class CommandListSupport<T> implements Iterable<GridBagCommand>
       return add(new LabelCommand(text).withSpec(spec));
    }
 
+   public T add(String label, JComponent component)
+   {
+      add(label);
+      return add(component);
+   }
+
+   public T add(String label, JComponent component, CellSpec spec)
+   {
+      add(label);
+      return add(component, spec);
+   }
+
+   public T add(String label, GridBagCommand command)
+   {
+      add(label);
+      return add(command);
+   }
+
    public T add(JComponent component)
    {
       return add(component, spec());
@@ -52,12 +70,12 @@ public class CommandListSupport<T> implements Iterable<GridBagCommand>
       return add(component(component).withSpec(spec));
    }
 
-   public T addAll(Iterable<? extends JComponent> components)
+   public T add(Iterable<? extends JComponent> components)
    {
-      return addAll(components, spec());
+      return add(components, spec());
    }
 
-   public T addAll(Iterable<? extends JComponent> components, CellSpec spec)
+   public T add(Iterable<? extends JComponent> components, CellSpec spec)
    {
       for (JComponent component : components)
       {

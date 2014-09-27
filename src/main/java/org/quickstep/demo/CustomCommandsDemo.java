@@ -196,7 +196,7 @@ public class CustomCommandsDemo extends JFrame
       @Override
       public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
       {
-         return panel().withContentAnchorX(AX.RIGHT).addAll(buttons, spec().withSizeGroup(0)).getComponent();
+         return panel().withContentAnchorX(AX.RIGHT).add(buttons, spec().withSizeGroup(0)).getComponent();
       }
 
       @Override
