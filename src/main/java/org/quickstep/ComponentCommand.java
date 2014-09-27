@@ -14,7 +14,7 @@ public class ComponentCommand extends AbstractComponentCommand<ComponentCommand>
    }
 
    @Override
-   public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+   public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
    {
       return component;
    }

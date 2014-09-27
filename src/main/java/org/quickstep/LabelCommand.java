@@ -12,7 +12,7 @@ public class LabelCommand extends AbstractComponentCommand<LabelCommand>
    }
 
    @Override
-   public JComponent getComponent(GridBagToolKit.Orientation parentOrientation, ComponentFactory parentFactory)
+   public JComponent getComponent(GridBagToolKit.Direction parentDirection, ComponentFactory parentFactory)
    {
       return parentFactory.createLabel(text);
    }

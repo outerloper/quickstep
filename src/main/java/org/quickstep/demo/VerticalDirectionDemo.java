@@ -6,13 +6,13 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class VerticalOrientationDemo extends JFrame
+public class VerticalDirectionDemo extends JFrame
 {
-   public VerticalOrientationDemo()
+   public VerticalDirectionDemo()
    {
       buildContent(
          this, panel()
-            .withOrientation(Orientation.VERTICAL)
+            .withDirection(Direction.TOP_TO_BOTTOM)
             .withLineLength(10)
             .withScroll()
             .withDefault(specWithFill())
@@ -39,6 +39,6 @@ public class VerticalOrientationDemo extends JFrame
    public static void main(String[] args)
    {
       DemoUtils.setSystemLookAndFeel();
-      new VerticalOrientationDemo();
+      new VerticalDirectionDemo();
    }
 }

@@ -50,9 +50,9 @@ public class GridSpecSupport<T>
       return owner;
    }
 
-   public T withOrientation(Orientation orientation)
+   public T withDirection(Direction direction)
    {
-      gridSpec.withOrientation(orientation);
+      gridSpec.withDirection(direction);
       return owner;
    }
 

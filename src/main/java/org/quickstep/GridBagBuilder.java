@@ -75,7 +75,7 @@ public class GridBagBuilder
 
    public boolean isHorizontal()
    {
-      return gridSpec.getOrientation().isHorizontal();
+      return gridSpec.getDirection().isHorizontal();
    }
 
    public boolean isEmpty()

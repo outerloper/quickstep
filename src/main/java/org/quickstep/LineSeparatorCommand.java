@@ -18,7 +18,7 @@ public class LineSeparatorCommand implements GridBagCommand
    public void apply(GridBagBuilder builder)
    {
       boolean horizontal = builder.isHorizontal();
-      JComponent separator = builder.getComponentFactory().createSeparator(horizontal ? Orientation.HORIZONTAL : Orientation.VERTICAL);
+      JComponent separator = builder.getComponentFactory().createSeparator(horizontal ? Direction.LEFT_TO_RIGHT : Direction.TOP_TO_BOTTOM);
       CellSpec spec = spec();
 
       if (horizontal)

@@ -18,7 +18,7 @@ public class ComponentFactory
 
    public JComponent createHeader(String title, boolean placedInFirstRow)
    {
-      GridContainerCommand result = panel().add(title).add(createSeparator(Orientation.HORIZONTAL), spec().withAnchorX(AX.BOTH).withWeightX(1.0));
+      GridContainerCommand result = panel().add(title).add(createSeparator(Direction.LEFT_TO_RIGHT), spec().withAnchorX(AX.BOTH).withWeightX(1.0));
       if (!placedInFirstRow)
       {
          result.withRow(0, spec().withInsetTop(5));
@@ -26,9 +26,9 @@ public class ComponentFactory
       return result.getComponent();
    }
 
-   public JComponent createSeparator(Orientation orientation)
+   public JComponent createSeparator(Direction direction)
    {
-      return new JSeparator(orientation.isHorizontal() ? JSeparator.HORIZONTAL : JSeparator.VERTICAL);
+      return new JSeparator(direction.isHorizontal() ? JSeparator.HORIZONTAL : JSeparator.VERTICAL);
    }
 
    public JPanel createPanel()
@@ -79,8 +79,8 @@ public class ComponentFactory
    private <C extends Container> C genericBuildContent(C container, AbstractComponentCommand command)
    {
       container.setLayout(new GridBagLayout());
-      JComponent component = command.getComponent(Orientation.HORIZONTAL, this);
-      GridBagConstraints constraints = specWithFill().withInset(5).overrideWith(command.getDefaultSpec(Orientation.HORIZONTAL)).toConstraints(0, 0);
+      JComponent component = command.getComponent(Direction.LEFT_TO_RIGHT, this);
+      GridBagConstraints constraints = specWithFill().withInset(5).overrideWith(command.getDefaultSpec(Direction.LEFT_TO_RIGHT)).toConstraints(0, 0);
 
       container.add(component, constraints);
       DebugSupport.attachDebugInfo(component, container, constraints);

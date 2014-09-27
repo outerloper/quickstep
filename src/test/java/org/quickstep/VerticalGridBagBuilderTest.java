@@ -21,7 +21,7 @@ public class VerticalGridBagBuilderTest
    {
       panel = createMock(JPanel.class);
       panel.setLayout((LayoutManager) anyObject());
-      panelCommand = panel().on(panel).withOrientation(Orientation.VERTICAL);
+      panelCommand = panel().on(panel).withDirection(Direction.TOP_TO_BOTTOM);
    }
 
    @Test

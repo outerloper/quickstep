@@ -69,7 +69,7 @@ public class HeaderCommandTest
       replay(panel);
 
       panelCommand.
-         withOrientation(Orientation.VERTICAL).
+         withDirection(Direction.TOP_TO_BOTTOM).
          add(aComponent()).
          add(aComponent()).
          addHeader("header").
@@ -108,7 +108,7 @@ public class HeaderCommandTest
       replay(panel);
 
       panelCommand.
-         withOrientation(Orientation.VERTICAL).
+         withDirection(Direction.TOP_TO_BOTTOM).
          withLineLength(2).
          add(aComponent()).
          add(aComponent()).

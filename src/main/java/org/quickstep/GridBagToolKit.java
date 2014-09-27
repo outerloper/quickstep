@@ -24,18 +24,18 @@ public final class GridBagToolKit
       CENTER, TOP, BOTTOM, BOTH
    }
 
-   public enum Orientation
+   public enum Direction
    {
-      HORIZONTAL, VERTICAL;
+      LEFT_TO_RIGHT, TOP_TO_BOTTOM;
 
       public boolean isHorizontal()
       {
-         return this == HORIZONTAL;
+         return this == LEFT_TO_RIGHT;
       }
 
-      public Orientation getOther()
+      public Direction getOther()
       {
-         return this == HORIZONTAL ? VERTICAL : HORIZONTAL;
+         return this == LEFT_TO_RIGHT ? TOP_TO_BOTTOM : LEFT_TO_RIGHT;
       }
    }
 
@@ -98,7 +98,7 @@ public final class GridBagToolKit
 
    public static PanelCommand vpanel()
    {
-      return new PanelCommand().withOrientation(Orientation.VERTICAL);
+      return new PanelCommand().withDirection(Direction.TOP_TO_BOTTOM);
    }
 
    public static LineCommand line()

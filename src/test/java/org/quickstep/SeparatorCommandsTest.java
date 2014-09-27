@@ -15,7 +15,7 @@ public class SeparatorCommandsTest
 {
    private JPanel panel = createMock(JPanel.class);
    private PanelCommand panelCommand;
-   private Orientation actualOrientation;
+   private Direction actualDirection;
 
    @Before
    public void setUp()
@@ -24,10 +24,10 @@ public class SeparatorCommandsTest
       panelCommand = panel().on(panel).withComponentFactory(new ComponentFactory()
       {
          @Override
-         public JComponent createSeparator(Orientation orientation)
+         public JComponent createSeparator(Direction direction)
          {
-            actualOrientation = orientation;
-            return super.createSeparator(orientation);
+            actualDirection = direction;
+            return super.createSeparator(direction);
          }
       });
    }
@@ -44,7 +44,7 @@ public class SeparatorCommandsTest
          getComponent();
 
       verify(panel);
-      assertEquals(actualOrientation, Orientation.VERTICAL);
+      assertEquals(actualDirection, Direction.TOP_TO_BOTTOM);
    }
 
    @Test
@@ -70,12 +70,12 @@ public class SeparatorCommandsTest
       replay(panel);
 
       panelCommand.
-         withOrientation(Orientation.VERTICAL).
+         withDirection(Direction.TOP_TO_BOTTOM).
          addSeparator().
          getComponent();
 
       verify(panel);
-      assertEquals(actualOrientation, Orientation.HORIZONTAL);
+      assertEquals(actualDirection, Direction.LEFT_TO_RIGHT);
    }
 
    @Test
@@ -86,7 +86,7 @@ public class SeparatorCommandsTest
       replay(panel);
 
       panelCommand.
-         withOrientation(Orientation.VERTICAL).
+         withDirection(Direction.TOP_TO_BOTTOM).
          withDefault(specWithFill()).
          addSeparator().
          getComponent();
@@ -106,7 +106,7 @@ public class SeparatorCommandsTest
          getComponent();
 
       verify(panel);
-      assertEquals(actualOrientation, Orientation.HORIZONTAL);
+      assertEquals(actualDirection, Direction.LEFT_TO_RIGHT);
    }
 
    @Test
@@ -132,12 +132,12 @@ public class SeparatorCommandsTest
       replay(panel);
 
       panelCommand.
-         withOrientation(Orientation.VERTICAL).
+         withDirection(Direction.TOP_TO_BOTTOM).
          addLineSeparator().
          getComponent();
 
       verify(panel);
-      assertEquals(actualOrientation, Orientation.VERTICAL);
+      assertEquals(actualDirection, Direction.TOP_TO_BOTTOM);
    }
 
    @Test
@@ -148,7 +148,7 @@ public class SeparatorCommandsTest
       replay(panel);
 
       panelCommand.
-         withOrientation(Orientation.VERTICAL).
+         withDirection(Direction.TOP_TO_BOTTOM).
          withDefault(specWithFill()).
          addLineSeparator().
          getComponent();
@@ -187,7 +187,7 @@ public class SeparatorCommandsTest
       replay(panel);
 
       panelCommand.
-         withOrientation(Orientation.VERTICAL).
+         withDirection(Direction.TOP_TO_BOTTOM).
          add(aComponent()).
          add(aComponent()).
          addLineSeparator().

@@ -11,7 +11,7 @@ import static org.quickstep.GridBagToolKit.*;
 public class GridSpec
 {
    private Integer lineLength;
-   private Orientation orientation = Orientation.HORIZONTAL;
+   private Direction direction = Direction.LEFT_TO_RIGHT;
    private final CellSpec defaultSpec = spec();
    private final Map<Integer, CellSpec> columnSpecs = new TreeMap<Integer, CellSpec>();
    private final Map<Integer, CellSpec> rowSpecs = new TreeMap<Integer, CellSpec>();
@@ -22,15 +22,15 @@ public class GridSpec
    {
    }
 
-   public GridSpec withOrientation(Orientation value)
+   public GridSpec withDirection(Direction value)
    {
-      orientation = value;
+      direction = value;
       return this;
    }
 
-   public Orientation getOrientation()
+   public Direction getDirection()
    {
-      return orientation;
+      return direction;
    }
 
    public GridSpec withLineLength(Integer lineLength)
@@ -132,9 +132,9 @@ public class GridSpec
       {
          lineLength = that.lineLength;
       }
-      if (that.orientation != null)
+      if (that.direction != null)
       {
-         orientation = that.orientation;
+         direction = that.direction;
       }
       withDefault(that.defaultSpec);
       for (Map.Entry<Integer, CellSpec> entry : that.rowSpecs.entrySet())
@@ -168,7 +168,7 @@ public class GridSpec
       if (!columnSpecs.equals(spec.columnSpecs)) return false;
       if (!defaultSpec.equals(spec.defaultSpec)) return false;
       if (lineLength != null ? !lineLength.equals(spec.lineLength) : spec.lineLength != null) return false;
-      if (orientation != spec.orientation) return false;
+      if (direction != spec.direction) return false;
       if (!rowSpecs.equals(spec.rowSpecs)) return false;
       if (!rowSpecsOverridingColumnSpecs.equals(spec.rowSpecsOverridingColumnSpecs)) return false;
       //noinspection SimplifiableIfStatement
@@ -179,7 +179,7 @@ public class GridSpec
    public int hashCode()
    {
       int result = lineLength != null ? lineLength.hashCode() : 0;
-      result = 31 * result + orientation.hashCode();
+      result = 31 * result + direction.hashCode();
       result = 31 * result + defaultSpec.hashCode();
       result = 31 * result + columnSpecs.hashCode();
       result = 31 * result + rowSpecs.hashCode();
@@ -191,7 +191,7 @@ public class GridSpec
    @Override
    public String toString()
    {
-      String result = "GridSpec{orientation=" + orientation + ", lineLength=" + lineLength + "\n " +
+      String result = "GridSpec{direction=" + direction + ", lineLength=" + lineLength + "\n " +
          defaultSpec + "\n";
       for (Map.Entry<Integer, CellSpec> entry : columnSpecs.entrySet())
       {

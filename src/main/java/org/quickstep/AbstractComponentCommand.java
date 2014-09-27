@@ -11,11 +11,11 @@ public abstract class AbstractComponentCommand<T extends AbstractComponentComman
 {
    private final CellSpec cellSpec = spec();
 
-   public abstract JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory);
+   public abstract JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory);
 
    public final JComponent getComponent()
    {
-      return getComponent(Orientation.HORIZONTAL, getDefaultComponentFactory());
+      return getComponent(Direction.LEFT_TO_RIGHT, getDefaultComponentFactory());
    }
 
    public final T withSpec(CellSpec spec)
@@ -24,7 +24,7 @@ public abstract class AbstractComponentCommand<T extends AbstractComponentComman
       return self();
    }
 
-   protected CellSpec getDefaultSpec(Orientation parentOrientation)
+   protected CellSpec getDefaultSpec(Direction parentDirection)
    {
       return spec();
    }
@@ -32,14 +32,14 @@ public abstract class AbstractComponentCommand<T extends AbstractComponentComman
    @Override
    public final void apply(GridBagBuilder builder)
    {
-      Orientation orientation = builder.isHorizontal() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
-      JComponent component = getComponent(orientation, builder.getComponentFactory());
+      Direction direction = builder.isHorizontal() ? Direction.LEFT_TO_RIGHT : Direction.TOP_TO_BOTTOM;
+      JComponent component = getComponent(direction, builder.getComponentFactory());
       if (component != null)
       {
          try
          {
             builder.moveToFreeCell();
-            builder.placeComponent(component, getDefaultSpec(orientation).overrideWith(cellSpec));
+            builder.placeComponent(component, getDefaultSpec(direction).overrideWith(cellSpec));
          }
          catch (GridBagException e)
          {

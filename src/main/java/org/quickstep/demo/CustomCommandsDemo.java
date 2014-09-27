@@ -20,7 +20,7 @@ public class CustomCommandsDemo extends JFrame
       buildContent(
          this, panel()
             .withContentAnchor(A.BOTH)
-            .withOrientation(Orientation.VERTICAL)
+            .withDirection(Direction.TOP_TO_BOTTOM)
             .add(toolbar()
                     .add(new JButton(getIcon("FileChooser.newFolderIcon")))
                     .add(new JButton(getIcon("FileChooser.upFolderIcon")))
@@ -32,7 +32,7 @@ public class CustomCommandsDemo extends JFrame
                     .add(tab("First").add("First tab content"))
                     .add(tab("Second")
                             .withContentAnchor(A.BOTH)
-                            .add(split(Orientation.VERTICAL)
+                            .add(split(Direction.TOP_TO_BOTTOM)
                                     .withResizeWeight(0.67)
                                     .withFirst(panel().add("Third tab top content"))
                                     .withSecond(panel().add("Third tab bottom content"))
@@ -40,7 +40,7 @@ public class CustomCommandsDemo extends JFrame
                     )
                     .add(tab("Third")
                             .withContentAnchor(A.BOTH)
-                            .add(split(Orientation.HORIZONTAL)
+                            .add(split(Direction.LEFT_TO_RIGHT)
                                     .withFirst(panel().add("Third tab left content"))
                                     .withSecond(panel().add("Third tab right content"))
                             )
@@ -89,18 +89,18 @@ public class CustomCommandsDemo extends JFrame
       return new ButtonsCommand();
    }
 
-   public static SplitCommand split(Orientation orientation)
+   public static SplitCommand split(Direction direction)
    {
-      return new SplitCommand(orientation);
+      return new SplitCommand(direction);
    }
 
    static class ToolBarCommand extends GridContainerCommand<JToolBar, ToolBarCommand>
    {
       @Override
-      public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+      public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
       {
          withContentAnchorX(AX.LEFT);
-         return super.getComponent(parentOrientation, parentFactory);
+         return super.getComponent(parentDirection, parentFactory);
       }
 
       @Override
@@ -110,7 +110,7 @@ public class CustomCommandsDemo extends JFrame
       }
 
       @Override
-      protected CellSpec getDefaultSpec(Orientation parentOrientation)
+      protected CellSpec getDefaultSpec(Direction parentDirection)
       {
          return spec().withWeightY(0.0);
       }
@@ -121,7 +121,7 @@ public class CustomCommandsDemo extends JFrame
       private final List<TabCommand> tabs = new LinkedList<TabCommand>();
 
       @Override
-      public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+      public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
       {
          JTabbedPane result = new JTabbedPane();
          int i = 0;
@@ -171,7 +171,7 @@ public class CustomCommandsDemo extends JFrame
       }
 
       @Override
-      protected CellSpec getDefaultSpec(Orientation parentOrientation)
+      protected CellSpec getDefaultSpec(Direction parentDirection)
       {
          return spec().withInset(5);
       }
@@ -194,13 +194,13 @@ public class CustomCommandsDemo extends JFrame
       }
 
       @Override
-      public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+      public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
       {
          return panel().withContentAnchorX(AX.RIGHT).addAll(buttons, spec().withSizeGroup(0)).getComponent();
       }
 
       @Override
-      protected CellSpec getDefaultSpec(Orientation parentOrientation)
+      protected CellSpec getDefaultSpec(Direction parentDirection)
       {
          return spec().withWeightY(0.0);
       }
@@ -211,18 +211,18 @@ public class CustomCommandsDemo extends JFrame
       private PanelCommand first;
       private PanelCommand second;
 
-      private Orientation orientation = Orientation.HORIZONTAL;
+      private Direction direction = Direction.LEFT_TO_RIGHT;
       private double resizeWeight = 0.5;
 
-      SplitCommand(Orientation orientation)
+      SplitCommand(Direction direction)
       {
-         this.orientation = orientation;
+         this.direction = direction;
       }
 
       @Override
-      public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+      public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
       {
-         JSplitPane result = new JSplitPane(orientation.isHorizontal() ? JSplitPane.HORIZONTAL_SPLIT : JSplitPane.VERTICAL_SPLIT);
+         JSplitPane result = new JSplitPane(direction.isHorizontal() ? JSplitPane.HORIZONTAL_SPLIT : JSplitPane.VERTICAL_SPLIT);
          if (first != null)
          {
             result.setTopComponent(first.getComponent());

@@ -88,7 +88,7 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
    }
 
    @Override
-   public JComponent getComponent(Orientation parentOrientation, ComponentFactory parentFactory)
+   public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
    {
       ComponentFactory factory = componentFactory != null ? componentFactory : parentFactory;
 
@@ -180,9 +180,9 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
       return contentAnchorSupport.withContentAnchorY(anchorY);
    }
 
-   public T withOrientation(Orientation orientation)
+   public T withDirection(Direction direction)
    {
-      return gridSpecSupport.withOrientation(orientation);
+      return gridSpecSupport.withDirection(direction);
    }
 
    public T withLineLength(Integer lineLength)

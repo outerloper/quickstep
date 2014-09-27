@@ -15,7 +15,7 @@ public class CustomComponentFactoryDemo extends JFrame
    {
       createComponentFactory().buildContent(
          this, panel()
-            .withOrientation(Orientation.VERTICAL)
+            .withDirection(Direction.TOP_TO_BOTTOM)
             .add(panel()
                     .withBorder("Custom Panel")
                     .add(line().add("User").add(new JTextField(), spec().withPreferredWidth(100)))
