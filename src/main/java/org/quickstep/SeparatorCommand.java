@@ -15,7 +15,7 @@ public class SeparatorCommand extends AbstractComponentCommand<SeparatorCommand>
    @Override
    public CellSpec getDefaultSpec(Direction parentDirection)
    {
-      if (parentDirection.isHorizontal())
+      if (parentDirection.isLeftToRight())
       {
          return spec().withAnchor(AX.CENTER, AY.BOTH);
       }

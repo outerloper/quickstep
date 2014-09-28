@@ -30,15 +30,15 @@ public class RichFormDemo extends JFrame
 
    public RichFormDemo()
    {
+      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
       arrangeComponentsUsingLineWraps();
 //      arrangeComponentsUsingExplicitLines();
 //      arrangeComponentsPlayWithItYourself();
 
-      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       setMinimumSize(getPreferredSize());
       setLocationRelativeTo(null);
       setAlwaysOnTop(true);
-      setVisible(true);
    }
 
    private void arrangeComponentsUsingLineWraps()
@@ -87,7 +87,8 @@ public class RichFormDemo extends JFrame
                     .add(line().add("Address 2", address2TextField, spec().withGridWidthRemainder()))
                     .add(line().add("City", cityTextField)
                             .add("Postal Code", spec().withGridHeight(2))
-                            .add(postalCodeTextField, spec().withGridHeight(2)))
+                            .add(postalCodeTextField, spec().withGridHeight(2))
+                    )
                     .add(line().add("Country", countryTextField))
             )
             .addLineBreak()
@@ -123,8 +124,9 @@ public class RichFormDemo extends JFrame
 
    public static void main(String[] args)
    {
-//      debug();
+      debug();
       DemoUtils.setSystemLookAndFeel();
-      new RichFormDemo();
+      RichFormDemo demo = new RichFormDemo();
+      demo.setVisible(true);
    }
 }

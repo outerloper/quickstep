@@ -6,27 +6,29 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class VerticalDirectionDemo extends JFrame
+public class VerticalDirectionDemo
 {
-   public VerticalDirectionDemo()
+   public static void main(String[] args)
    {
+      DemoUtils.setSystemLookAndFeel();
+      JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
       buildContent(
-         this, panel()
+         frame, panel()
             .withDirection(Direction.TOP_TO_BOTTOM)
             .withLineLength(10)
             .withContentAnchor(A.BOTH)
-            .add(generateOptions())
+            .add(createCheckBoxes())
       );
 
-      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setMinimumSize(getPreferredSize());
-      setLocationRelativeTo(null);
-      setAlwaysOnTop(true);
-      setResizable(true);
-      setVisible(true);
+      frame.setMinimumSize(frame.getPreferredSize());
+      frame.setLocationRelativeTo(null);
+      frame.setAlwaysOnTop(true);
+      frame.setVisible(true);
    }
 
-   private List<AbstractButton> generateOptions()
+   private static List<AbstractButton> createCheckBoxes()
    {
       List<AbstractButton> buttons = new LinkedList<AbstractButton>();
       for (int i = 1; i <= 60; i++)
@@ -34,11 +36,5 @@ public class VerticalDirectionDemo extends JFrame
          buttons.add(new JCheckBox("Option " + i));
       }
       return buttons;
-   }
-
-   public static void main(String[] args)
-   {
-      DemoUtils.setSystemLookAndFeel();
-      new VerticalDirectionDemo();
    }
 }

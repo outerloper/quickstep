@@ -6,12 +6,16 @@ import org.quickstep.GridBagCommand;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class ContentAnchorDemo extends JFrame
+public class ContentAnchorDemo
 {
-   public ContentAnchorDemo()
+   public static void main(String[] args) throws Exception
    {
+      DemoUtils.setSystemLookAndFeel();
+      JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
       buildContent(
-         this, panel()
+         frame, panel()
             .withContentAnchor(A.BOTH)
             .add(panel().add(components()).withBorder().withContentAnchor(AX.RIGHT, AY.BOTTOM))
             .add(panel().add(components()).withBorder().withContentAnchor(AX.BOTH, AY.BOTTOM))
@@ -26,12 +30,10 @@ public class ContentAnchorDemo extends JFrame
             .add(panel().add(components()).withBorder().withContentAnchor(AX.LEFT, AY.TOP))
       );
 
-      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setMinimumSize(getPreferredSize());
-      setLocationRelativeTo(null);
-      setAlwaysOnTop(true);
-      setResizable(true);
-      setVisible(true);
+      frame.setMinimumSize(frame.getPreferredSize());
+      frame.setLocationRelativeTo(null);
+      frame.setAlwaysOnTop(true);
+      frame.setVisible(true);
    }
 
    public static GridBagCommand components()
@@ -41,12 +43,5 @@ public class ContentAnchorDemo extends JFrame
          .add(new JTextField(), spec().withPreferredWidth(50))
          .addLineBreak()
          .add(new JButton("Button"), spec().withGridWidthRemainder().withAnchorX(AX.BOTH));
-   }
-
-   public static void main(String[] args) throws Exception
-   {
-//      debug();
-      DemoUtils.setSystemLookAndFeel();
-      new ContentAnchorDemo();
    }
 }

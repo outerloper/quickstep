@@ -1,5 +1,5 @@
 OK think about text align in label, beware of vertical -> NO, if you want to have your labels right-aligned, specify it in ComponentFactory
 OK .add(label, field[, spec]/componentCommand) can have additional ":"
-TODO move handling mnemonics to factory
-TODO factory starts to be golden hammer, think about splitting it
+OK move handling mnemonics to factory -> not in this "release"
+OK factory starts to be golden hammer, think about splitting it -> panel appearance and wrapping build method
 OK resizable panel without components - test getting resizable behavior

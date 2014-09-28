@@ -1,10 +1,7 @@
 package org.quickstep;
 
-import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
-
-import org.quickstep.support.DebugSupport;
 
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
@@ -28,7 +25,7 @@ public class ComponentFactory
 
    public JComponent createSeparator(Direction direction)
    {
-      return new JSeparator(direction.isHorizontal() ? JSeparator.HORIZONTAL : JSeparator.VERTICAL);
+      return new JSeparator(direction.isLeftToRight() ? JSeparator.HORIZONTAL : JSeparator.VERTICAL);
    }
 
    public JPanel createPanel()
@@ -52,7 +49,7 @@ public class ComponentFactory
       return result;
    }
 
-   public GridSpec createDefaultGridSpec()
+   public GridSpec getGridSpec()
    {
       return new GridSpec()
          .withDefault(spec().withGap(5).withAnchorX(AX.LEFT))
@@ -70,38 +67,13 @@ public class ComponentFactory
       return AY.CENTER;
    }
 
-   public ComponentFactory getContentFactory()
+   public ComponentFactory createChildFactory()
    {
       return this;
    }
 
-
-   private <C extends Container> C genericBuildContent(C container, AbstractComponentCommand command)
+   public JComponent apply(JComponent component, CellSpec spec)
    {
-      container.setLayout(new GridBagLayout());
-      JComponent component = command.getComponent(Direction.LEFT_TO_RIGHT, this);
-      GridBagConstraints constraints = specWithFill().withInset(5).overrideWith(command.getDefaultSpec(Direction.LEFT_TO_RIGHT)).toConstraints(0, 0);
-
-      container.add(component, constraints);
-      DebugSupport.attachDebugInfo(component, container, constraints);
-      DebugSupport.colorize(container, container.getComponents());
-      return container;
-   }
-
-   public Window buildContent(Window window, AbstractComponentCommand command)
-   {
-      Window result = genericBuildContent(window, command);
-      window.pack();
-      return result;
-   }
-
-   public JComponent buildContent(JComponent component, AbstractComponentCommand command)
-   {
-      return genericBuildContent(component, command);
-   }
-
-   public JPanel build(ComponentCommand command)
-   {
-      return genericBuildContent(createPanel(), command);
+      return component;
    }
 }

@@ -33,7 +33,7 @@ public class RichFormDemo2 extends JFrame
    JTextField other3TextField = new JTextField();
    List<JRadioButton> directionRadios = Arrays.asList(new JRadioButton("Up"), new JRadioButton("Down"));
    List<JRadioButton> scopeRadios = Arrays.asList(new JRadioButton("From cursor"), new JRadioButton("Entire scope"));
-   JComponent colorPicker;
+   JComponent colorPicker = createColorPanel();
    JComboBox thicknessComboBox = new JComboBox<String>(new String[]{"1", "2", "3", "4", "5"});
    JButton clearButton = new JButton("Clear");
    JButton findAllButton = new JButton("Find &All");
@@ -42,17 +42,8 @@ public class RichFormDemo2 extends JFrame
 
    public RichFormDemo2() throws HeadlessException
    {
-      buildComponents();
-      arrangeComponents();
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setLocationRelativeTo(null);
-      setAlwaysOnTop(true);
-      setResizable(true);
-      setVisible(true);
-   }
 
-   private void arrangeComponents()
-   {
       buildContent(
          this, vpanel()
             .withContentAnchorX(AX.BOTH)
@@ -90,6 +81,9 @@ public class RichFormDemo2 extends JFrame
                     .add(Arrays.asList(clearButton, findAllButton, findNextButton, closeButton))
             )
       );
+
+      setLocationRelativeTo(null);
+      setAlwaysOnTop(true);
    }
 
    private static CellSpec getRoundTripSpec()
@@ -113,7 +107,7 @@ public class RichFormDemo2 extends JFrame
       return line().withCell(1, spec().withGridWidth(2).withAnchorX(AX.BOTH));
    }
 
-   private void buildComponents()
+   private static JPanel createColorPanel()
    {
       List<JPanel> colorPanels = new LinkedList<JPanel>();
       for (Color color : new Color[]{Color.GREEN, Color.BLUE, Color.ORANGE, Color.MAGENTA, Color.CYAN})
@@ -123,12 +117,13 @@ public class RichFormDemo2 extends JFrame
          colorPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
          colorPanels.add(colorPanel);
       }
-      colorPicker = panel().add(colorPanels, spec().withInset(1).withPreferredSize(18, 18)).getComponent();
+      return buildContent(panel().add(colorPanels, spec().withInset(1).withPreferredSize(18, 18)));
    }
 
    public static void main(String[] args)
    {
       DemoUtils.setSystemLookAndFeel();
-      new RichFormDemo2();
+      RichFormDemo2 demo = new RichFormDemo2();
+      demo.setVisible(true);
    }
 }

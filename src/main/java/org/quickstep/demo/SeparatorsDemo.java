@@ -4,12 +4,16 @@ import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
-public class SeparatorsDemo extends JFrame
+public class SeparatorsDemo
 {
-   public SeparatorsDemo()
+   public static void main(String[] args)
    {
+      DemoUtils.setSystemLookAndFeel();
+      JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
       buildContent(
-         this, panel()
+         frame, panel()
             .withBorder()
             .withContentAnchor(A.BOTH)
             .add(new JButton("Button 0"))
@@ -27,17 +31,9 @@ public class SeparatorsDemo extends JFrame
             )
       );
 
-      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setMinimumSize(getPreferredSize());
-      setLocationRelativeTo(null);
-      setAlwaysOnTop(true);
-      setResizable(true);
-      setVisible(true);
-   }
-
-   public static void main(String[] args)
-   {
-      DemoUtils.setSystemLookAndFeel();
-      new SeparatorsDemo();
+      frame.setMinimumSize(frame.getPreferredSize());
+      frame.setLocationRelativeTo(null);
+      frame.setAlwaysOnTop(true);
+      frame.setVisible(true);
    }
 }

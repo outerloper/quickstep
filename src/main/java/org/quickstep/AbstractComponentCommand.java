@@ -9,7 +9,7 @@ import static org.quickstep.GridBagToolKit.*;
 
 public abstract class AbstractComponentCommand<T extends AbstractComponentCommand<T>> implements GridBagCommand
 {
-   private final CellSpec cellSpec = spec();
+   private final CellSpec spec = spec();
 
    public abstract JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory);
 
@@ -20,13 +20,18 @@ public abstract class AbstractComponentCommand<T extends AbstractComponentComman
 
    public final T withSpec(CellSpec spec)
    {
-      this.cellSpec.overrideWith(spec);
+      this.spec.overrideWith(spec);
       return self();
    }
 
    protected CellSpec getDefaultSpec(Direction parentDirection)
    {
       return spec();
+   }
+
+   public final CellSpec getSpec(Direction parentDirection)
+   {
+      return getDefaultSpec(parentDirection).overrideWith(spec);
    }
 
    @Override
@@ -39,7 +44,7 @@ public abstract class AbstractComponentCommand<T extends AbstractComponentComman
          try
          {
             builder.moveToFreeCell();
-            builder.placeComponent(component, getDefaultSpec(direction).overrideWith(cellSpec));
+            builder.placeComponent(component, getSpec(direction));
          }
          catch (GridBagException e)
          {

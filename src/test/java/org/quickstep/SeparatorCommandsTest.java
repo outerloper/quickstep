@@ -39,9 +39,9 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         addSeparator().
-         getComponent();
+      panelCommand
+         .addSeparator()
+         .getComponent();
 
       verify(panel);
       assertEquals(actualDirection, Direction.TOP_TO_BOTTOM);
@@ -54,10 +54,10 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         withDefault(specWithFill()).
-         addSeparator().
-         getComponent();
+      panelCommand
+         .withDefault(specWithFill())
+         .addSeparator()
+         .getComponent();
 
       verify(panel);
    }
@@ -69,10 +69,10 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         withDirection(Direction.TOP_TO_BOTTOM).
-         addSeparator().
-         getComponent();
+      panelCommand
+         .withDirection(Direction.TOP_TO_BOTTOM)
+         .addSeparator()
+         .getComponent();
 
       verify(panel);
       assertEquals(actualDirection, Direction.LEFT_TO_RIGHT);
@@ -85,11 +85,11 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         withDirection(Direction.TOP_TO_BOTTOM).
-         withDefault(specWithFill()).
-         addSeparator().
-         getComponent();
+      panelCommand
+         .withDirection(Direction.TOP_TO_BOTTOM)
+         .withDefault(specWithFill())
+         .addSeparator()
+         .getComponent();
 
       verify(panel);
    }
@@ -101,9 +101,9 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         addLineSeparator().
-         getComponent();
+      panelCommand
+         .addLineSeparator()
+         .getComponent();
 
       verify(panel);
       assertEquals(actualDirection, Direction.LEFT_TO_RIGHT);
@@ -116,10 +116,10 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         withDefault(specWithFill()).
-         addLineSeparator().
-         getComponent();
+      panelCommand
+         .withDefault(specWithFill())
+         .addLineSeparator()
+         .getComponent();
 
       verify(panel);
    }
@@ -131,10 +131,10 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         withDirection(Direction.TOP_TO_BOTTOM).
-         addLineSeparator().
-         getComponent();
+      panelCommand
+         .withDirection(Direction.TOP_TO_BOTTOM)
+         .addLineSeparator()
+         .getComponent();
 
       verify(panel);
       assertEquals(actualDirection, Direction.TOP_TO_BOTTOM);
@@ -147,11 +147,11 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         withDirection(Direction.TOP_TO_BOTTOM).
-         withDefault(specWithFill()).
-         addLineSeparator().
-         getComponent();
+      panelCommand
+         .withDirection(Direction.TOP_TO_BOTTOM)
+         .withDefault(specWithFill())
+         .addLineSeparator()
+         .getComponent();
 
       verify(panel);
    }
@@ -166,12 +166,12 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         add(aComponent()).
-         add(aComponent()).
-         addLineSeparator().
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .add(aComponent())
+         .add(aComponent())
+         .addLineSeparator()
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -186,13 +186,13 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         withDirection(Direction.TOP_TO_BOTTOM).
-         add(aComponent()).
-         add(aComponent()).
-         addLineSeparator().
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withDirection(Direction.TOP_TO_BOTTOM)
+         .add(aComponent())
+         .add(aComponent())
+         .addLineSeparator()
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -204,9 +204,9 @@ public class SeparatorCommandsTest
 
       replay(panel);
 
-      panelCommand.
-         add(new LineSeparatorCommand().withSpec(spec().withAnchorX(AX.LEFT))).
-         getComponent();
+      panelCommand
+         .add(new LineSeparatorCommand().withSpec(spec().withAnchorX(AX.LEFT)))
+         .getComponent();
 
       verify(panel);
    }

@@ -1,53 +1,60 @@
 package org.quickstep.demo;
 
 import java.awt.*;
-import java.util.Arrays;
+import java.util.*;
+import java.util.List;
 import javax.swing.*;
 
 import static org.quickstep.GridBagToolKit.*;
 
 public class BaselineDemo
 {
-   public static final int N = 12;
+   public static void main(String[] args)
+   {
+      DemoUtils.setSystemLookAndFeel();
+      JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+      buildContent(
+         frame, panel()
+            .withContentAnchor(A.BOTH)
+            .withDefault(spec().withBaseline())
+            .add(line().add("Label respecting baseline", getBigFontTextField()))
+            .add(line().add("&Label respecting baseline", vpanel()
+                               .withContentAnchor(A.BOTH)
+                               .withLineLength(4)
+                               .add(getBigFontCheckBoxes(), spec().withIPadY(10).withInsetTop(10))
+                 )
+            )
+      );
+
+      frame.setMinimumSize(frame.getPreferredSize());
+      frame.setLocationRelativeTo(null);
+      frame.setAlwaysOnTop(true);
+      frame.setVisible(true);
+   }
 
    private static Font font16()
    {
       return new Font("Arial", Font.PLAIN, 16);
    }
 
-   public static void main(String[] args)
+   private static JTextField getBigFontTextField()
    {
-      DemoUtils.setSystemLookAndFeel();
-      JFrame frame = new JFrame();
-
       JTextField textField = new JTextField();
       textField.setFont(font16());
+      return textField;
+   }
 
-      JCheckBox[] checkBoxes = new JCheckBox[N];
-      for (int i = 0; i < N; i++)
+   private static List<JCheckBox> getBigFontCheckBoxes()
+   {
+      List<JCheckBox> checkBoxes = new LinkedList<JCheckBox>();
+      for (int i = 0; i < 12; i++)
       {
-         checkBoxes[i] = new JCheckBox("Item " + i);
-         checkBoxes[i].setFont(font16());
+         JCheckBox checkBox = new JCheckBox("Item " + i);
+         checkBoxes.add(checkBox);
+         checkBox.setFont(font16());
       }
-
-      buildContent(
-         frame, panel()
-            .withContentAnchor(A.BOTH)
-            .withDefault(spec().withBaseline())
-            .add(line().add("Label respecting baseline", textField))
-            .add(line().add("&Label respecting baseline", vpanel()
-                               .withContentAnchor(A.BOTH)
-                               .withLineLength(4)
-                               .add(Arrays.asList(checkBoxes), spec().withIPadY(10).withInsetTop(10))
-                 )
-            )
-      );
-
-      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      frame.setMinimumSize(frame.getPreferredSize());
-      frame.setLocationRelativeTo(null);
-      frame.setAlwaysOnTop(true);
-      frame.setVisible(true);
-      frame.pack();
+      return checkBoxes;
    }
 }

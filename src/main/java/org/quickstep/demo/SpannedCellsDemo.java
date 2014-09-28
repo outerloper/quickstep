@@ -7,36 +7,36 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class SpannedCellsDemo extends JFrame
 {
-   List<JButton> buttons = new LinkedList<JButton>();
-
-   public SpannedCellsDemo()
+   public static void main(String[] args)
    {
-      for (int i = 0; i < 30; i++)
-      {
-         buttons.add(new JButton("JButton " + i));
-      }
+      DemoUtils.setSystemLookAndFeel();
+      JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
       buildContent(
-         this, panel()
+         frame, panel()
             .withLineLength(4)
             .withContentAnchor(A.BOTH)
             .withCell(1, 2, spec().withGridSize(2, 3))
             .withCell(0, 5, spec().withGridSize(2, 2))
             .withCell(2, 7, spec().withGridSize(1, 2))
             .withCell(3, 3, spec().withGridHeightRemainder())
-            .add(buttons)
+            .add(createButtons())
       );
 
-      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setMinimumSize(getPreferredSize());
-      setLocationRelativeTo(null);
-      setAlwaysOnTop(true);
-      setVisible(true);
+      frame.setMinimumSize(frame.getPreferredSize());
+      frame.setLocationRelativeTo(null);
+      frame.setAlwaysOnTop(true);
+      frame.setVisible(true);
    }
 
-   public static void main(String[] args)
+   private static List<JButton> createButtons()
    {
-      DemoUtils.setSystemLookAndFeel();
-      new SpannedCellsDemo();
+      List<JButton> buttons = new LinkedList<JButton>();
+      for (int i = 0; i < 30; i++)
+      {
+         buttons.add(new JButton("JButton " + i));
+      }
+      return buttons;
    }
 }

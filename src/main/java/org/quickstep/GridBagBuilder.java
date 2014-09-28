@@ -75,7 +75,7 @@ public class GridBagBuilder
 
    public boolean isHorizontal()
    {
-      return gridSpec.getDirection().isHorizontal();
+      return gridSpec.getDirection().isLeftToRight();
    }
 
    public boolean isEmpty()
@@ -173,6 +173,7 @@ public class GridBagBuilder
    public void placeComponent(JComponent component, CellSpec givenSpec)
    {
       CellSpec calculatedSpec = completeSpec().overrideWith(gridSpec.getSpecAt(cursorX, cursorY)).overrideWith(givenSpec);
+      component = componentFactory.apply(component, calculatedSpec);
 
       if (!isAreaFree(cursorX, cursorY, calculatedSpec.getGridWidth(), calculatedSpec.getGridHeight()))
       {
@@ -183,7 +184,7 @@ public class GridBagBuilder
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
       DebugSupport.attachDebugInfo(component, gridContainer, constraints);
-      JComponent componentToAdd = getComponentToAdd(component, calculatedSpec);
+      JComponent componentToAdd = applyPreferredSize(component, calculatedSpec);
       gridContainer.add(componentToAdd, constraints);
       groupsSupport.add(componentToAdd, calculatedSpec);
       handleMnemonic(component);
@@ -218,7 +219,7 @@ public class GridBagBuilder
       }
    }
 
-   private JComponent getComponentToAdd(JComponent component, CellSpec calculatedSpec)
+   static JComponent applyPreferredSize(JComponent component, CellSpec calculatedSpec)
    {
       Integer width = calculatedSpec.getPreferredWidth();
       if (width != null)

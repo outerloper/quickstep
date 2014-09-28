@@ -1,7 +1,6 @@
 package org.quickstep;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.logging.Logger;
 import javax.swing.*;
 
@@ -28,7 +27,7 @@ public final class GridBagToolKit
    {
       LEFT_TO_RIGHT, TOP_TO_BOTTOM;
 
-      public boolean isHorizontal()
+      public boolean isLeftToRight()
       {
          return this == LEFT_TO_RIGHT;
       }
@@ -42,10 +41,16 @@ public final class GridBagToolKit
    public static Logger logger = Logger.getLogger(GridBagBuilder.class.getName());
 
    private static ComponentFactory defaultComponentFactory = new ComponentFactory();
+   private static ContentBuilder defaultContentBuilder = new ContentBuilder();
 
    public static ComponentFactory getDefaultComponentFactory()
    {
       return defaultComponentFactory;
+   }
+
+   public static ContentBuilder getDefaultContentBuilder()
+   {
+      return defaultContentBuilder;
    }
 
    private GridBagToolKit()
@@ -116,22 +121,41 @@ public final class GridBagToolKit
       return new ComponentCommand(component);
    }
 
-
-   public static Window buildContent(Window window, AbstractComponentCommand command)
+   public static LabelCommand label(String text)
    {
-      return getDefaultComponentFactory().buildContent(window, command);
+      return new LabelCommand(text);
    }
 
-   public static JComponent buildContent(JComponent component, AbstractComponentCommand command)
+   public static HeaderCommand header(String text)
    {
-      return getDefaultComponentFactory().buildContent(component, command);
+      return new HeaderCommand(text);
    }
 
-   public static JPanel buildContent(ComponentCommand command)
+   public static SeparatorCommand separator()
    {
-      return getDefaultComponentFactory().build(command);
+      return new SeparatorCommand();
    }
 
+   public static LineSeparatorCommand lineSeparator()
+   {
+      return new LineSeparatorCommand();
+   }
+
+
+   public static void buildContent(Window window, AbstractComponentCommand command)
+   {
+      getDefaultContentBuilder().buildContent(window, command);
+   }
+
+   public static void buildContent(JComponent container, AbstractComponentCommand command)
+   {
+      getDefaultContentBuilder().buildContent(container, command);
+   }
+
+   public static JPanel buildContent(AbstractComponentCommand command)
+   {
+      return getDefaultContentBuilder().buildContent(command);
+   }
 
    public static void debug()
    {

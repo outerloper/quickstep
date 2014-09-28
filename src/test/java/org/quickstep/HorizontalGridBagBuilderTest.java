@@ -33,11 +33,11 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -53,14 +53,14 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -74,12 +74,12 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         add(aComponent()).
-         addLineBreak().
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .add(aComponent())
+         .addLineBreak()
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -93,11 +93,11 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         add(aComponent(), spec().withGridWidthRemainder()).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .add(aComponent(), spec().withGridWidthRemainder())
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -112,13 +112,13 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withDefault(spec().withInset(10, 3)).
-         add(aComponent()).
-         add(aComponent(), spec().withGridWidthRemainder()).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withDefault(spec().withInset(10, 3))
+         .add(aComponent())
+         .add(aComponent(), spec().withGridWidthRemainder())
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -133,14 +133,14 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         withColumn(1, spec().withAnchorX(AX.RIGHT)).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .withColumn(1, spec().withAnchorX(AX.RIGHT))
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -155,14 +155,14 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         withRow(1, spec().withInsetTop(20)).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .withRow(1, spec().withInsetTop(20))
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -174,11 +174,11 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         withCell(0, 0, spec().withInsetLeft(10).withInsetTop(10)).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .withCell(0, 0, spec().withInsetLeft(10).withInsetTop(10))
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -193,13 +193,13 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         withRow(1, spec().withInsetBottom(20)).
-         withColumn(1, spec().withInsetBottom(30)).
-         addBlank().addBlank().addBlank().
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .withRow(1, spec().withInsetBottom(20))
+         .withColumn(1, spec().withInsetBottom(30))
+         .addBlank().addBlank().addBlank()
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -214,13 +214,13 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         withColumn(1, spec().withInsetBottom(20)).
-         withRow(1, spec().withInsetBottom(30)).
-         addBlank().addBlank().addBlank().
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .withColumn(1, spec().withInsetBottom(20))
+         .withRow(1, spec().withInsetBottom(30))
+         .addBlank().addBlank().addBlank()
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -232,11 +232,11 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         withCell(0, 0, spec().withAnchor(AX.RIGHT, AY.BOTTOM)).
-         add(aComponent(), spec().withAnchor(AX.LEFT, AY.TOP)).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .withCell(0, 0, spec().withAnchor(AX.RIGHT, AY.BOTTOM))
+         .add(aComponent(), spec().withAnchor(AX.LEFT, AY.TOP))
+         .getComponent();
 
       verify(panel);
    }
@@ -249,10 +249,10 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         add(aComponent(), spec().withGridWidth(2)).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .add(aComponent(), spec().withGridWidth(2))
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -266,12 +266,12 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         add(aComponent(), spec().withGridHeight(2)).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .add(aComponent(), spec().withGridHeight(2))
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -286,13 +286,13 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(3).
-         add(aComponent(), spec().withGridSize(2, 2)).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(3)
+         .add(aComponent(), spec().withGridSize(2, 2))
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -309,15 +309,15 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(2).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent()).
-         add(aComponent(), spec().withGridHeightRemainder()).
-         add(aComponent()).
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withLineLength(2)
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent())
+         .add(aComponent(), spec().withGridHeightRemainder())
+         .add(aComponent())
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -339,11 +339,11 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(3).
-         withColumn(0, spec().withInsetLeft(30)).
-         add(checkBoxes, spec().withInsetTop(20)).
-         getComponent();
+      panelCommand
+         .withLineLength(3)
+         .withColumn(0, spec().withInsetLeft(30))
+         .add(checkBoxes, spec().withInsetTop(20))
+         .getComponent();
 
       verify(panel);
    }
@@ -357,12 +357,12 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      PanelCommand builder = panel().on(auxPanel).
-         withSpec(specWithFill());
-      panelCommand.
-         withCell(0, 0, spec().withInsetRight(50)).
-         add(builder).
-         getComponent();
+      PanelCommand builder = panel().on(auxPanel)
+         .withSpec(specWithFill());
+      panelCommand
+         .withCell(0, 0, spec().withInsetRight(50))
+         .add(builder)
+         .getComponent();
 
       verify(panel);
    }
@@ -375,10 +375,10 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         add(line().add(aComponent(), spec().withGridWidthRemainder())).
-         add(line().add(aComponent())).
-         getComponent();
+      panelCommand
+         .add(line().add(aComponent(), spec().withGridWidthRemainder()))
+         .add(line().add(aComponent()))
+         .getComponent();
 
       verify(panel);
    }
@@ -393,14 +393,14 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         add(seq().
-            add(aComponent(), spec().withIPad(4)).
-            add(aComponent(), spec().withGridSize(2, 2)).
-            add(aComponent()).
-            addLineBreak().
-            add(aComponent())).
-         getComponent();
+      panelCommand
+         .add(seq()
+                 .add(aComponent(), spec().withIPad(4))
+                 .add(aComponent(), spec().withGridSize(2, 2))
+                 .add(aComponent())
+                 .addLineBreak()
+                 .add(aComponent()))
+         .getComponent();
 
       verify(panel);
    }
@@ -413,14 +413,14 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         addLineBreak().
-         addLineBreak().
-         add(aComponent()).
-         addLineBreak().
-         addLineBreak().
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .addLineBreak()
+         .addLineBreak()
+         .add(aComponent())
+         .addLineBreak()
+         .addLineBreak()
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
    }
@@ -430,9 +430,9 @@ public class HorizontalGridBagBuilderTest
    {
       replay(panel);
 
-      panelCommand.
-         add((JComponent) null).
-         getComponent();
+      panelCommand
+         .add((JComponent) null)
+         .getComponent();
 
       verify(panel);
    }
@@ -444,13 +444,13 @@ public class HorizontalGridBagBuilderTest
 
       replay(panel);
 
-      panelCommand.
-         withLineLength(1).
-         add(aComponent(), spec().withGridHeightRemainder()).
-         add(aComponent(), spec().withIPad(1)).
-         add(aComponent(), spec().withIPad(2)).
-         add(aComponent(), spec().withIPad(3)).
-         getComponent();
+      panelCommand
+         .withLineLength(1)
+         .add(aComponent(), spec().withGridHeightRemainder())
+         .add(aComponent(), spec().withIPad(1))
+         .add(aComponent(), spec().withIPad(2))
+         .add(aComponent(), spec().withIPad(3))
+         .getComponent();
 
       verify(panel);
    }

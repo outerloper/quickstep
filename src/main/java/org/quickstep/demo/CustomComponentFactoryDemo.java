@@ -9,12 +9,18 @@ import org.quickstep.*;
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class CustomComponentFactoryDemo extends JFrame
+public class CustomComponentFactoryDemo
 {
-   public CustomComponentFactoryDemo()
+   public static void main(String[] args)
    {
-      createComponentFactory().buildContent(
-         this, panel()
+      DemoUtils.setSystemLookAndFeel();
+      JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+      buildContent(
+         frame, panel()
+            .withSpec(spec().withInset(20, 3))
+            .withComponentFactory(createComponentFactory())
             .withDirection(Direction.TOP_TO_BOTTOM)
             .add(panel()
                     .withBorder("Custom Panel")
@@ -24,20 +30,18 @@ public class CustomComponentFactoryDemo extends JFrame
             .add(new JButton("Proceed"), spec().withGridWidthRemainder().withAnchor(A.CENTER).withInset(5))
       );
 
-      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setMinimumSize(getPreferredSize());
-      setLocationRelativeTo(null);
-      setAlwaysOnTop(true);
-      setResizable(true);
-      setVisible(true);
+      frame.setMinimumSize(frame.getPreferredSize());
+      frame.setLocationRelativeTo(null);
+      frame.setAlwaysOnTop(true);
+      frame.setVisible(true);
    }
 
-   private ComponentFactory createComponentFactory()
+   private static ComponentFactory createComponentFactory()
    {
       return new ComponentFactory()
       {
          @Override
-         public ComponentFactory getContentFactory()
+         public ComponentFactory createChildFactory()
          {
             return new ComponentFactory()
             {
@@ -56,9 +60,9 @@ public class CustomComponentFactoryDemo extends JFrame
                }
 
                @Override
-               public GridSpec createDefaultGridSpec()
+               public GridSpec getGridSpec()
                {
-                  return super.createDefaultGridSpec().withDefault(spec().withGap(10));
+                  return super.getGridSpec().withDefault(spec().withGap(10));
                }
             };
          }
@@ -83,11 +87,5 @@ public class CustomComponentFactoryDemo extends JFrame
             return AY.BOTH;
          }
       };
-   }
-
-   public static void main(String[] args)
-   {
-      DemoUtils.setSystemLookAndFeel();
-      new CustomComponentFactoryDemo();
    }
 }

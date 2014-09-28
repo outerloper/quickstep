@@ -10,6 +10,7 @@ public class SizeGroupsDemo
    {
       DemoUtils.setSystemLookAndFeel();
       JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
       buildContent(
          frame, panel()
@@ -27,11 +28,9 @@ public class SizeGroupsDemo
             .add(new JButton("2222222222222"), spec().withSizeGroup(2))
       );
 
-      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       frame.setMinimumSize(frame.getPreferredSize());
       frame.setLocationRelativeTo(null);
       frame.setAlwaysOnTop(true);
       frame.setVisible(true);
-      frame.pack();
    }
 }

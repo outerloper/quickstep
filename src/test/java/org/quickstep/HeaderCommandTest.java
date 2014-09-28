@@ -10,6 +10,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.easymock.EasyMock.*;
 import static org.quickstep.GridBagToolKit.*;
+import static org.quickstep.GridBagToolKit.Direction.*;
 import static org.quickstep.TestUtils.aComponent;
 import static org.quickstep.TestUtils.defaultSpec;
 import static org.quickstep.TestUtils.gbc;
@@ -24,9 +25,9 @@ public class HeaderCommandTest
    public void setUp()
    {
       panel.setLayout((LayoutManager) anyObject());
-      panelCommand = panel().
-         on(panel).
-         withComponentFactory(new ComponentFactory()
+      panelCommand = panel()
+         .on(panel)
+         .withComponentFactory(new ComponentFactory()
          {
             @Override
             public JComponent createHeader(String title, boolean placedInFirstRow)
@@ -47,12 +48,12 @@ public class HeaderCommandTest
 
       replay(panel);
 
-      panelCommand.
-         add(aComponent()).
-         add(aComponent()).
-         addHeader("header").
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .add(aComponent())
+         .add(aComponent())
+         .addHeader("header")
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
       assertFalse(headerInFirstRowHandled);
@@ -68,13 +69,13 @@ public class HeaderCommandTest
 
       replay(panel);
 
-      panelCommand.
-         withDirection(Direction.TOP_TO_BOTTOM).
-         add(aComponent()).
-         add(aComponent()).
-         addHeader("header").
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withDirection(TOP_TO_BOTTOM)
+         .add(aComponent())
+         .add(aComponent())
+         .addHeader("header")
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
       assertFalse(headerInFirstRowHandled);
@@ -88,10 +89,10 @@ public class HeaderCommandTest
 
       replay(panel);
 
-      panelCommand.
-         addHeader("header").
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .addHeader("header")
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
       assertTrue(headerInFirstRowHandled);
@@ -107,14 +108,14 @@ public class HeaderCommandTest
 
       replay(panel);
 
-      panelCommand.
-         withDirection(Direction.TOP_TO_BOTTOM).
-         withLineLength(2).
-         add(aComponent()).
-         add(aComponent()).
-         addHeader("header").
-         add(aComponent()).
-         getComponent();
+      panelCommand
+         .withDirection(TOP_TO_BOTTOM)
+         .withLineLength(2)
+         .add(aComponent())
+         .add(aComponent())
+         .addHeader("header")
+         .add(aComponent())
+         .getComponent();
 
       verify(panel);
       assertTrue(headerInFirstRowHandled);
@@ -127,9 +128,9 @@ public class HeaderCommandTest
 
       replay(panel);
 
-      panelCommand.
-         add(new HeaderCommand("header").withSpec(spec().withAnchorX(AX.LEFT))).
-         getComponent();
+      panelCommand
+         .add(new HeaderCommand("header").withSpec(spec().withAnchorX(AX.LEFT)))
+         .getComponent();
 
       verify(panel);
    }

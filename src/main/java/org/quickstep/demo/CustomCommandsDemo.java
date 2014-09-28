@@ -10,15 +10,19 @@ import org.quickstep.*;
 import static javax.swing.UIManager.*;
 import static org.quickstep.GridBagToolKit.*;
 
-public class CustomCommandsDemo extends JFrame
+public class CustomCommandsDemo
 {
-   public CustomCommandsDemo()
+   public static void main(String[] args)
    {
-      JPanel explicitlyProvidedPanel = new JPanel();
-      explicitlyProvidedPanel.setBackground(Color.GREEN);
+      DemoUtils.setSystemLookAndFeel();
+      JFrame frame = new JFrame();
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+      JPanel customPanel = new JPanel();
+      customPanel.setBackground(Color.GREEN);
 
       buildContent(
-         this, panel()
+         frame, panel()
             .withContentAnchor(A.BOTH)
             .withDirection(Direction.TOP_TO_BOTTOM)
             .add(toolbar()
@@ -29,24 +33,25 @@ public class CustomCommandsDemo extends JFrame
                     .add(new JButton("Details..."))
             )
             .add(tabs()
+                    .withSpec(spec().withPreferredSize(400, 200))
                     .add(tab("First").add("First tab content"))
                     .add(tab("Second")
                             .withContentAnchor(A.BOTH)
-                            .add(split(Direction.TOP_TO_BOTTOM)
+                            .add(horizontalSplit()
+                                    .withFirst(panel().add("Second tab left content"))
+                                    .withSecond(panel().add("Second tab right content"))
+                            )
+                    )
+                    .add(tab("Third")
+                            .withContentAnchor(A.BOTH)
+                            .add(verticalSplit()
                                     .withResizeWeight(0.67)
                                     .withFirst(panel().add("Third tab top content"))
                                     .withSecond(panel().add("Third tab bottom content"))
                             )
                     )
-                    .add(tab("Third")
-                            .withContentAnchor(A.BOTH)
-                            .add(split(Direction.LEFT_TO_RIGHT)
-                                    .withFirst(panel().add("Third tab left content"))
-                                    .withSecond(panel().add("Third tab right content"))
-                            )
-                    )
                     .add(tab("Fourth")
-                            .on(explicitlyProvidedPanel)
+                            .on(customPanel)
                             .add("Fourth tab content")
                     )
                     .add(tab("Details")
@@ -61,12 +66,10 @@ public class CustomCommandsDemo extends JFrame
             )
       );
 
-      setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      setMinimumSize(getPreferredSize());
-      setLocationRelativeTo(null);
-      setAlwaysOnTop(true);
-      setResizable(true);
-      setVisible(true);
+      frame.setMinimumSize(frame.getPreferredSize());
+      frame.setLocationRelativeTo(null);
+      frame.setAlwaysOnTop(true);
+      frame.setVisible(true);
    }
 
    public static ToolBarCommand toolbar()
@@ -89,9 +92,14 @@ public class CustomCommandsDemo extends JFrame
       return new ButtonsCommand();
    }
 
-   public static SplitCommand split(Direction direction)
+   public static SplitCommand horizontalSplit()
    {
-      return new SplitCommand(direction);
+      return new SplitCommand(false);
+   }
+
+   public static SplitCommand verticalSplit()
+   {
+      return new SplitCommand(true);
    }
 
    static class ToolBarCommand extends GridContainerCommand<JToolBar, ToolBarCommand>
@@ -127,7 +135,7 @@ public class CustomCommandsDemo extends JFrame
          int i = 0;
          for (TabCommand tab : tabs)
          {
-            result.add(tab.getTitle(), panel().withContentAnchor(A.BOTH).add(tab).getComponent());
+            result.add(tab.getTitle(), panel().withContentAnchor(A.BOTH).add(tab).getComponent(parentDirection, parentFactory));
             if (tab.getIcon() != null)
             {
                result.setIconAt(i, tab.getIcon());
@@ -196,7 +204,7 @@ public class CustomCommandsDemo extends JFrame
       @Override
       public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
       {
-         return panel().withContentAnchorX(AX.RIGHT).add(buttons, spec().withSizeGroup(0)).getComponent();
+         return panel().withContentAnchorX(AX.RIGHT).add(buttons, spec().withSizeGroup(0)).getComponent(parentDirection, parentFactory);
       }
 
       @Override
@@ -211,25 +219,25 @@ public class CustomCommandsDemo extends JFrame
       private PanelCommand first;
       private PanelCommand second;
 
-      private Direction direction = Direction.LEFT_TO_RIGHT;
+      private boolean vertical = false;
       private double resizeWeight = 0.5;
 
-      SplitCommand(Direction direction)
+      SplitCommand(boolean vertical)
       {
-         this.direction = direction;
+         this.vertical = vertical;
       }
 
       @Override
       public JComponent getComponent(Direction parentDirection, ComponentFactory parentFactory)
       {
-         JSplitPane result = new JSplitPane(direction.isHorizontal() ? JSplitPane.HORIZONTAL_SPLIT : JSplitPane.VERTICAL_SPLIT);
+         JSplitPane result = new JSplitPane(vertical ? JSplitPane.VERTICAL_SPLIT : JSplitPane.HORIZONTAL_SPLIT);
          if (first != null)
          {
-            result.setTopComponent(first.getComponent());
+            result.setTopComponent(first.getComponent(parentDirection, parentFactory));
          }
          if (second != null)
          {
-            result.setBottomComponent(second.getComponent());
+            result.setBottomComponent(second.getComponent(parentDirection, parentFactory));
          }
          result.setResizeWeight(resizeWeight);
          return result;
@@ -252,11 +260,5 @@ public class CustomCommandsDemo extends JFrame
          this.second = second;
          return this;
       }
-   }
-
-   public static void main(String[] args)
-   {
-      DemoUtils.setSystemLookAndFeel();
-      new CustomCommandsDemo();
    }
 }

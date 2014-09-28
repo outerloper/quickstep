@@ -110,10 +110,10 @@ public abstract class GridContainerCommand<C extends JComponent, T extends GridC
       C gridContainer = container != null ? container : createDefaultContainer(factory);
       gridContainer.setLayout(new GridBagLayout());
 
-      GridSpec gridSpec = factory.createDefaultGridSpec().overrideWith(gridSpecSupport.getGridSpec());
+      GridSpec gridSpec = factory.getGridSpec().overrideWith(gridSpecSupport.getGridSpec());
       JComponent component = createContentAnchorSupport(factory).applyContentAnchor(gridContainer, gridSpec);
       SizeGroupsSupport sizeGroupsSupport = new SizeGroupsSupport();
-      GridBagBuilder builder = new GridBagBuilder(gridContainer, gridSpec, factory.getContentFactory(), sizeGroupsSupport);
+      GridBagBuilder builder = new GridBagBuilder(gridContainer, gridSpec, factory.createChildFactory(), sizeGroupsSupport);
 
       for (GridBagCommand command : commandListSupport)
       {
