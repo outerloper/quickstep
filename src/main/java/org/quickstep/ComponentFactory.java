@@ -15,10 +15,13 @@ public class ComponentFactory
 
    public JComponent createHeader(String title, boolean placedInFirstRow)
    {
-      GridContainerCommand result = panel().add(title).add(createSeparator(Direction.LEFT_TO_RIGHT), spec().withAnchorX(AX.BOTH).withWeightX(1.0));
+      GridContainerCommand result = panel()
+         .withRow(0, spec().withInsetBottom(3))
+         .add(title)
+         .add(createSeparator(Direction.LEFT_TO_RIGHT), spec().withAnchorX(AX.BOTH).withWeightX(1.0));
       if (!placedInFirstRow)
       {
-         result.withRow(0, spec().withInsetTop(5));
+         result.withRow(0, spec().withInsetTop(10));
       }
       return result.getComponent();
    }
