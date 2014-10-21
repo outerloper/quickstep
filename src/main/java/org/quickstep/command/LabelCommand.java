@@ -1,6 +1,9 @@
-package org.quickstep;
+package org.quickstep.command;
 
 import javax.swing.*;
+
+import org.quickstep.ComponentFactory;
+import org.quickstep.GridBagToolKit;
 
 public class LabelCommand extends AbstractComponentCommand<LabelCommand>
 {

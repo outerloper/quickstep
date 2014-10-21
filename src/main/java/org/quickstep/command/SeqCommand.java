@@ -1,14 +1,15 @@
-package org.quickstep;
+package org.quickstep.command;
 
 import javax.swing.*;
 
+import org.quickstep.spec.CellSpec;
 import org.quickstep.support.CommandListSupport;
 
 public class SeqCommand implements GridBagCommand
 {
    private final CommandListSupport<SeqCommand> commandListSupport = new CommandListSupport<SeqCommand>(this);
 
-   protected SeqCommand()
+   public SeqCommand()
    {
    }
 

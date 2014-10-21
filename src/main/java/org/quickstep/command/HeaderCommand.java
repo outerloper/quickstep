@@ -1,7 +1,10 @@
-package org.quickstep;
+package org.quickstep.command;
 
 import java.util.logging.Level;
 import javax.swing.*;
+
+import org.quickstep.GridBagException;
+import org.quickstep.spec.CellSpec;
 
 import static org.quickstep.GridBagToolKit.*;
 

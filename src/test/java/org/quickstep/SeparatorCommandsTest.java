@@ -5,6 +5,8 @@ import javax.swing.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.quickstep.command.LineSeparatorCommand;
+import org.quickstep.command.PanelCommand;
 
 import static junit.framework.Assert.assertEquals;
 import static org.easymock.EasyMock.*;

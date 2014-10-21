@@ -1,10 +1,12 @@
-package org.quickstep;
+package org.quickstep.command;
 
 import javax.swing.*;
 
+import org.quickstep.ComponentFactory;
+
 public class PanelCommand extends GridContainerCommand<JPanel, PanelCommand>
 {
-   protected PanelCommand()
+   public PanelCommand()
    {
    }
 

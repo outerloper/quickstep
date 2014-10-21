@@ -5,7 +5,8 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 
-import org.quickstep.CellSpec;
+import org.quickstep.GridBagToolKit;
+import org.quickstep.spec.CellSpec;
 
 public class SizeGroupsSupport
 {
@@ -14,6 +15,25 @@ public class SizeGroupsSupport
 
    public SizeGroupsSupport()
    {
+   }
+
+   public static JComponent applyPreferredSize(JComponent component, CellSpec calculatedSpec)
+   {
+      Integer width = calculatedSpec.getPreferredWidth();
+      if (width != null)
+      {
+         component.setPreferredSize(new Dimension(width, component.getPreferredSize().height));
+      }
+      Integer height = calculatedSpec.getPreferredHeight();
+      if (height != null)
+      {
+         component.setPreferredSize(new Dimension(component.getPreferredSize().width, height));
+      }
+      if (width != null || height != null)
+      {
+         return GridBagToolKit.ResizablePanel.wrap(component);
+      }
+      return component;
    }
 
    public void add(JComponent component, CellSpec spec)

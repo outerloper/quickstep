@@ -1,9 +1,12 @@
-package org.quickstep;
+package org.quickstep.command;
 
 import java.util.logging.Level;
 
 import javax.swing.*;
 
+import org.quickstep.GridBagException;
+import org.quickstep.spec.CellSpec;
+import org.quickstep.spec.LineSpec;
 import org.quickstep.support.CommandListSupport;
 import org.quickstep.support.LineSpecSupport;
 
@@ -14,7 +17,7 @@ public class LineCommand implements GridBagCommand
    private final LineSpecSupport<LineCommand> lineSpecSupport = new LineSpecSupport<LineCommand>(this);
    private final CommandListSupport<LineCommand> commandListSupport = new CommandListSupport<LineCommand>(this);
 
-   protected LineCommand()
+   public LineCommand()
    {
    }
 

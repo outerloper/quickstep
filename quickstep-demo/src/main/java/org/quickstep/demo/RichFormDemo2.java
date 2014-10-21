@@ -6,7 +6,9 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
-import org.quickstep.*;
+import org.quickstep.command.LineCommand;
+import org.quickstep.spec.CellSpec;
+import org.quickstep.spec.GridSpec;
 
 import static org.quickstep.GridBagToolKit.*;
 

@@ -5,6 +5,8 @@ import javax.swing.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.quickstep.command.HeaderCommand;
+import org.quickstep.command.PanelCommand;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;

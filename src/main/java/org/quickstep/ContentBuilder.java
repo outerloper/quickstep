@@ -3,7 +3,10 @@ package org.quickstep;
 import java.awt.*;
 import javax.swing.*;
 
+import org.quickstep.command.AbstractComponentCommand;
+import org.quickstep.spec.CellSpec;
 import org.quickstep.support.DebugSupport;
+import org.quickstep.support.SizeGroupsSupport;
 
 import static org.quickstep.GridBagToolKit.*;
 
@@ -23,7 +26,7 @@ public class ContentBuilder
    {
       container.setLayout(new GridBagLayout());
       JComponent component = command.getComponent(Direction.LEFT_TO_RIGHT, getComponentFactory());
-      component = GridBagBuilder.applyPreferredSize(component, spec);
+      component = SizeGroupsSupport.applyPreferredSize(component, spec);
 
       GridBagConstraints constraints = spec.toConstraints(0, 0);
       container.add(component, constraints);

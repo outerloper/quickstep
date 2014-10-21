@@ -4,6 +4,8 @@ import java.awt.*;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+import org.quickstep.command.*;
+import org.quickstep.spec.*;
 import org.quickstep.support.DebugSupport;
 
 public final class GridBagToolKit
@@ -38,7 +40,7 @@ public final class GridBagToolKit
       }
    }
 
-   public static Logger logger = Logger.getLogger(GridBagBuilder.class.getName());
+   public static Logger logger = Logger.getLogger(GridBagToolKit.class.getName());
 
    private static ComponentFactory defaultComponentFactory = new ComponentFactory();
    private static ContentBuilder defaultContentBuilder = new ContentBuilder();

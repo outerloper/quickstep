@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import org.easymock.IArgumentMatcher;
+import org.quickstep.spec.CellSpec;
 
 import static org.easymock.EasyMock.anyObject;
 import static org.easymock.EasyMock.reportMatcher;

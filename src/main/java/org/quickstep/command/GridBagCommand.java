@@ -1,4 +1,4 @@
-package org.quickstep;
+package org.quickstep.command;
 
 public interface GridBagCommand
 {

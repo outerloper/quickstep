@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import org.junit.Test;
+import org.quickstep.spec.CellSpec;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package org.quickstep;
+package org.quickstep.command;
 
 import java.awt.*;
 import java.util.*;
@@ -6,6 +6,10 @@ import java.util.logging.Level;
 import javax.swing.*;
 
 import com.google.common.collect.*;
+import org.quickstep.ComponentFactory;
+import org.quickstep.GridBagException;
+import org.quickstep.spec.CellSpec;
+import org.quickstep.spec.GridSpec;
 import org.quickstep.support.*;
 
 import static org.quickstep.GridBagToolKit.*;
@@ -184,7 +188,7 @@ public class GridBagBuilder
       GridBagConstraints constraints = calculatedSpec.toConstraints(cursorX, cursorY);
 
       DebugSupport.attachDebugInfo(component, gridContainer, constraints);
-      JComponent componentToAdd = applyPreferredSize(component, calculatedSpec);
+      JComponent componentToAdd = SizeGroupsSupport.applyPreferredSize(component, calculatedSpec);
       gridContainer.add(componentToAdd, constraints);
       groupsSupport.add(componentToAdd, calculatedSpec);
       handleMnemonic(component);
@@ -217,25 +221,6 @@ public class GridBagBuilder
          labelWithMnemonic.setLabelFor(component);
          labelWithMnemonic = null;
       }
-   }
-
-   static JComponent applyPreferredSize(JComponent component, CellSpec calculatedSpec)
-   {
-      Integer width = calculatedSpec.getPreferredWidth();
-      if (width != null)
-      {
-         component.setPreferredSize(new Dimension(width, component.getPreferredSize().height));
-      }
-      Integer height = calculatedSpec.getPreferredHeight();
-      if (height != null)
-      {
-         component.setPreferredSize(new Dimension(component.getPreferredSize().width, height));
-      }
-      if (width != null || height != null)
-      {
-         return ResizablePanel.wrap(component);
-      }
-      return component;
    }
 
    private void markAreaAsUsed(int x, int y, CellSpec spec)

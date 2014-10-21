@@ -2,7 +2,7 @@ package org.quickstep.demo;
 
 import javax.swing.*;
 
-import org.quickstep.GridBagCommand;
+import org.quickstep.command.GridBagCommand;
 
 import static org.quickstep.GridBagToolKit.*;
 

@@ -1,7 +1,7 @@
 package org.quickstep.support;
 
-import org.quickstep.CellSpec;
-import org.quickstep.LineSpec;
+import org.quickstep.spec.CellSpec;
+import org.quickstep.spec.LineSpec;
 
 import static org.quickstep.GridBagToolKit.*;
 

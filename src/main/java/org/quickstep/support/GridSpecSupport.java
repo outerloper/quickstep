@@ -1,6 +1,6 @@
 package org.quickstep.support;
 
-import org.quickstep.*;
+import org.quickstep.spec.*;
 
 import static org.quickstep.GridBagToolKit.*;
 

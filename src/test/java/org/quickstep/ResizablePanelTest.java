@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.quickstep.command.PanelCommand;
 
 import static org.junit.Assert.assertEquals;
 import static org.quickstep.GridBagToolKit.*;

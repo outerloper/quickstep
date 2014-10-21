@@ -1,6 +1,9 @@
-package org.quickstep;
+package org.quickstep.command;
 
 import java.util.logging.Level;
+
+import org.quickstep.GridBagException;
+import org.quickstep.GridBagToolKit;
 
 public class LineBreakCommand implements GridBagCommand
 {

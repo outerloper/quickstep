@@ -1,6 +1,8 @@
-package org.quickstep;
+package org.quickstep.command;
 
 import javax.swing.*;
+
+import org.quickstep.spec.CellSpec;
 
 import static org.quickstep.GridBagToolKit.*;
 

@@ -1,4 +1,4 @@
-package org.quickstep;
+package org.quickstep.spec;
 
 import java.awt.*;
 
@@ -33,11 +33,11 @@ public final class CellSpec
    private Integer iPadX;
    private Integer iPadY;
 
-   CellSpec()
+   public CellSpec()
    {
    }
 
-   CellSpec(CellSpec that)
+   public CellSpec(CellSpec that)
    {
       this(that.sizeGroupX,
            that.sizeGroupY,

@@ -1,6 +1,7 @@
 package org.quickstep;
 
 import org.junit.Test;
+import org.quickstep.spec.GridSpec;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

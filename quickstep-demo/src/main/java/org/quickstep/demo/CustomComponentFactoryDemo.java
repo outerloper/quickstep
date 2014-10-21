@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import org.quickstep.*;
+import org.quickstep.spec.GridSpec;
 
 import static javax.swing.BorderFactory.*;
 import static org.quickstep.GridBagToolKit.*;

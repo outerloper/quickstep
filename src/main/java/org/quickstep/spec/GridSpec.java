@@ -1,4 +1,4 @@
-package org.quickstep;
+package org.quickstep.spec;
 
 import java.util.Map;
 import java.util.TreeMap;

@@ -3,7 +3,8 @@ package org.quickstep.support;
 import java.util.*;
 import javax.swing.*;
 
-import org.quickstep.*;
+import org.quickstep.command.*;
+import org.quickstep.spec.CellSpec;
 
 import static org.quickstep.GridBagToolKit.*;
 

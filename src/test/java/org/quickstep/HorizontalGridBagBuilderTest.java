@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.quickstep.command.PanelCommand;
 
 import static org.easymock.EasyMock.*;
 import static org.quickstep.GridBagToolKit.*;
