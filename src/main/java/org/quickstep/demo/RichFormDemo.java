@@ -7,7 +7,7 @@ import static org.quickstep.GridBagToolKit.*;
 
 public class RichFormDemo extends JFrame
 {
-   JList<String> peopleList = new JList<String>(new String[]{
+   JList peopleList = new JList(new String[]{
       "Bunny Bugs", "Cat Sylvester", "Coyote Wile E.", "Devil Tasmanian", "Duck Daffy",
       "Fudd Elmer", "Le Pew Pepe", "Martial Marvin"
    });

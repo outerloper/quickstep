@@ -34,7 +34,7 @@ public class RichFormDemo2 extends JFrame
    List<JRadioButton> directionRadios = Arrays.asList(new JRadioButton("Up"), new JRadioButton("Down"));
    List<JRadioButton> scopeRadios = Arrays.asList(new JRadioButton("From cursor"), new JRadioButton("Entire scope"));
    JComponent colorPicker = createColorPanel();
-   JComboBox thicknessComboBox = new JComboBox<String>(new String[]{"1", "2", "3", "4", "5"});
+   JComboBox thicknessComboBox = new JComboBox(new String[]{"1", "2", "3", "4", "5"});
    JButton clearButton = new JButton("Clear");
    JButton findAllButton = new JButton("Find &All");
    JButton findNextButton = new JButton("Find &Next");
