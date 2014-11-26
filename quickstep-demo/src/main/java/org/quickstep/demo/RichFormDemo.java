@@ -124,7 +124,6 @@ public class RichFormDemo extends JFrame
 
    public static void main(String[] args)
    {
-      debug();
       DemoUtils.setSystemLookAndFeel();
       RichFormDemo demo = new RichFormDemo();
       demo.setVisible(true);
